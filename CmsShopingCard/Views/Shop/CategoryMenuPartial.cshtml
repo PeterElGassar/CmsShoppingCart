@@ -1,0 +1,51 @@
+﻿@model IEnumerable<CmsShopingCard.Models.ViewModels.Shop.CategoriesVM>
+
+@foreach (var Category in Model)
+{
+    <li class="dropdown side-dropdown">
+        <a class="dropdown-toggle" href="/shop/category?categoryName=@Category.Sulg.ToLower()">
+            @Category.Name
+            <i class="fa fa-angle-right arrow_categorymenu"></i>
+        </a>
+        @if (Category.Brands.Count() > 0)
+        {
+            <div class="custom-menu">
+                <div class="row">
+                    @foreach (var brand in Category.Brands)
+                    {
+                        <div class="col-md-2">
+                            <ul class="list-links">
+                                <li>
+                                    <h4 class="list-links-title"><a href="/Shop/Category?categoryName=@Category.Sulg&brandId=@brand.Id">@brand.Name</a></h4>
+                                </li>
+
+                                <li class="hidden-sm hidden-xs">
+                                    <a href="/Shop/Category?categoryName=@Category.Sulg&brandId=@brand.Id">
+                                        <img src="~/Images/Uploads/Brands/@brand.Id.ToString()/Thumbs/@brand.ImageName.ToString()" width="60" height="60" />
+                                    </a>
+                                </li>
+                            </ul>
+                            <hr class="hidden-md hidden-lg">
+                        </div>
+                    }
+
+                </div>
+            </div>
+        }
+
+    </li>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

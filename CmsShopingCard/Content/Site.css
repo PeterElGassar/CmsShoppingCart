@@ -1,0 +1,359 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+.input-validation-error {
+    border: 2px solid red;
+}
+
+table.sorting tr:not(.home) {
+    cursor: pointer;
+}
+
+.ui-state-highlight {
+    border: dashed 2px #ccc;
+}
+
+.search-div input {
+    width: 250px;
+    float: right;
+    margin: 10px;
+}
+
+div.newCatName {
+    margin-top: 30px;
+    position: relative;
+}
+
+span.ajax-text {
+    display: none;
+}
+
+table.sorting.categories td {
+    padding: 20px !important;
+    width:250px;
+}
+
+.ajaxDivTd {
+    width: 400px;
+    position: absolute;
+}
+#CategoiesP{
+    width: 500px;
+    height: 70px;
+}
+
+#InputDiv {
+    color: #ffffff;
+    background-color: #428bca;
+    border-color: #357ebd;
+    padding: 9px;
+    border-radius: 5px;
+    width: 230px;
+}
+
+#InputImgDiv {
+    position: relative;
+    bottom: 25px;
+    left: 20px;
+    top: 10px;
+}
+
+span.loader {
+    display: none;
+}
+
+.ajaxMS {
+    background-color: green;
+    padding: 10px;
+    display: none;
+    position: absolute;
+    bottom: 0;
+    color: white;
+}
+
+.ajaxCart {
+    color: white;
+    letter-spacing: 1px;
+    position: relative;
+    top: 4px;
+}
+
+.ib {
+    display: inline-block !important;
+}
+
+ul.adminarea {
+    position: relative;
+    top: 15px;
+}
+
+.ajaxBG {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: white;
+    display: none;
+    z-index: 100;
+}
+
+    .ajaxBG span {
+        position: relative;
+        left: 30%;
+        top: 30%;
+        transform: translate3d(-50%, -50%,0);
+    }
+
+        .ajaxBG span > img {
+            width: 75px;
+            height: 75px;
+        }
+
+form.paypalForm {
+    position: absolute;
+    left: -2000px;
+}
+
+#LogOutId:hover {
+    color: white;
+}
+
+
+.qty {
+    position: absolute;
+    right: -9px;
+    top: -9px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    font-size: 10px;
+    background: #F8694A;
+    color: #FFF;
+    border-radius: 50%;
+}
+
+.category-nav {
+    cursor: pointer;
+}
+
+    .category-nav:hover ul.category-list {
+        display: block !important;
+    }
+
+#MyModel {
+    /*left: 50vmin;
+    top: 7%;
+    overflow: hidden;*/
+}
+
+#MyModel_BodyDiv {
+    /*width: 70vmin;*/
+}
+
+/*.modal-content {
+    height: 80vmin;
+}*/
+
+.quick-view-btn {
+    margin: 5px;
+}
+
+.Render_Body {
+    margin-top: 40px;
+    min-height: 750px;
+}
+
+
+.wrapper-content {
+    /*width:1360px;*/
+    margin: 0 auto;
+    padding: 25px 20px;
+    /*width: 70%;
+    margin: 0 auto;*/
+
+}
+
+
+/*==========================================*/
+#dropZone_imagesPreview {
+    width: 30%;
+    display: inline-block;
+    margin: 3px;
+}
+
+.deleteimage {
+    width: 100px;
+}
+
+h2::first-letter {
+    color: #F8694A;
+}
+
+.header-btns > li:first-child {
+    width: 165px;
+}
+
+#newCatName {
+    margin-bottom: 10px;
+}
+
+#ImageName {
+    display: none;
+}
+
+
+/*============================Brands Section=================================*/
+/*============================Brands Section=================================*/
+/*============================Brands Section=================================*/
+
+.brands__display, .products__display {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: stretch;
+}
+
+.brands__item {
+    margin: 0px 5px 4px 5px !important;
+}
+
+.edite_brand_btn, .remove_brand_btn {
+    width: 100%;
+}
+
+.panel-info {
+    border: none !important;
+    padding: 0px;
+}
+
+.panel .panel-info > .panel-heading {
+    text-align: center;
+    background-color: #f8694a !important;
+}
+
+.txtColor_alert {
+    color: #ec5840 !important;
+}
+
+.addToCard, .addToWish {
+    width: 100%;
+    text-align: center;
+}
+
+.brandsTable {
+    width: 100% !important;
+}
+/*======================Slick Slider===================*/
+.post-slider {
+    position: relative;
+}
+
+    .post-slider .slider-titel {
+        text-align: center;
+        margin: 15px 0px;
+    }
+
+    .post-slider .next {
+        position: absolute;
+        top: 50%;
+        right: 25px;
+        font-size: 2em;
+        color: #F8694A;
+        cursor: pointer;
+    }
+
+    .post-slider .prev {
+        position: absolute;
+        top: 50%;
+        left: 25px;
+        font-size: 2em;
+        color: #F8694A;
+        cursor: pointer;
+    }
+
+    .post-slider .post-wrapper {
+        width: 85%;
+        height: 350px;
+        margin: 0px auto;
+        overflow: hidden;
+        /*padding:10px 0px;*/
+    }
+
+        .post-slider .post-wrapper .post {
+            background-color: white;
+            display: inline-block;
+            width: 210px !important;
+            height: 340px;
+            margin: 0px 5px;
+            border-radius: 5px;
+            box-shadow: 1rem 1rem 1rem -1rem #a0a0a0;
+            /*position: relative;*/
+        }
+
+.post-slider .post-wrapper .post a.main-btn {
+           width: 140px;
+           cursor: pointer;
+           margin: 0px auto;
+           display: block;
+           opacity: 0.9;
+}
+
+            /*.post-slider .post-wrapper .post:hover {
+  -webkit-box-shadow: 0px 6px 10px -6px rgba(0, 0, 0, 0.175);
+  box-shadow: 0px 6px 10px -6px rgba(0, 0, 0, 0.175);
+  -webkit-transform: translateY(-4px);
+  -ms-transform: translateY(-4px);
+  transform: translateY(-4px);
+}*/
+
+            .post-slider .post-wrapper .post .slider-img {
+                width: 100%;
+                height: 210px;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+            }
+
+        .post-slider .post-wrapper .post-info {
+            padding: 0px 5px;
+            height: 128px;
+        }
+
+.post-info h5, h4 {
+    margin: 6px !important;
+}
+
+.post-info h4:first-letter {
+    color: #F8694A;
+}
+
+.post-info .add-to-cart {
+    /*padding-left: 8px;
+    padding-right: 8px;*/
+    height: 35px;
+    border-radius: 2px;
+}
+
+.slick-list {
+    height: 346px;
+}
+
+#quick_btn {
+    width: 140px;
+    cursor: pointer;
+    margin: 0px auto;
+    display: block;
+    opacity: 0.9;
+}
+
+.btnDiv {
+    position: relative;
+    top: 100px;
+}
+
+.page-wrapper {
+    margin: 50px auto;
+}
+
+slick-track {
+    width: 400px !important;
+}

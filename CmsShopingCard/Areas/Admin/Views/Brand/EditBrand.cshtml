@@ -1,0 +1,88 @@
+﻿@model CmsShopingCard.Models.Data.Brand
+
+@{
+    ViewBag.Title = "EditBrand";
+}
+
+<h2>EditBrand</h2>
+
+@if (TempData["SM"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SM"]
+
+    </div>
+}
+
+@using (Html.BeginForm("EditBrand", "Brand", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Brand</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => m.BrandId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                @Html.ValidationMessage("BrandName", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="ImageName">Add Brand Image</label>
+            @Html.EditorFor(model => model.ImageName, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-10">
+                <div id="InputDiv">
+                    <input type="file" name="BrandImage" id="ImageUpload" accept="image/*" />
+                </div>
+                <br />
+                <img src="/Images/Uploads/Brands/@Model.BrandId/Thumbs/@Model.ImageName" id="ImgPreview" width="250" height="250" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+
+            //Preview Selected Image
+            /////////////////////////////////////////////////////////////////////
+            function readUrl(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $("img#ImgPreview")
+                            .attr("src", e.target.result)
+                            .width(200)
+                            .height(200);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#ImageUpload").change(function () {
+                readUrl(this);
+            });
+
+        });
+    </script>
+}

@@ -1,0 +1,40 @@
+﻿@model CmsShopingCard.Models.ViewModels.Cart.CartVM
+
+
+@*<i class="glyphicon glyphicon-shopping-cart"></i>
+@Model.Quantity item(s) - $@Model.Price
+<br />
+@Html.ActionLink("Checkout", "Index")*@
+
+<!-- Cart -->
+@*<div class="ajaxCart">
+    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+        <div class="header-btns-icon">
+            <i class="glyphicon glyphicon-shopping-cart"></i>
+            <span class="qty">@Model.Quantity</span>
+        </div>
+        <strong class="text-uppercase">My Cart:</strong>
+        <br>
+    </a>
+    <div class="shopping-cart-btns">
+        <a href="/Cart/Index" class="primary-btn">Checkout <i class="glyphicon glyphicon-circle-arrow-right"></i></a>
+    </div>
+
+</div>*@
+<!-- /Cart -->
+
+    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+        <div class="header-btns-icon">
+            <i class="fa fa-shopping-cart"></i>
+            <span class="qty">@Model.Quantity</span>
+        </div>
+        <strong class="text-uppercase">My Cart:</strong>
+        <br>
+        <span>$@Model.Price</span>
+    </a>
+    <div class="custom-menu">     
+            <div class="shopping-cart-btns">
+                <button class="main-btn">View Cart</button>
+                <a  href="/Cart/Index" class="primary-btn">Checkout <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+    </div>

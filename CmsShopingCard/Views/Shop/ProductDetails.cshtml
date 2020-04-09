@@ -1,0 +1,442 @@
+﻿@model CmsShopingCard.Models.ViewModels.Shop.ProductVM
+
+@{
+    ViewBag.Title = Model.Name;
+}
+@if (TempData["SM"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["SM"]
+    </div>
+}
+
+
+<div class="col-xs-12 col-sm-6 col-md-1"></div>
+<div class="col-xs-12 col-sm-6 col-md-10">
+    <h2>@Model.Name</h2>
+    <br />
+    <div class="row">
+
+        <!--  Product Details -->
+        <!---Colors-->
+        <div class="row product product-details clearfix">
+            <div class="col-md-6">
+                <div id="product-main-view">
+                    <div class="">
+                        <img src="/Images/Uploads/Products/@Model.Id/Thumbs/@Model.ImageName" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="product-body">
+                    <div class="product-label">
+                        <span>New</span>
+                        <span class="sale">-20%</span>
+                    </div>
+                    <h2 class="product-name">@Model.Name</h2>
+                    <h3 class="product-price">$@Model.Price</h3>
+                    <div>
+                        <div class="product-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star empty"></i>
+                        </div>
+                        <a href="#">3 Review(s) / Add Review</a>
+                    </div>
+                    @*@if (Model.Quantity > 0)
+                        {
+                            <h6><strong>Availability:</strong> In Stock</h6>
+                        }
+                        else
+                        {
+                            <h6><strong>Availability:</strong>Product Not Available In Stock Now</h6>
+                        }*@
+                    <h4 style="display: inline-block;">Brand: </h4>
+                    <strong>
+                        @if (@Model.Brand != null)
+                    {
+                            @Model.Brand.Name
+                    }
+                    else
+                    {
+                            @Model.Category.Name
+                    }
+                    </strong>
+                    <p>
+                        @Html.Raw(Model.Description);
+                    </p>
+                    <div class="product-options">
+
+                        <ul class="color-option">
+                            <li><span class="text-uppercase">Color:</span></li>
+                            <li class="active"><a href="#" style="background-color:#475984;"></a></li>
+                            <li><a href="#" style="background-color:#8A2454;"></a></li>
+                            <li><a href="#" style="background-color:#BF6989;"></a></li>
+                            <li><a href="#" style="background-color:#9A54D8;"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="product-btns">
+                        <div class="qty-input" style="display:inline-block;">
+
+                            @*<label for="QuntList" class="text-uppercase">Quantity</label>
+
+                                @if (Model.Quantity > 0)
+                                {
+                                    <select class="QuntList form-control" style="width:50%;display: inline-block;">
+
+                                        @for (int i = 1; i <= Model.Quantity; i++)
+                                        {
+                                            <option>@i</option>
+                                            if (i == 10)
+                                            {
+                                                break;
+                                            }
+
+                                        }
+                                    </select>
+
+                                }*@
+                            @*else
+                                {
+                                    <h4 class="danger">This Product Not Available In Stock Now</h4>
+                                }*@
+                        </div>
+                        @if (Model.Quantity > 0)
+                    {
+                        if (Model.Quantity == 1)
+                        {
+                                <h4 class="txtColor_alert">Only 1 left in stock!</h4>
+                        }
+                        if (User.Identity.IsAuthenticated)
+                        {
+                                <a class="addToCard primary-btn"><i class=" fa fa-shopping-cart"></i> Add to Cart</a>
+                        }
+                        else
+                        {
+                                <h4 class="txtColor_alert">Please Login To Can Add This Item To Card</h4>
+                        }
+                    }
+                    else
+                    {
+                            <h4 class="txtColor_alert">This Product Not Available In Stock Now</h4>
+                    }
+                        <div class="pull-right">
+                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                            <button class="main-btn icon-btn"><i class="fa fa-share-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>          
+
+        </div>
+        <div class="row">
+            <h3>Product Gallery</h3>
+
+            <div class="col-xs-12 col-sm-12 col-md-12   fancyBoxDiv">
+
+                <br /><br />
+                @foreach (var Image in Model.GalleryImages)
+                {
+                    <div style="display:inline-block">
+                        <a class="fancybox" rel="gallery1" href="/Images/Uploads/Products/@Model.Id/Gallery/@Image">
+
+                            <img src="/Images/Uploads/Products/@Model.Id/Gallery/Thumbs/@Image" width="300" height="300" />
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-tab">
+                    <ul class="tab-nav">
+                        <li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
+                        <li><a data-toggle="tab" href="#tab1">Details</a></li>
+                        <li><a data-toggle="tab" href="#tab2">Reviews (3)</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab1" class="tab-pane fade in active">
+                            <p>
+                                @Html.Raw(Model.Description);
+
+                            </p>
+                        </div>
+                        <div id="tab2" class="tab-pane fade in">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="product-reviews">
+                                        <div class="single-review">
+                                            <div class="review-heading">
+                                                <div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
+                                                <div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
+                                                <div class="review-rating pull-right">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o empty"></i>
+                                                </div>
+                                            </div>
+                                            <div class="review-body">
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
+                                                    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="single-review">
+                                            <div class="review-heading">
+                                                <div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
+                                                <div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
+                                                <div class="review-rating pull-right">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o empty"></i>
+                                                </div>
+                                            </div>
+                                            <div class="review-body">
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
+                                                    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="single-review">
+                                            <div class="review-heading">
+                                                <div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
+                                                <div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
+                                                <div class="review-rating pull-right">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o empty"></i>
+                                                </div>
+                                            </div>
+                                            <div class="review-body">
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
+                                                    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <ul class="reviews-pages">
+                                            <li class="active">1</li>
+                                            <li><a href="#">2</a></li>
+                                            <li><a href="#">3</a></li>
+                                            <li><a href="#"><i class="fa fa-caret-right"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4 class="text-uppercase">Write Your Review</h4>
+                                    <p>Your email address will not be published.</p>
+                                    <form class="review-form">
+                                        <div class="form-group">
+                                            <input class="input" type="text" placeholder="Your Name" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="input" type="email" placeholder="Email Address" />
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea class="input" placeholder="Your review"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-rating">
+                                                <strong class="text-uppercase">Your Rating: </strong>
+                                                <div class="stars">
+                                                    <input type="radio" id="star5" name="rating" value="5" /><label for="star5"></label>
+                                                    <input type="radio" id="star4" name="rating" value="4" /><label for="star4"></label>
+                                                    <input type="radio" id="star3" name="rating" value="3" /><label for="star3"></label>
+                                                    <input type="radio" id="star2" name="rating" value="2" /><label for="star2"></label>
+                                                    <input type="radio" id="star1" name="rating" value="1" /><label for="star1"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="primary-btn">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Product Details -->
+    </div>
+</div>
+<div class="col-xs-12 col-sm-6 col-md-1"></div>
+
+
+
+<link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
+
+@section Scripts{
+    <script src="~/Scripts/jquery.fancybox.js"></script>
+    @*to pass a productID to External JS File*@
+    <script>var productId = "@Model.Id"</script>
+    <script src="~/Scripts/productsDetails.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @*<script>
+        /*
+        *FancyBox
+        */
+        $(function () {
+            $(".fancybox").fancybox();
+        });
+        ////////////////////////////////////
+        /*
+       *Add ToCart
+       */
+
+        //Change Event For Selected List
+        var dropDownList = document.querySelector(".QuntList");
+        var qtyDropList;
+        if (dropDownList !== null) {
+            dropDownList.addEventListener("change",function(e){
+                debugger;
+                e.preventDefault();
+                qtyDropList = $(this).val();
+                console.log(qtyDropList);
+            });
+        }
+
+        $("a.addToCard").click(function (e) {
+            e.preventDefault();
+            debugger;
+            var TestId ="@Model.Id";
+            console.log(TestId);
+            $("span.loader").addClass("ib");
+            var url = "/Cart/AddToCartPartial";
+            $.get(url, { id:@Model.Id , Qyt:qtyDropList} ,function(data){
+                $(".ajaxCart").html(data);
+            }).done(function(){
+                $("span.loader").removeClass("ib");
+                $("span.ajaxMS").addClass("ib");
+
+                setTimeout(function(){
+                    $("span.ajaxMS").fadeOut("fast");
+                    $("span.ajaxMS").removeClass("ib");
+                },1500);
+                qtyDropList = null;
+
+                var url2 ="/Shop/GetProductQuantity";
+                debugger;
+                $.get(url2, { productId:@Model.Id} ,function(data){
+                    debugger;
+                    var checkValue = data.includes("</h4>");
+                    if (checkValue) {
+                        $(".product-btns").empty();
+                        $(".product-btns").html(data);
+                    }
+                    else{
+                        $(".QuntList").empty();
+                        $(".QuntList").html(data);
+                    }
+
+                }).done(function(){
+                    console.log("done");
+                });
+            });
+
+        });
+
+        ////////////////////////////////////
+    </script>*@
+}
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div class="row">
+        <div class="col-xs-12 col-md-4">
+            <img src="/Images/Uploads/Products/@Model.Id/Thumbs/@Model.ImageName" />
+        </div>
+        <br />
+        <div class="col-xs-12 col-md-8">
+            @Html.DisplayFor(model => model.Description)
+            <br />
+            $@Html.DisplayFor(model => model.Price)
+            <br />
+            @if (Request.IsAuthenticated)
+            {
+            <div class="addToCard">
+                <a href="#" class="addToCard btn btn-default">Add To Card</a>
+
+                <span class="loader">
+                    <img src="~/Content/Img/lg.comet-spinner.gif" width="60" height="60" />
+                </span>
+
+                <span class="ajaxMS">The Product has been Added to your Card</span>
+
+            </div>
+            <br />
+
+            }
+            <div class="quantityDiv">
+                @if (Model.Quantity < 1)
+                {
+                <h4 class="danger">This Product Not Available In Stock Now</h4>
+                }
+                else
+                {
+                <label for="QuntList">Quantity</label>
+                <select id="QuntList" class="form-control" style="width:20%">
+
+                    @for (int i = 1; i <= Model.Quantity; i++)
+                    {
+                    <option>@i</option>
+                    if (i == 10)
+                    {
+                    break;
+                    }
+                    }
+
+                </select>
+                }
+            </div>
+        </div>
+    </div>*@
+
+

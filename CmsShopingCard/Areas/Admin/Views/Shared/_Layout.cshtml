@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Admin Area</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <!-- fav icon -->
+    <link rel="shortcut icon" href="~/Images/shopping-cart.png" />
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="~/Content/Templet_Files/css/font-awesome.min.css" />
+
+    <!---Googel Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Sigmar+One&display=swap&subset=latin-ext,vietnamese" rel="stylesheet">
+
+</head>
+<body>
+    <div class="wrapper">
+
+        <div class="top-navbar">
+
+            <div class="humburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
+            <div class="top-menu">
+                <div class="logo">DashBoard</div>
+                <ul>
+                    <li><a href="#"><i class="fa fa-bell"></i></a></li>
+                    <li><a href="#"><i class="fa fa-user"></i></a></li>
+                    <li><a href="/"><i class="fa fa-sign-out"></i></a></li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <ul>
+                <li>
+                    <a href="/admin/pages" class="activee">
+                        <span class="icon">
+                            <i class="fa fa-book" aria-hidden="true"></i>
+                        </span>
+                        <span class="titel">Pages</span>
+                    </a>
+                </li>
+                <li>
+
+                    <a href="/admin/Slider/AddImage">
+                        <span class="icon">
+                            <i class="fa fa-image" aria-hidden="true"></i>
+                        </span>
+                        <span class="titel">Slider</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/Shop/Categories">
+                        <span class="icon">
+                            <i class="fa fa-list-alt" aria-hidden="true"></i>
+                        </span>
+                        <span class="titel">Category</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/shop/orders">
+                        <span class="icon">
+                            <i class="fa fa-gift" aria-hidden="true"></i>
+                        </span>
+                        <span class="titel">Orders</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/shop/Products">
+                        <span class="icon">
+                            <i class="fa fa-product-hunt" aria-hidden="true"></i>
+                        </span>
+                        <span class="titel">Products</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/Brand/Index">
+                        <span class="icon">
+                            <i class="fa fa-gift" aria-hidden="true"></i>
+                        </span>
+                        <span class="titel">Brands</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/Pages/EditSidebar">
+                        <span class="icon">
+                            <i class="fa fa-window-maximize fa-rotate-90" aria-hidden="true"></i>
+                        </span>
+                        <span class="titel">Sidbar</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row main-container">
+           
+            @RenderBody()
+
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/lib")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript" src="~/Scripts/DashboardScript.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+@*<div class="navbar navbar-inverse navbar-fixed-topcancel">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { class = "navbar-brand" })
+                <a href="/Admin/DashBoard" class="navbar-brand">Dashboard</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/admin/Pages">Pages</a></li>
+                    <li><a href="/admin/Pages/EditSidebar">Sidebar</a></li>
+                    <li><a href="/admin/Shop/Categories">Categories</a></li>
+                    <li><a href="/admin/Shop/Products">Products</a></li>
+                    <li><a href="/admin/Shop/Orders">Orders</a></li>
+                    <li><a href="/admin/Brand/Index">Brands</a></li>
+                    <li><a href="/admin/Slider/AddImage">Silder</a></li>
+                </ul>
+                <ul class="navbar-right">
+                    <li><a href="/" class="navbar-brand" traget="_blank">Back To WebSite<i class="glyphicon glyphicon-share-alt" style="margin-left: 5px;"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid body-content">
+        <div class="row">
+            <!-- Star vertical Menu Bar-->
+            <div class="col-md-2 vertical-Menu">
+                <div class="wrapper">
+
+                </div>
+            </div>
+            <!-- End vertical Menu Bar-->
+
+            <div class="col-md-8">
+                RenderBody()
+                <hr />
+            </div>
+
+            <div class="col-md-2">
+                <img src="~/Images/shopping-cart.png" />
+            </div>
+
+        </div>
+
+    </div>*@

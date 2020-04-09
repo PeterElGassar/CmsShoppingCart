@@ -1,0 +1,75 @@
+﻿@model IEnumerable<CmsShopingCard.Models.ViewModels.Shop.ProductVM>
+@using PagedList;
+@using PagedList.Mvc;
+
+
+@{
+    ViewBag.Title = ViewBag.CategoryName;
+    string slug = ViewBag.CategoryName.Replace(" ", "-").ToLower();
+}
+<div class="col-md-1"></div>
+<div class="col-md-10">
+
+    @if (@ViewBag.BrandName != null)
+    {
+        <h2>@ViewBag.CategoryName<strong>/</strong> @ViewBag.BrandName</h2>
+
+    }
+    else
+    {
+        <h2>@ViewBag.CategoryName</h2>
+    }
+
+    <div class="panel">
+        <div class="panel-heading">
+            <div class="row panel-body products__display">
+                @foreach (var item in ViewBag.OnePageOfProducts)
+            {
+                        <!-- Product Single -->
+                    <div class=" col-md-3 product product-single">
+                        <div class="product-thumb">
+                            <a id="quick_btn" onclick="quickViewFunction(@item.Id)" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
+                            <img src="/Images/Uploads/Products/@item.Id/Thumbs/@item.ImageName" />
+                        </div>
+                        <div class="product-body">
+                            <h3 class="product-price">$@item.Price</h3>
+
+                            <h2 class="product-name"><a href="/Shop/product-details/@item.Slug">@item.Name</a></h2>
+                            <div class="product-btns">
+                                <a href="" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                        <!-- /Product Single -->
+                }
+            </div>
+        </div>
+    </div>
+    @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Category", new { page, categoryName = slug, brandId = ViewBag.BrandId }))
+</div>
+<div class="col-md-1"></div>
+
+
+<!--Model Poup-->
+<div class="modal fade" id="MyModel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--Model Header-->
+            <div class="modal-header">
+                <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-window-close fa-lg" style="    color: rgb(248, 105, 74);"></span></a>
+                <h3 class="modal-title">Quick View to Product</h3>
+            </div>
+            <!--/Model Header-->
+            <!--Model Body-->
+            <div class="modal-body" id="MyModel_BodyDiv">
+
+            </div>
+            <!--/Model Body-->
+
+        </div>
+    </div>
+</div>
+<!--/Model Poup-->
+@*Add It In Bundel*@
+@*<script src="~/Scripts/MyJavaScript.js"></script>*@
+

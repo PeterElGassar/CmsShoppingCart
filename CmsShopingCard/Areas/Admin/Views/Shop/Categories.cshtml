@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CmsShopingCard.Models.ViewModels.Shop.CategoriesVM>
+
+@{
+    ViewBag.Title = "Categories";
+}
+
+<h2>Categories</h2>
+<div class="new-cat" style="width:350px">
+
+    <input type="text" id="newCatName" value="" class="form-control" />
+    <p id="CategoiesP">
+        <a href="#" id="newCatA" class="btn btn-primary">Add New Category</a>
+        <span class="ajax-text">
+            @*<img src="~/Content/Img/lg.harmony-taiji-spinner.gif" width="50" height="25" />*@
+            <img src="~/Content/fancybox/fancybox_loading@2x.gif" />
+        </span>
+    </p>
+</div>
+@if (!Model.Any())
+{
+    <h2 class="text-center">there Are No Categories..</h2>
+}
+else
+{
+    <table class="table sorting categories" id="Pages">
+        <tr class="home">
+
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr id="id_@item.Id">
+                <td>
+                    <div class="ajaxDivTd"></div>
+                    @Html.EditorFor(modelItem => item.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                </td>
+                <td>
+
+                    <a href="#" data-catId="@item.Id" class="delete btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+
+                    <a href="@Url.Action("EditCategory", "Brand",new { id = item.Id })" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <a href="@Url.Action("DetailsCategory", "Brand",new { id = item.Id })" class="btn btn-success">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+
+@section Scripts{
+    <script src="~/Scripts/jquery-ui.js"></script>    
+    @*<script src="~/Scripts/MyJavaScript.js"></script>*@
+}

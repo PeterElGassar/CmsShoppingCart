@@ -1,0 +1,102 @@
+﻿@model IEnumerable<CmsShopingCard.Models.ViewModels.pages.PageVM>
+
+@{
+    ViewBag.Title = "Pages";
+}
+
+<h2>Pages</h2>
+<div class="search-div">
+    <form id="search-note">
+        <input class="form-control" type="text" placeholder="search" />
+    </form>
+</div>
+<p>
+    @Html.ActionLink("Add New Page", "AddPage")
+</p>
+@if (Model.Count() == 0)
+{
+    <h1 class="text-center"> There Are no Pages..</h1>
+}
+else
+{
+    <table class="table sorting" id="pages">
+        <tr class="home">
+            <th>Titel</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sulg)
+            </th>
+            <th>
+                HasSidebar
+            </th>
+            <th>
+
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr id="id_@item.Id" class="@item.Sulg">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sulg)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.HasSidebar)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Editpage", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "PageDetails", new { id = item.Id }) |
+                    @if (item.Sulg != "home")
+                    {
+                        @Html.ActionLink("Delete", "DeletePage", new { id = item.Id }, new { @class = "delete" })
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+
+@section Scripts{
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="~/Scripts/MyJavaScript.js"></script>
+    @*<script src="~/Scripts/jquery-ui.js"></script>*@
+    <script>
+        $(function () {
+
+            //confirm Page Deletion
+            $('a.delete').click(function () {
+                if (!confirm("Confirm Page Deletion")) {
+                    return false;
+                }
+            });
+            /////////////////////////////////////////////////////////////////////
+            /*
+            * reorder Pages
+            */
+            $("table#pages tbody").sortable({
+
+                items: "tr:not(.home)",
+                placeholder: "ui-state-highlight",
+                update: function () {
+                    //Proplem Here
+                    var ids = $("table#pages tbody").sortable("serialize");
+                    var url = "/Admin/Pages/ReorderPages/";
+
+                    $.post(url, ids, function (data) {
+                    });
+                   
+                }
+            });
+
+        });
+    </script>
+}
+
+
+

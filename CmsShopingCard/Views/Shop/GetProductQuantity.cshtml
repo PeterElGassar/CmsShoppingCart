@@ -1,0 +1,59 @@
+﻿@model CmsShopingCard.Models.ViewModels.Shop.ProductVM
+
+
+@*@if (Model.Quantity < 1)
+            {
+        <h4 class="danger">This Product Not Available In Stock Now</h4>
+    }
+    else
+    {
+        <label for="QuntList">Quantity</label>
+            <select class="QuntList form-control" style="width: 50%;display: inline-block;">
+
+                @for (int i = 1; i <= Model.Quantity; i++)
+                {
+                    <option>@i</option>
+                    if (i == 10)
+                    {
+                        break;
+                    }
+                }
+
+            </select>
+    }*@
+
+
+
+@if (Model.Quantity > 0)
+{
+
+    for (int i = 1; i <= Model.Quantity; i++)
+    {
+        <option>@i</option>
+        if (i == 10)
+        {
+            break;
+        }
+
+    }
+    
+}
+else
+{
+    <h4 class="danger">This Product Not Available In Stock Now</h4>
+}
+@section Scripts{
+
+    <script>
+        //Change Event For Selected List
+        var dropDownList = document.querySelector(".QuntList2");
+        var qtyDropList;
+        dropDownList.addEventListener("change", function (e) {
+            debugger;
+            e.preventDefault();
+            qtyDropList = $(this).val();
+            console.log(qtyDropList);
+        });
+
+    </script>
+}

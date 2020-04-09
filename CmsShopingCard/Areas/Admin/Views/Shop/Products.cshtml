@@ -1,0 +1,102 @@
+﻿@model IEnumerable<CmsShopingCard.Models.ViewModels.Shop.ProductVM>
+
+@{
+    ViewBag.Title = "Products";
+}
+@using PagedList.Mvc;
+@using PagedList;
+
+<h2>Products</h2>
+<select id="SelectdCategory" name="SelectdCategory" class="form-control" style="width:25vmin;">
+    <option value="0">All</option>
+    @foreach (var item in ViewBag.Categories)
+    {
+        if (ViewBag.SelectCat == item.Value)
+        {
+            <option selected="selected" value="@item.Value">@item.Text</option>
+        }
+        else
+        {
+            <option value="@item.Value">@item.Text</option>
+        }
+    }
+</select>
+<br /> <br />
+<p>
+    @Html.ActionLink("Add New Product", "AddProduct", "", new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Slug
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Image Name
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var product in ViewBag.OnePageOfProducts)
+    {
+
+        <tr>
+            <td>@product.Name</td>
+            <td>@product.Slug</td>
+            <td>@product.Quantity</td>
+            <td>@product.Price</td>
+            <td class="dashboard-product-img">
+                <a href="/admin/shop/EditProduct/@product.Id">
+                    <img src="/Images/Uploads/Products/@product.Id/Thumbs/@product.ImageName" class="img-thumbnail" />
+                </a>
+            </td>
+            <td>
+                <a href="/admin/shop/EditProduct/@product.Id" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i></a>
+                <a href="/admin/shop/DeleteProduct/@product.Id" class="delete btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
+            </td>
+        </tr>
+    }
+
+
+</table>
+@Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Products", new { page, catId = ViewBag.SelectCat }))
+@section Scripts{
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <script src="~/Scripts/MyJavaScript.js"></script>
+    <script>
+        $(function () {
+            /////////////////////////////////////////////////////////////////////
+            /*
+            * Select Product From Spcified Category
+            */
+            $("#SelectdCategory").on("change", function () {
+                var url = $(this).val();
+                if (url) {
+                    window.location = "/Admin/Shop/Products?catId=" + url;
+                }
+                return false;
+            });
+
+            /////////////////////////////////////////////////////////////////////
+            /*
+            * confirm Products Deletion
+            */
+            $('a.delete').click(function () {
+                if (!confirm("Confirm Product Deletion")) {
+                    return false;
+                }
+            });
+
+
+        });
+    </script>
+}
+
+

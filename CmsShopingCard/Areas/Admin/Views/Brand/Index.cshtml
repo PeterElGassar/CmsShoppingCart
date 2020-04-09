@@ -1,0 +1,118 @@
+﻿@model IEnumerable<CmsShopingCard.Models.Data.Brand>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="col-md-1"></div>
+<div class="col-md-10">
+    <h2>Brands Of Categories</h2>
+    <p>
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+    @if (!Model.Any())
+    {
+
+        <h2>You Have No Brands Yet..</h2>
+    }
+    else
+    {
+
+    <!---Brands Table-->
+        <table class="brandsTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ImageName)
+                    </th>
+                    <th>Controls</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <div class="thumbnail" style="width:90px">
+                        <img src="/Images/Uploads/Brands/@item.BrandId/Thumbs/@item.ImageName" width="90" height="90" />
+                    </div>
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="/admin/Brand/EditBrand/@item.BrandId"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a class="delete btn btn-danger" href="/admin/Brand/DeleteBrand/@item.BrandId"><i class="glyphicon glyphicon-trash"></i></a>
+                </td>
+            </tr>
+            }
+            </tbody>
+        </table>
+    }
+</div>
+<div class="col-md-1"></div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".brandsTable").DataTable();
+        });
+        $(function () {
+
+            /////////////////////////////////////////////////////////////////////
+            /*
+            * confirm Brand Deletion
+            */
+            $('a.delete').click(function () {
+                if (!confirm("Confirm Brand Deletion")) {
+                    return false;
+                }
+            });
+
+        });
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div class="container-fluid">
+        <div class="row brands__display">
+            @foreach (var brand in Model)
+                {
+             <!-- Single brand -->
+                <div class="col-xs-2  brands__item">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!--Image-->
+                            <img class="thumbnail" src="/Images/Uploads/Brands/@brand.BrandId/Thumbs/@brand.ImageName"
+                                 width="90" height="90" />
+
+                            <!---Btns---->
+                            <div class="row">
+                                <a class="btn btn-primary edite_brand_btn" href="/admin/Brand/EditBrand/@brand.BrandId"><i class="glyphicon glyphicon-pencil"></i></a>
+                                <a class="delete btn btn-danger remove_brand_btn" href="/admin/Brand/DeleteBrand/@brand.BrandId"><i class="glyphicon glyphicon-trash"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            <!-- /Single brand -->
+            }
+        </div>
+    </div>*@
