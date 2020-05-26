@@ -240,7 +240,6 @@ namespace CmsShopingCard.Controllers
             return PartialView(cart);
         }
 
-
         [HttpPost]
         public void PlaceOrder()
         {
