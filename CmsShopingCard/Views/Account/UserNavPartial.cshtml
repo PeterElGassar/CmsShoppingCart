@@ -1,3 +1,55 @@
 ﻿@model CmsShopingCard.Models.ViewModels.Account.UserNavPartialVM
 
-<a href="/account/user-profile" style="font-size:16px">(@Model.FirstName @Model.LastName)</a>
+@*<a href="/account/user-profile" style="font-size:16px">(@Model.FirstName @Model.LastName)</a>*@
+
+
+@*<a href="/account/user-profile">
+        <i class="icofont icofont-user-alt-7"></i>
+    </a>
+    <a href="/Account/user-profile"> <span>(@Model.FirstName-@Model.LastName)</span></a>*@
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<div class=" user-profile-wrapper">
+    <ul class="navbar-nav navbar-right">
+
+        <li class="nav-item dropdown">
+            <p href="#" class=" nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="icofont icofont-user-alt-7 user-icon"></i>
+                <span>(@Model.FirstName-@Model.LastName)</span>
+            </p>
+            <ul class="dropdown-menu dropdownList ">
+                <li>
+                    <a class=" " href="/Account/user-profile">
+                        <i class="fa fa-user"></i>
+
+                        Profile
+                    </a>
+                </li>
+                <li>
+                    <a  class=" " href="/account/Orders ">
+                        <i class="fa fa-box-open"></i>
+
+                        My Orders
+                    </a>
+
+                </li>
+                <li>
+                    <a  class=" " href="/account/create-account">
+                        <i class="fa fa-user-plus"></i>
+                         New Account
+                    </a>
+                </li>
+
+                <div role="separator" class="divider"></div>
+
+                <li>
+                <a  class=" " href="/account/LogOut">
+                    <i class="fa fa-sign-out-alt fa-lg text-danger"></i>
+                    Log Out
+                </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

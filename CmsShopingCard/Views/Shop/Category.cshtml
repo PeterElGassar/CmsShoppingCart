@@ -7,69 +7,210 @@
     ViewBag.Title = ViewBag.CategoryName;
     string slug = ViewBag.CategoryName.Replace(" ", "-").ToLower();
 }
-<div class="col-md-1"></div>
-<div class="col-md-10">
 
-    @if (@ViewBag.BrandName != null)
-    {
-        <h2>@ViewBag.CategoryName<strong>/</strong> @ViewBag.BrandName</h2>
+<!-- Page Banner Section Start -->
+<div class="page-banner-section section">
+    <div class="page-banner-wrap row row-0 d-flex align-items-center ">
 
-    }
-    else
-    {
-        <h2>@ViewBag.CategoryName</h2>
-    }
-
-    <div class="panel">
-        <div class="panel-heading">
-            <div class="row panel-body products__display">
-                @foreach (var item in ViewBag.OnePageOfProducts)
-            {
-                        <!-- Product Single -->
-                    <div class=" col-md-3 product product-single">
-                        <div class="product-thumb">
-                            <a id="quick_btn" onclick="quickViewFunction(@item.Id)" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
-                            <img src="/Images/Uploads/Products/@item.Id/Thumbs/@item.ImageName" />
-                        </div>
-                        <div class="product-body">
-                            <h3 class="product-price">$@item.Price</h3>
-
-                            <h2 class="product-name"><a href="/Shop/product-details/@item.Slug">@item.Name</a></h2>
-                            <div class="product-btns">
-                                <a href="" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
-                            </div>
-                        </div>
-                    </div>
-                        <!-- /Product Single -->
-                }
+        <!-- Page Banner -->
+        <div class="col-lg-4 col-12 order-lg-2 d-flex align-items-center justify-content-center">
+            <div class="page-banner">
+                <h1>SHOP Grid VIEW</h1>
+                <p>similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita</p>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a href="#">HOME</a></li>
+                        <li><a href="#">SHOP Grid VIEW</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Category", new { page, categoryName = slug, brandId = ViewBag.BrandId }))
-</div>
-<div class="col-md-1"></div>
 
+        <!-- Banner -->
+        <div class="col-lg-4 col-md-6 col-12 order-lg-1">
+            <div class="banner"><a href="#"><img src="~/Content/newTemplet/images/banner/banner-15.jpg" alt="Banner"></a></div>
+        </div>
+
+        <!-- Banner -->
+        <div class="col-lg-4 col-md-6 col-12 order-lg-3">
+            <div class="banner"><a href="#"><img src="~/Content/newTemplet/images/banner/banner-14.jpg" alt="Banner"></a></div>
+        </div>
+
+    </div>
+</div>
+<!-- Page Banner Section End -->
+
+<!-- Product Section Start -->
+<div class="product-section section mt-90 mb-90">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row mb-50">
+                    <div class="col">
+
+                        <!-- Shop Top Bar Start -->
+                        <div class="shop-top-bar">
+
+                            <!-- Product View Mode -->
+                            <div class="product-view-mode">
+                                <a class="active" href="#" data-target="grid"><i class="fa fa-th"></i></a>
+                                <a href="#" data-target="list"><i class="fa fa-list"></i></a>
+                            </div>
+
+                            <!-- Product Showing -->
+                            <div class="product-showing">
+                                <p>Showing</p>
+                                <select name="showing" class="nice-select">
+                                    <option value="1">8</option>
+                                    <option value="2">12</option>
+                                    <option value="3">16</option>
+                                    <option value="4">20</option>
+                                    <option value="5">24</option>
+                                </select>
+                            </div>
+
+                            <!-- Product Short -->
+                            <div class="product-short">
+                                <p>Short by</p>
+                                <select name="sortby" class="nice-select">
+                                    <option value="trending">Trending items</option>
+                                    <option value="sales">Best sellers</option>
+                                    <option value="rating">Best rated</option>
+                                    <option value="date">Newest items</option>
+                                    <option value="price-asc">Price: low to high</option>
+                                    <option value="price-desc">Price: high to low</option>
+                                </select>
+                            </div>
+
+                            <!-- Product Pages -->
+                            <div class="product-pages">
+                            </div>
+
+                        </div><!-- Shop Top Bar End -->
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mx-auto">
+                        @if (@ViewBag.BrandName != null)
+                        {
+                            <h2>@ViewBag.CategoryName<strong>/</strong> @ViewBag.BrandName</h2>
+
+                        }
+                        else
+                        {
+                            <h2>@ViewBag.CategoryName</h2>
+                        }
+                    </div>
+                </div>
+                <!-- Shop Product Wrap Start -->
+                <!-- Shop Product Wrap Start -->
+                <div class="shop-product-wrap grid row">
+
+                    @foreach (var item in ViewBag.OnePageOfProducts)
+                    {
+                        //Single Products
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-12 pb-30 pt-10">
+                            <!-- Product Start -->
+                            <div class="ee-product">
+
+                                <!-- Image -->
+                                <div class="image">
+                                    <div class="quick-view-div card-img-overlay">
+
+                                        <a id="" onclick="quickViewFunction(@item.Id)" class="btn btn-warning ">
+                                            <i class="fa fa-search-plus"></i>
+                                            Quick view
+                                        </a>
+                                    </div>
+                                    <a href="single-product.html" class="img" onclick="quickViewFunction(@item.Id)">
+
+                                        <img src="/Images/Uploads/Products/@item.Id/Thumbs/@item.ImageName" alt="Product Image">
+
+                                    </a>
+
+                                    <div class="wishlist-compare">
+                                        <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a>
+                                        <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
+                                    </div>
+
+                                    <a href="#" class="add-to-cart addToCard" data-product-id="@item.Id" data-product-name="@item.Name">
+                                    <i class="ti-shopping-cart"></i><span>ADD TO CART</span>
+                                    </a>
+
+                                </div>
+
+                                <!-- Content -->
+                                <div class="content">
+
+                                    <!-- Category & Title -->
+                                    <div class="category-title">
+
+                                        <a href="#" class="cat">@ViewBag.CategoryName</a>
+                                        <h5 class="title"><a href="/Shop/product-details/@item.Slug">@item.Name</a></h5>
+
+                                    </div>
+
+                                    <!-- Price & Ratting -->
+                                    <div class="price-ratting">
+
+                                        <h5 class="price">@item.Price</h5>
+                                        <div class="ratting">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- Product End -->
+                            <!-- Product List Start -->
+                            <!-- Product List End -->
+                        </div>
+                        //End Single Product
+                    }
+
+
+
+
+                </div>
+                <!-- Shop Product Wrap End -->
+                <!--Pageination--->
+                <div class="row mt-30">
+                    <div class="col">
+                        @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Category", new { page, categoryName = slug, brandId = ViewBag.BrandId }))
+                    </div>
+                </div>
+                <!--End Pageination--->
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Feature Product Section End -->
 
 <!--Model Poup-->
-<div class="modal fade" id="MyModel">
-    <div class="modal-dialog">
+<div id="MyModel" class="modal fade">
+    <div class="modal-dialog" style="min-width: 70%">
         <div class="modal-content">
-            <!--Model Header-->
             <div class="modal-header">
-                <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-window-close fa-lg" style="    color: rgb(248, 105, 74);"></span></a>
-                <h3 class="modal-title">Quick View to Product</h3>
+                <h4 class="modal-title">
+                    Quick Product View
+                </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
             </div>
-            <!--/Model Header-->
-            <!--Model Body-->
+
             <div class="modal-body" id="MyModel_BodyDiv">
 
             </div>
-            <!--/Model Body-->
-
         </div>
     </div>
 </div>
 <!--/Model Poup-->
-@*Add It In Bundel*@
-@*<script src="~/Scripts/MyJavaScript.js"></script>*@
-

@@ -10,16 +10,24 @@ namespace CmsShopingCard
         {
             bundles.Add(new ScriptBundle("~/bundles/lib").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/bootstrap.js",
+                        "~/Content/newTemplet/js/popper.min.js",
+                        "~/Content/newTemplet/js/bootstrap.min.js",
+                        "~/Content/newTemplet/js/plugins.js",
                         "~/Scripts/respond.js",
+                        "~/Scripts/toastr.js",
                         "~/Scripts/datatables/jquery.datatables.js",
                         "~/scripts/datatables/dataTables.bootstrap.js",
-                        "~/scripts/bootbox/bootbox.js",
-                        "~/Scripts/MyJavaScript.js"
+                        "~/Content/newTemplet/js/main.js"
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/Modules").Include(
+                 "~/Scripts/App/Services/NotificationsService.js",
+                        "~/Scripts/App/Services/AddToCartService.js",
+                        "~/Scripts/App/Controllers/CartController.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
                         "~/Scripts/jquery-{version}.js",
@@ -30,15 +38,13 @@ namespace CmsShopingCard
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-            //          "~/Scripts/bootstrap.js",
-            //          "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/content/datatables/css/dataTables.bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/DashboardStyle.css"
+                      "~/Content/DashboardStyle.css",
+                      "~/Content/toastr.css"
                       ));
         }
     }

@@ -1,91 +1,538 @@
 ﻿@model IEnumerable<CmsShopingCard.Models.Data.Category>
 
-@*@foreach (var item in Model)
-    {
-        if (item.Products.Count > 0)
+
+
+@*<div class="col-md-12">
+        @foreach (var category in Model)
         {
-            <div class="panel panel-info">
-                <div class="panel-heading"><h1>@item.Name</h1></div>
+            if (category.Products.Count() > 0)
+            {
+                <div class="page-wrapper row">
+                    <div class="post-slider ">
+                        <h1 class="slider-titel">
+                            <a href="/shop/category?categoryName=@category.Slug">@category.Name</a>
+                        </h1>
+                        <!-- غير هنا اسم الكلاس عن طريق id -->
+                        <!--علشان يكون كل واحد مستقل للفئة بتعتها -->
+                        <i class="fa fa-chevron-left prev prev_@category.Id"></i>
+                        <i class="fa fa-chevron-right next next_@category.Id"></i>
 
-                <div class="row panel-body products__display">
+                        <div class="post-wrapper post_@category.Id">
 
-                    @foreach (var subItem in item.Products)
-                    {
-                            <!-- Product Single -->
-                        <div class=" col-md-3 product product-single">
-                            <div class="product-thumb">
-                                <a id="quick_btn" onclick="quickViewFunction(@subItem.Id)" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
-                                <img src="/Images/Uploads/Products/@subItem.Id/Thumbs/@subItem.ImageName" />
-                            </div>
-                            <div class="product-body">
-                                <h3 class="product-price">$@subItem.Price</h3>
+                            @for (int i = 0; i < category.Products.Count(); i++)
+                        {
+                             <!--One Single Product-->
+                                <div class="post">
+                                    <div class="btnDiv">
+                                        <a id="quick_btn" onclick="quickViewFunction(@category.Products.ToArray()[i].Id)" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
+                                    </div>
 
-                                <h2 class="product-name"><a href="/Shop/product-details/@subItem.Slug">@subItem.Name</a></h2>
-                                <div class="product-btns">
-                                    <a href="" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+                                    <img class="slider-img" src="/Images/Uploads/Products/@category.Products.ToArray()[i].Id/Thumbs/@category.Products.ToArray()[i].ImageName" />
+                                    <div class="post-info">
+                                        <h5 class="product-name"><a href="/Shop/product-details/@category.Products.ToArray()[i].Slug">@category.Products.ToArray()[i].Name</a></h5>
+                                        <h4>$@category.Products.ToArray()[i].Price</h4>
+                                    </div>
+
                                 </div>
-                            </div>
-                        </div>
-                            <!-- /Product Single -->
-                    }
-                </div>
-            </div>
-        }
-    }*@
-
-<div class="col-md-12">
-    @foreach (var category in Model)
-    {
-        if (category.Products.Count() > 0)
-        {
-            <div class="page-wrapper row">
-                <div class="post-slider ">
-                    <h1 class="slider-titel">
-                        <a href="/shop/category?categoryName=@category.Slug">@category.Name</a>
-                    </h1>
-                    <!-- غير هنا اسم الكلاس عن طريق id -->
-                    <!--علشان يكون كل واحد مستقل للفئة بتعتها -->
-                    <i class="fa fa-chevron-left prev prev_@category.Id"></i>
-                    <i class="fa fa-chevron-right next next_@category.Id"></i>
-
-                    <div class="post-wrapper post_@category.Id">
-
-                        @for (int i = 0; i < category.Products.Count(); i++)
-                    {
-                         <!--One Single Product-->
-                            <div class="post">
-                                <div class="btnDiv">
-                                    <a id="quick_btn" onclick="quickViewFunction(@category.Products.ToArray()[i].Id)" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
-                                </div>
-
-                                <img class="slider-img" src="/Images/Uploads/Products/@category.Products.ToArray()[i].Id/Thumbs/@category.Products.ToArray()[i].ImageName" />
-                                <div class="post-info">
-                                    <h5 class="product-name"><a href="/Shop/product-details/@category.Products.ToArray()[i].Slug">@category.Products.ToArray()[i].Name</a></h5>
-                                    <h4>$@category.Products.ToArray()[i].Price</h4>
-                                    @*<a href="" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i>Add to Cart</a>*@
-                                </div>
-
-                            </div>
-                            if (i == 10)
-                            {
-                                break;
+                                if (i == 10)
+                                {
+                                    break;
+                                }
+                        <!--/One Single Product-->
                             }
-                    <!--/One Single Product-->
-                        }
+
+                        </div>
 
                     </div>
+                </div>
+            }
+
+        }
+
+    </div>*@
+
+@*<div class="test-slick" style="width: 70%; margin: auto">
+        <div class="slick-item">
+            <img width="100"  src="~/Content/Img/1024px-Gnome-stock_person.svg.png" />
+        </div>
+
+        <div class="slick-item">
+            <img width="100" src="~/Content/Img/1024px-Gnome-stock_person.svg.png" />
+        </div>
+
+        <div class="slick-item">
+            <img width="100"  src="~/Content/Img/1024px-Gnome-stock_person.svg.png" />
+        </div>
+    </div>*@
+
+
+@foreach (var category in Model)
+{
+    if (category.Products.Any())
+    {
+        <!-- Feature Product Section Start -->
+        <div class="product-section section mb-70">
+            <div class="container">
+                <div class="row">
+
+                    <!-- Section Title Start -->
+                    <div class="col-12 mb-40">
+                        <div class="section-title-one" data-title="FEATURED ITEMS">
+                            <h1>                 
+                                <a href="/shop/category?categoryName=@category.Slug">@category.Name</a>
+                            </h1>
+                        </div>
+                    </div><!-- Section Title End -->
+                    <!-- Product Tab Content Start -->
+                    <div class="col-12">
+                        <div class="tab-content">
+
+                            <!-- Tab Pane Start -->
+                            <div class="tab-pane fade show active" id="tab-one">
+
+                                <!-- Product Slider Wrap Start -->
+                                <div class="product-slider-wrap product-slider-arrow-one">
+                                    <!-- Product Slider Start -->
+                                    <div class="product-slider product-slider-4">
+
+
+                                        @* Singel product col *@
+                                        @for (int i = 0; i < category.Products.Count(); i++)
+                                        {
+                                            <div class="col pb-20 pt-10">
+                                                <!-- Product Start -->
+                                                <div class="ee-product">
+
+                                                    <!-- Image -->
+                                                    <div class="image">
+                                                        <div class="quick-view-div card-img-overlay">
+
+                                                            <a id="" onclick="quickViewFunction(@category.Products.ToArray()[i].Id)" class="btn btn-warning ">
+                                                                <i class="fa fa-search-plus"></i>
+                                                                Quick view
+                                                            </a>
+                                                        </div>
+                                                        <a href="/Shop/product-details/@category.Products.ToArray()[i].Slug" class="img">
+
+                                                            <img class="slider-img" src="/Images/Uploads/Products/@category.Products.ToArray()[i].Id/Thumbs/@category.Products.ToArray()[i].ImageName" />
+
+                                                        </a>
+
+                                                        <div class="wishlist-compare">
+                                                            <a href="#" data-tooltip="Compare">
+                                                                <i class="ti-control-shuffle"></i>
+                                                            </a>
+                                                            <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
+                                                        </div>
+
+                                                        <a href="#" class="add-to-cart addToCard" data-product-id="@category.Products.ToArray()[i].Id" data-product-name="@category.Products.ToArray()[i].Name">
+                                                            <i class="ti-shopping-cart"></i><span>ADD TO CART</span>
+                                                        </a>
+                                                    </div>
+
+                                                    <!-- Content -->
+                                                    <div class="content">
+
+                                                        <!-- Category & Title -->
+                                                        <div class="category-title">
+
+                                                            <a href="#" class="cat">@category.Name</a>
+                                                            <h5 class="title">
+                                                                <a href="/Shop/product-details/@category.Products.ToArray()[i].Slug">
+                                                                    @category.Products.ToArray()[i].Name
+                                                                </a>
+                                                            </h5>
+
+                                                        </div>
+
+                                                        <!-- Price & Ratting -->
+                                                        <div class="price-ratting">
+
+                                                            <h5 class="price">$@category.Products.ToArray()[i].Price</h5>
+                                                            <div class="ratting">
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div><!-- Product End -->
+                                            </div>
+                                        }
+
+
+                                        @* End Singel product col *@
+
+                                    </div>
+                                    <!-- Product Slider End -->
+                                </div>
+                                <!-- Product Slider Wrap End -->
+
+                            </div>
+                            <!-- Tab Pane End -->
+                            <!-- Tab Pane Start -->
+                            @*<div class="tab-pane fade" id="tab-two">
+
+                                <!-- Product Slider Wrap Start -->
+                                <div class="product-slider-wrap product-slider-arrow-one">
+                                    <!-- Product Slider Start -->
+                                    <div class="product-slider product-slider-4">
+
+                                        <div class="col pb-20 pt-10">
+                                            <!-- Product Start -->
+                                            <div class="ee-product">
+
+                                                <!-- Image -->
+                                                <div class="image">
+
+                                                    <span class="label sale">sale</span>
+
+                                                    <a href="single-product.html" class="img">
+                                                        <img src="assets/images/product/product-6.png"
+                                                             alt="Product Image">
+                                                    </a>
+
+                                                    <div class="wishlist-compare">
+                                                        <a href="#" data-tooltip="Compare">
+                                                            <i class="ti-control-shuffle"></i>
+                                                        </a>
+                                                        <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
+                                                    </div>
+
+                                                    <a href="#" class="add-to-cart">
+                                                        <i class="ti-shopping-cart"></i><span>ADD TO CART</span>
+                                                    </a>
+
+                                                </div>
+
+                                                <!-- Content -->
+                                                <div class="content">
+
+                                                    <!-- Category & Title -->
+                                                    <div class="category-title">
+
+                                                        <a href="#" class="cat">Camera</a>
+                                                        <h5 class="title">
+                                                            <a href="single-product.html">
+                                                                Axor Digital
+                                                                camera
+                                                            </a>
+                                                        </h5>
+
+                                                    </div>
+
+                                                    <!-- Price & Ratting -->
+                                                    <div class="price-ratting">
+
+                                                        <h5 class="price"><span class="old">$265</span>$199.00</h5>
+                                                        <div class="ratting">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-half-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div><!-- Product End -->
+                                        </div>
+
+                                        <div class="col pb-20 pt-10">
+                                            <!-- Product Start -->
+                                            <div class="ee-product">
+
+                                                <!-- Image -->
+                                                <div class="image">
+
+                                                    <a href="single-product.html" class="img">
+                                                        <img src="assets/images/product/product-7.png"
+                                                             alt="Product Image">
+                                                    </a>
+
+                                                    <div class="wishlist-compare">
+                                                        <a href="#" data-tooltip="Compare">
+                                                            <i class="ti-control-shuffle"></i>
+                                                        </a>
+                                                        <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
+                                                    </div>
+
+                                                    <a href="#" class="add-to-cart">
+                                                        <i class="ti-shopping-cart"></i><span>ADD TO CART</span>
+                                                    </a>
+
+                                                </div>
+
+                                                <!-- Content -->
+                                                <div class="content">
+
+                                                    <!-- Category & Title -->
+                                                    <div class="category-title">
+
+                                                        <a href="#" class="cat">Camera</a>
+                                                        <h5 class="title">
+                                                            <a href="single-product.html">
+                                                                Silvex DSLR Camera T
+                                                                32
+                                                            </a>
+                                                        </h5>
+
+                                                    </div>
+
+                                                    <!-- Price & Ratting -->
+                                                    <div class="price-ratting">
+
+                                                        <h5 class="price">$580.00</h5>
+                                                        <div class="ratting">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div><!-- Product End -->
+                                        </div>
+
+                                        <div class="col pb-20 pt-10">
+                                            <!-- Product Start -->
+                                            <div class="ee-product">
+
+                                                <!-- Image -->
+                                                <div class="image">
+
+                                                    <span class="label new">new</span>
+
+                                                    <a href="single-product.html" class="img">
+                                                        <img src="assets/images/product/product-8.png"
+                                                             alt="Product Image">
+                                                    </a>
+
+                                                    <div class="wishlist-compare">
+                                                        <a href="#" data-tooltip="Compare">
+                                                            <i class="ti-control-shuffle"></i>
+                                                        </a>
+                                                        <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
+                                                    </div>
+
+                                                    <a href="#" class="add-to-cart">
+                                                        <i class="ti-shopping-cart"></i><span>ADD TO CART</span>
+                                                    </a>
+
+                                                </div>
+
+                                                <!-- Content -->
+                                                <div class="content">
+
+                                                    <!-- Category & Title -->
+                                                    <div class="category-title">
+
+                                                        <a href="#" class="cat">Camera</a>
+                                                        <h5 class="title">
+                                                            <a href="single-product.html">
+                                                                Necta Instant
+                                                                Camera
+                                                            </a>
+                                                        </h5>
+
+                                                    </div>
+
+                                                    <!-- Price & Ratting -->
+                                                    <div class="price-ratting">
+
+                                                        <h5 class="price">$320.00</h5>
+                                                        <div class="ratting">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div><!-- Product End -->
+                                        </div>
+
+                                        <div class="col pb-20 pt-10">
+                                            <!-- Product Start -->
+                                            <div class="ee-product">
+
+                                                <!-- Image -->
+                                                <div class="image">
+
+                                                    <span class="label sale">sale</span>
+
+                                                    <a href="single-product.html" class="img">
+                                                        <img src="assets/images/product/product-9.png"
+                                                             alt="Product Image">
+                                                    </a>
+
+                                                    <div class="wishlist-compare">
+                                                        <a href="#" data-tooltip="Compare">
+                                                            <i class="ti-control-shuffle"></i>
+                                                        </a>
+                                                        <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
+                                                    </div>
+
+                                                    <a href="#" class="add-to-cart">
+                                                        <i class="ti-shopping-cart"></i><span>ADD TO CART</span>
+                                                    </a>
+
+                                                </div>
+
+                                                <!-- Content -->
+                                                <div class="content">
+
+                                                    <!-- Category & Title -->
+                                                    <div class="category-title">
+
+                                                        <a href="#" class="cat">Watch</a>
+                                                        <h5 class="title">
+                                                            <a href="single-product.html">
+                                                                Mascut Smart
+                                                                Watch
+                                                            </a>
+                                                        </h5>
+
+                                                    </div>
+
+                                                    <!-- Price & Ratting -->
+                                                    <div class="price-ratting">
+
+                                                        <h5 class="price"><span class="old">$365</span>$295.00</h5>
+                                                        <div class="ratting">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-half-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div><!-- Product End -->
+                                        </div>
+
+                                        <div class="col pb-20 pt-10">
+                                            <!-- Product Start -->
+                                            <div class="ee-product">
+
+                                                <!-- Image -->
+                                                <div class="image">
+
+                                                    <a href="single-product.html" class="img">
+                                                        <img src="assets/images/product/product-10.png"
+                                                             alt="Product Image">
+                                                    </a>
+
+                                                    <div class="wishlist-compare">
+                                                        <a href="#" data-tooltip="Compare">
+                                                            <i class="ti-control-shuffle"></i>
+                                                        </a>
+                                                        <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
+                                                    </div>
+
+                                                    <a href="#" class="add-to-cart">
+                                                        <i class="ti-shopping-cart"></i><span>ADD TO CART</span>
+                                                    </a>
+
+                                                </div>
+
+                                                <!-- Content -->
+                                                <div class="content">
+
+                                                    <!-- Category & Title -->
+                                                    <div class="category-title">
+
+                                                        <a href="#" class="cat">Watch</a>
+                                                        <h5 class="title">
+                                                            <a href="single-product.html">
+                                                                Z Bluetooth
+                                                                Headphone
+                                                            </a>
+                                                        </h5>
+
+                                                    </div>
+
+                                                    <!-- Price & Ratting -->
+                                                    <div class="price-ratting">
+
+                                                        <h5 class="price">$189.00</h5>
+                                                        <div class="ratting">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div><!-- Product End -->
+                                        </div>
+
+                                    </div><!-- Product Slider End -->
+                                </div>
+                                <!-- Product Slider Wrap End -->
+
+                            </div>*@
+                            <!-- Tab Pane End -->
+
+                        </div>
+                    </div><!-- Product Tab Content End -->
 
                 </div>
             </div>
-        }
-
+        </div>
+        <!-- Feature Product Section End -->
     }
+}
 
+
+
+
+
+<div id="MyModel" class="modal fade" >
+    <div class="modal-dialog" style="min-width: 70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    Quick Product View
+                </h4>
+                <button type="button" class="close btn-warning" data-dismiss="modal">&times;</button>
+
+            </div>
+            
+            <div class="modal-body" id="MyModel_BodyDiv">
+
+            </div>
+        </div>
+    </div>
 </div>
 
 
+
+
 <!--Model Poup-->
-<div class="modal fade" id="MyModel">
+@*<div class="modal fade" id="MyModel">
     <div class="modal-dialog">
         <div class="modal-content">
             <!--Model Header-->
@@ -102,8 +549,12 @@
 
         </div>
     </div>
-</div>
-@*<script src="~/Scripts/jquery-1.12.4.min.js"></script>*@
-@*<script src="~/Scripts/MyJavaScript.js"></script>*@
+</div>*@
 <!--/Model Poup-->
+
+
 @*<link href="~/Content/Templet_Files/css/style.css" rel="stylesheet" />*@
+
+@section scripts{
+    <script src="~/Content/slick/slick.js"></script>
+}

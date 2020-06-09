@@ -36,7 +36,8 @@ namespace CmsShopingCard
             //Name Space here To Spcifiec Pages/Index in User Area Not Admin 
             routes.MapRoute("Default", "", new { controller = "Pages", action = "Index" }, new[] { "CmsShopingCard.Controllers" });
 
-            
+
+            routes.MapRoute("TempleteTest", "TempleteTest/{action}/{name}", new { controller = "TempleteTest", action = "Index", name = UrlParameter.Optional }, new[] { "CmsShopingCard.Controllers" });
 
         }
     }

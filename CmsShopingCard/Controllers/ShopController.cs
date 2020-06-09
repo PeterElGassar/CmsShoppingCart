@@ -98,7 +98,6 @@ namespace CmsShopingCard.Controllers
                 var brand = db.Brands.Find(brandId);
                 ViewBag.BrandName = brand.Name;
                 ViewBag.BrandId = brandId;
-
             }
             else
             {
@@ -181,26 +180,50 @@ namespace CmsShopingCard.Controllers
         }
 
         [HttpGet]
-        public ActionResult Search()
+        public ActionResult Search(int? page, string prefix)
         {
-            return View();
+
+            var result = db.Products.ToArray()
+                            .Where(x => x.Name.Contains(prefix)
+                        || x.Description.Contains(prefix)
+                        || x.Slug.Contains(prefix)
+                        || x.Category.Name.Contains(prefix))
+                        .Select(x => new ProductVM(x)).ToList();
+
+            //prefix to seconde page
+            ViewBag.prefix = prefix;
+            //Pagination
+            var pageNumber = page ?? 1;
+            var onePageOfProducts = result.ToPagedList(pageNumber, 12);
+
+            ViewBag.OnePageOfProducts = onePageOfProducts;
+
+            return View(result);
         }
 
         [HttpPost]
-        public ActionResult Search(string searchText)
+        public ActionResult Search(string prefix, int? page)
         {
             var result = db.Products.ToArray()
-                .Where(x => x.Name.Contains(searchText)
-            || x.Description.Contains(searchText)
-            || x.Slug.Contains(searchText)
-            || x.Category.Name.Contains(searchText)).Select(x => new ProductVM(x)).ToList();
+                .Where(x => x.Name.Contains(prefix)
+            || x.Description.Contains(prefix)
+            || x.Slug.Contains(prefix)
+            || x.Category.Name.Contains(prefix))
+            .Select(x => new ProductVM(x)).ToList();
 
+            //prefix to seconde page
+            ViewBag.prefix = prefix;
+            //Pagination
+            var pageNumber = page ?? 1;
+            var onePageOfProducts = result.ToPagedList(pageNumber, 12);
+
+            ViewBag.OnePageOfProducts = onePageOfProducts;
 
             return View(result);
         }
 
 
-        // GET: Shop/GetProductQuantity
+        //GET: Shop/GetProductQuantity
         //public int GetProductQuantity2(int productId)
         //{
         //    Product ProductInDb = db.Products.Where(x => x.Id == productId).FirstOrDefault();
@@ -211,6 +234,22 @@ namespace CmsShopingCard.Controllers
         //    //string jsonString = javaScriptSerializer.Serialize(ProductInDb);
         //    return Quantity;
         //}
+
+
+        [HttpGet]
+        public JsonResult AutoComplete(string prefix)
+        {
+            var product2s = (from pro in db.Products
+                             where pro.Name.StartsWith(prefix)
+                             || pro.Name.ToLower().Contains(prefix.ToLower())
+                             select new { ProductName = pro.Name, ProductImg = pro.ImageName, ProductId = pro.Id, ProductSlug = pro.Slug })
+                             .Take(8)
+                             .ToList();
+
+            //var products = db.Products.Where(p => p.Name.StartsWith(prefix)).Select(p => p.Name).ToList();
+
+            return Json(product2s, JsonRequestBehavior.AllowGet);
+        }
 
         protected override void Dispose(bool disposing)
         {

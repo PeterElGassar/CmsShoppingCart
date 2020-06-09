@@ -1,63 +1,127 @@
 ﻿@model CmsShopingCard.Models.ViewModels.Shop.ProductVM
 
+@*@Html.HiddenFor(model => model.Quantity, new { id = "product-quantity-hidden" })
+
+@Html.HiddenFor(model => model.Id, new { id = "product-id-hidden" })*@
+
+<link href="~/Content/newTemplet/css/style.css" rel="stylesheet" />
 <div class="container-fluid">
+
     <div class="row">
-        <div class="col-md-6 product_img">
-            <img src="/Images/Uploads/Products/@Model.Id/Thumbs/@Model.ImageName" class="img-responsive">
+
+        <!--Image col-->
+        <div class="col-md-4 Q-view-col-one">
+            <img src="/Images/Uploads/Products/@Model.Id/Thumbs/@Model.ImageName" class="img-fluid">
+        </div>
+        <!--End Image col-->
+
+        <div class="col-md-4 Q-view-col-tow">
+
+            <h4 class="Q-view-name">@Model.Name</h4>
+
+            @if (Model.Quantity < 1)
+            {
+                <p class="outOfStock txtcolor-alert">
+                    This item is currently out of stock
+                </p>
+            }
+            else if (Model.Quantity < 10)
+            {
+                <p class="outOfStock txtcolor-alert">
+                    Order now, only <span>@Model.Quantity</span> left in stock!
+                </p>
+            }
+
+            @*<h3 class="cost"><span class="fa fa-usd fa-1x"></span>@Model.Price</h3>*@
+            <h5 class="price">$@Model.Price</h5>           
+
         </div>
 
-        <div class="col-md-6 product_content">
+        <div class="col-md-4 Q-view-col-three">
 
-            <h4>Product Id: <span>@Model.Id</span></h4>
-            <div class="rating">
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                (10 reviews)
-            </div>
-            <p>@Html.Raw(Model.Description)</p>
-            <h3 class="cost"><span class="fa fa-usd"></span>@Model.Price</h3>
-            <div class="row">
-                <div class="col-md-6 col-sm-12">
-                    <select class="form-control" name="select">
-                        <option value="" selected="">Color</option>
-                        <option value="black">Black</option>
-                        <option value="white">White</option>
-                        <option value="gold">Gold</option>
-                        <option value="rose gold">Rose Gold</option>
-                    </select>
+
+            <div class="single-product-content">
+
+                <!-- Category & Title -->
+                <div class="head-content">
+
+
                 </div>
-                <!-- end col -->
-                <div class="col-md-6 col-sm-12">
-                    <select class="form-control" name="select">
-                        <option value="" selected="">QTY</option>
-                        <option value="">1</option>
-                        <option value="">2</option>
-                        <option value="">3</option>
-                    </select>
+
+                <div class="single-product-description">
+
+
+
+                    <!--Alert Message-->
+                    <div class="alert alert-danger ajax-message text-center font-weight-bold" style="display:none">
+                        <span></span>
+                    </div>
+                    <!--End Alert Message-->
+
+                    <div class="quantity-colors">
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="quantity">
+                                <h5>Quantity</h5>
+                                <div class="pro-qty">
+                                    <input id="qty-input" type="number" value="1" min="1" max="@Model.Quantity" data-old-val="" data-max-value="@Model.Quantity">
+
+                                </div>
+                            </div>
+                        }
+
+                        <div class="colors">
+                            <h5>Color</h5>
+                            <select class="nice-select" style="display: none;">
+                                <option>red</option>
+                                <option>black</option>
+                                <option>yellow</option>
+                                <option>grey</option>
+                            </select><div class="nice-select" tabindex="0"><span class="current">red</span><ul class="list"><li data-value="red" class="option selected">red</li><li data-value="black" class="option">black</li><li data-value="yellow" class="option">yellow</li><li data-value="grey" class="option">grey</li></ul></div>
+                        </div>
+
+                    </div>
+
+                    <div class="actions">                      
+
+                        <a href="#" class="add-to-cart addToCard" data-product-id="@Model.Id"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
+
+                        <div class="wishlist-compare">
+                            <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a>
+                            <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
+                        </div>
+
+                    </div>
+
+
                 </div>
-                <!-- end col -->
+
             </div>
-
-
         </div>
     </div>
-    <div class="quick-view-btn row">
-        <div class="col-md-6 col-sm-12" style="padding:6px 15px">
-            <a id="btn_cart" class="addToCard primary-btn"><i class="fa fa-shopping-cart"></i> Add To Cart</a>
+
+    <!--Btn Row-->
+
+    <div class="row Q-view-disc-row">
+
+        <div class="wrapper-description">
+            <p>@Html.Raw(Model.Description)</p>
+
         </div>
-        <div class="col-md-6 col-sm-12" style="padding:6px 15px">
-            <a class="addToWish primary-btn"><span class="fa fa-heart"></span> Add To Wishlist</a>
-        </div>
+
+
     </div>
 
 </div>
 
 @section Scripts{
 
+    @*@Scripts.Render("~/bundles/quickView")*@
+
+
     <script>
+
         $("#btn_cart").click(function (e) {
             e.preventDefault();
             debugger;
@@ -76,5 +140,6 @@
             });
 
         });
+    
     </script>
 }

@@ -5,7 +5,10 @@
     TempData["PageTitel"] = ViewBag.PageTitel;
 }
 
-
+@* Variable To Slick Slider data *@
+@{
+    int dataSlickIndex = 0;
+}
 
 @if (Model.Titel != "Home")
 {
@@ -13,72 +16,105 @@
 }
 else
 {
-    <div class="home-wrap">
-        <!-- home slick -->
-        <div id="home-slick">
-            @foreach (var img in Model.SliderGallery)
-            {
-                  <!-- banner1 -->
-                <div class="banner banner-1">
-                    <img src="/Images/Uploads/SliderImages/@img.ImageName" height="610" />
-                    <div class="banner-caption text-center">
-                        <h1 class=" font-weak" style="color:#F8694A">@img.Title</h1>
-                        @if (img.UrlLink != null)
-                        {
-                            <a class="btn primary-btn" href="@Url.Content(img.UrlLink)">Shop Now</a>
-                        }
+    @*<div class="home-wrap">
+            <!-- home slick -->
+            <div id="home-slick">
+                @foreach (var img in Model.SliderGallery)
+                {
+                    <!-- banner1 -->
+                    <div class="banner banner-1">
+                        <img src="/Images/Uploads/SliderImages/@img.ImageName" height="610" />
+                        <div class="banner-caption text-center">
+                            <h1 class=" font-weak" style="color:#F8694A">@img.Title</h1>
+                            @if (img.UrlLink != null)
+                            {
+                                <a class="btn primary-btn" href="@Url.Content(img.UrlLink)">Shop Now</a>
+                            }
+                        </div>
                     </div>
+                    <!-- /banner -->
+                }
+                <!-- /banner -->
+            </div>
+            <!-- /home slick -->
+        </div>*@
+
+
+    <!-- Header Category Start -->
+    <div class="header-category-section">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+
+                    <!-- Header Category -->
+                    <div class="header-category">
+
+                        <!-- Category Toggle Wrap -->
+                        <div class="category-toggle-wrap d-block d-lg-none">
+                            <!-- Category Toggle -->
+                            <button class="category-toggle">Categories <i class="ti-menu"></i></button>
+                        </div>
+
+                        <!-- Category Menu -->
+                        <nav class="category-menu">
+                            <ul class="d-flex justify-content-center">
+                                @Html.Action("PagesMenuPartial", "Pages")
+                            </ul>
+                        </nav>
+
+                    </div>
+
                 </div>
-            <!-- /banner -->
-            }          
-            <!-- /banner -->
+            </div>
         </div>
-        <!-- /home slick -->
+    </div>
+    <!-- Header Category End -->
+
+
+    <div class="hero-section section mb-30">
+        <div class="container">
+            <div class="row">
+                <div class="col maniSliderCol">
+                    <!-- Hero Slider Start -->
+                    <div class="hero-slider hero-slider-one">
+
+                        <!-- Hero Item Start -->
+
+                        @foreach (var img in Model.SliderGallery)
+                        {
+
+                            <div class="hero-item">
+                                <div class="row align-items-center justify-content-between">
+
+                                    <!-- Hero Content -->
+                                    <div class="hero-content  col-12 col-sm-6 mx-auto">
+
+                                        <h2>HURRY UP!</h2>
+                                        <h1><span>@img.Title</span></h1>
+                                        <h1>IT’S <span class="big">29%</span> OFF</h1>
+                                        <a href="@Url.Content(img.UrlLink)">get it now</a>
+
+                                    </div>
+
+                                    <!-- Hero Image -->
+                                    <div class="hero-image  col-12 col-sm-6">
+                                        <img class="img-responsive custemSlideImg" src="/Images/Uploads/SliderImages/@img.ImageName" width="284" height="447" alt="Hero Image">
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        }
+                        <!-- Hero Item End -->
+                    </div>
+                    <!-- Hero Slider End -->
+
+                </div>
+            </div>
+        </div>
     </div>
 
-  <!-- section -->
-    @*<div class="section">
-        <!-- container -->
-        <div class="container">
-            <!-- row -->
-            <div class="row">
-                <!-- banner -->
-                <div class="col-md-4 col-sm-6">
-                    <a class="banner banner-1" href="#">
-                        <img src="~/Content/Templet_Files/img/banner10.jpg" />
-                        <div class="banner-caption text-center">
-                            <h2 class="white-color">NEW COLLECTION</h2>
-                        </div>
-                    </a>
-                </div>
-                <!-- /banner -->
-                <!-- banner -->
-                <div class="col-md-4 col-sm-6">
-                    <a class="banner banner-1" href="#">
-                        <img src="~/Content/Templet_Files/img/banner11.jpg" />
-                        <div class="banner-caption text-center">
-                            <h2 class="white-color">NEW COLLECTION</h2>
-                        </div>
-                    </a>
-                </div>
-                <!-- /banner -->
-                <!-- banner -->
-                <div class="col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3">
-                    <a class="banner banner-1" href="#">
-                        <img src="~/Content/Templet_Files/img/banner12.jpg" />
-                        <div class="banner-caption text-center">
-                            <h2 class="white-color">NEW COLLECTION</h2>
-                        </div>
-                    </a>
-                </div>
-                <!-- /banner -->
 
-            </div>
-            <!-- /row -->
-        </div>
-        <!-- /container -->
-    </div>*@
-    <!-- /section -->
 
-    <!--Partial View Get Product By Category-->
- }
+}

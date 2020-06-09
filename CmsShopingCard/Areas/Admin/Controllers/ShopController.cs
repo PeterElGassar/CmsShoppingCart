@@ -228,7 +228,7 @@ namespace CmsShopingCard.Areas.Admin.Controllers
 
                 //Create and save thumb
                 WebImage img = new WebImage(file.InputStream);
-                img.Resize(391, 385, false, true).Crop(1, 1, 1, 1).Write();
+                img.Resize(img.Width, img.Height, false, true).Crop(1, 1, 1, 1).Write();
                 img.Save(path2);
             }
             #endregion
@@ -430,7 +430,7 @@ namespace CmsShopingCard.Areas.Admin.Controllers
                     //Save Original Ana thumb
                     file.SaveAs(path);
                     WebImage img = new WebImage(file.InputStream);
-                    img.Resize(391, 385, false, true).Crop(1, 1, 1, 1).Write();
+                    img.Resize(720, 480, false, true).Crop(1, 1, 1, 1).Write();
                     img.Save(path2);
 
                 }

@@ -178,6 +178,7 @@
             DropZone JS
             */
             Dropzone.options.dropZoneFrom = {
+                
                 //This Attribute allows you to see only files with image extensions
                 acceptedFiles: "image/*",
                 maxFilesize:2,
@@ -186,6 +187,7 @@
                     //file Prameter = Image
                     //"Complete Event Return True When Image Uploaded Or False If Not
                     this.on("complete", function (file) {
+                        debugger;
                         if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0){
                             location.reload();
                         }

@@ -74,9 +74,12 @@ namespace CmsShopingCard.Controllers
         // GET: Cart
         public ActionResult AddToCartPartial(int id, int? Qyt)
         {
+
+
+
+
             //Init CartVM Listttt
             List<CartVM> cart = Session["cart"] as List<CartVM> ?? new List<CartVM>();
-
 
             //GET the product
             Product product = db.Products.Find(id);
@@ -248,7 +251,6 @@ namespace CmsShopingCard.Controllers
             string username = User.Identity.Name;
 
             int orderId = 0;
-
 
             Order OrderDTO = new Order();
 
