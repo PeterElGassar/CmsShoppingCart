@@ -83,8 +83,8 @@
                         <span class="availability">Availability: <span>In Stock</span></span>
 
                         <!--Alert Message-->
-                        <div class="alert alert-danger ajax-message text-center font-weight-bold" style="display:none">
-                            <span></span>
+                        <div class="alert alert-danger ajax-message mb-15">
+                            <span>You'r Quantity not Available now</span>
                         </div>
                         <!--End Alert Message-->
 
@@ -117,17 +117,23 @@
                             {
                                 <h4 class="txtColor_alert">Only <span>@Model.Quantity</span> left in stock!</h4>
                             }
-                            if (true)
+                            if (User.Identity.IsAuthenticated)
                             {
-                               
+
 
                                 <div class="actions">
 
-                                    <a href="#" class="add-to-cart addToCard" data-product-id="@Model.Id" data-product-name="@Model.Name" ><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
+                                    <a href="#" class="add-to-cart addToCard" data-product-id="@Model.Id" data-product-name="@Model.Name"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
 
                                     <div class="wishlist-compare">
                                         <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a>
-                                        <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
+
+                                        <a href="#"
+                                           data-tooltip="Wishlist"
+                                           data-product-id="@Model.Id"
+                                           class="wishlist js-wishlist @(Model.InWishlist ?"added1":"")">
+                                            <i class="ti-heart"></i>
+                                        </a>
                                     </div>
 
                                 </div>
@@ -384,81 +390,8 @@
 @section Scripts{
 
     <script src="~/Scripts/jquery.fancybox.js"></script>
-    @*to pass a productID to External JS File*@
 
-    @*<script>
-        var productId = "@Model.Id";
-        var productQuantity = Number(@Model.Quantity);
-
-    </script>*@
     <script src="~/Scripts/productsDetails.js"></script>
 
 
-
-    @*<script>
-            /*
-            *FancyBox
-            */
-            $(function () {
-                $(".fancybox").fancybox();
-            });
-            ////////////////////////////////////
-            /*
-           *Add ToCart
-           */
-
-            //Change Event For Selected List
-            var dropDownList = document.querySelector(".QuntList");
-            var qtyDropList;
-            if (dropDownList !== null) {
-                dropDownList.addEventListener("change",function(e){
-                    debugger;
-                    e.preventDefault();
-                    qtyDropList = $(this).val();
-                    console.log(qtyDropList);
-                });
-            }
-
-            $("a.addToCard").click(function (e) {
-                e.preventDefault();
-                debugger;
-                var TestId ="@Model.Id";
-                console.log(TestId);
-                $("span.loader").addClass("ib");
-                var url = "/Cart/AddToCartPartial";
-                $.get(url, { id:@Model.Id , Qyt:qtyDropList} ,function(data){
-                    $(".ajaxCart").html(data);
-                }).done(function(){
-                    $("span.loader").removeClass("ib");
-                    $("span.ajaxMS").addClass("ib");
-
-                    setTimeout(function(){
-                        $("span.ajaxMS").fadeOut("fast");
-                        $("span.ajaxMS").removeClass("ib");
-                    },1500);
-                    qtyDropList = null;
-
-                    var url2 ="/Shop/GetProductQuantity";
-                    debugger;
-                    $.get(url2, { productId:@Model.Id} ,function(data){
-                        debugger;
-                        var checkValue = data.includes("</h4>");
-                        if (checkValue) {
-                            $(".product-btns").empty();
-                            $(".product-btns").html(data);
-                        }
-                        else{
-                            $(".QuntList").empty();
-                            $(".QuntList").html(data);
-                        }
-
-                    }).done(function(){
-                        console.log("done");
-                    });
-                });
-
-            });
-
-            ////////////////////////////////////
-        </script>*@
 }

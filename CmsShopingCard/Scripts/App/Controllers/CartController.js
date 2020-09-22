@@ -6,8 +6,6 @@
 
     var quantityFunc = function () {
 
-        debugger;
-
         addToCartService.quantity(productQuantityH, productIdH);
     }
     //=========================Glopal Section ===========================//

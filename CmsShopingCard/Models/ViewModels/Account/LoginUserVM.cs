@@ -15,6 +15,7 @@ namespace CmsShopingCard.Models.ViewModels.Account
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [Display(Name = "Remember me")]
         public bool RememberMy { get; set; }
 
 

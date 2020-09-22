@@ -33,7 +33,7 @@
             <tbody>
                 @foreach (var item in Model)
             {
-            <tr>
+            <tr id=" id_@item.BrandId">
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
@@ -44,10 +44,12 @@
                 </td>
                 <td>
                     <a class="btn btn-primary" href="/admin/Brand/EditBrand/@item.BrandId"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <a class="delete btn btn-danger" href="/admin/Brand/DeleteBrand/@item.BrandId"><i class="glyphicon glyphicon-trash"></i></a>
+                    <a class="delete-btn btn btn-danger" data-brand-id="@item.BrandId" href="#"><i class="glyphicon glyphicon-trash"></i></a>
+                    @*<a class="delete-btn btn btn-danger" href="/admin/Brand/DeleteBrand/@item.BrandId"><i class="glyphicon glyphicon-trash"></i></a>*@
+
                 </td>
             </tr>
-            }
+                }
             </tbody>
         </table>
     }
@@ -65,11 +67,40 @@
             /*
             * confirm Brand Deletion
             */
-            $('a.delete').click(function () {
-                if (!confirm("Confirm Brand Deletion")) {
-                    return false;
-                }
+            $('a.delete-btn').click(function (e) {
+                //if (!confirm("Confirm Brand Deletion")) {
+                //    return false;
+                //}
+                debugger;
+                e.preventDefault();
+                var buttonId = $(this).attr("data-brand-id");
+                var url = "/admin/Brand/DeleteBrand";
+
+                new duDialog('', 'Are You Sure you want Remove this Brand?', duDialog.OK_CANCEL, {
+                    okText: 'Remove',
+                    callbacks: {
+                        okClick: function () {
+                            $.get(url, { id: buttonId }, function () {
+                                // get a Specific Item <tr> to remove it
+                                var trElement = $("tr#id_" + buttonId);
+                                trElement.remove();
+                            });
+
+                            this.hide();
+                        },
+                        cancelClick: function () {
+                            this.hide();
+                        }
+                    }
+                });
+
+
+
+
             });
+
+
+
 
         });
     </script>

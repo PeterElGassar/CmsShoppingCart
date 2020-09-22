@@ -72,7 +72,7 @@ else
                                     <tr id="tr_@item.ProductId" class="product-row">
                                         <td class="pro-thumbnail">
                                             <a href="/Shop/ProductDetails/@item.Slug">
-                                                <img src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image" width="160" height="160" />
+                                                <img class="img-fluid" src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image" width="160" height="160" />
                                             </a>
                                         </td>
                                         <td class="pro-title"><a href="#">@item.ProductName</a></td>
@@ -105,8 +105,9 @@ else
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td class="grandtotal" style="font-weight:bolder">
-                                        <b>Grand Total: </b>$ <span>@ViewBag.GrandTotal</span>
+                                    <td class="grandtotal">
+                                        @*<b>Grand Total: </b>$ <span>@ViewBag.GrandTotal</span>*@
+                                        <h2>Grand Total: $<span id="gt-span">@ViewBag.GrandTotal</span></h2>
                                     </td>
                                 </tr>
                             </tbody>
@@ -138,75 +139,6 @@ else
                     </div>
 
 
-                    @*<div class="row">
-
-                            <div class="col-lg-6 col-12 mb-15">
-                                <!-- Calculate Shipping -->
-                                <div class="calculate-shipping">
-                                    <h4>Calculate Shipping</h4>
-                                    <form action="#">
-                                        <div class="row">
-                                            <div class="col-md-6 col-12 mb-25">
-                                                <select class="nice-select">
-                                                    <option>Bangladesh</option>
-                                                    <option>China</option>
-                                                    <option>country</option>
-                                                    <option>India</option>
-                                                    <option>Japan</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6 col-12 mb-25">
-                                                <select class="nice-select">
-                                                    <option>Dhaka</option>
-                                                    <option>Barisal</option>
-                                                    <option>Khulna</option>
-                                                    <option>Comilla</option>
-                                                    <option>Chittagong</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6 col-12 mb-25">
-                                                <input type="text" placeholder="Postcode / Zip">
-                                            </div>
-                                            <div class="col-md-6 col-12 mb-25">
-                                                <input type="submit" value="Estimate">
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <!-- Discount Coupon -->
-                                <div class="discount-coupon">
-                                    <h4>Discount Coupon Code</h4>
-                                    <form action="#">
-                                        <div class="row">
-                                            <div class="col-md-6 col-12 mb-25">
-                                                <input type="text" placeholder="Coupon Code">
-                                            </div>
-                                            <div class="col-md-6 col-12 mb-25">
-                                                <input type="submit" value="Apply Code">
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-
-                            <!-- Cart Summary -->
-                            <div class="col-lg-6 col-12 mb-40 d-flex">
-                                <div class="cart-summary">
-                                    <div class="cart-summary-wrap">
-                                        <h4>Cart Summary</h4>
-                                        <p>Sub Total <span>$1250.00</span></p>
-                                        <p>Shipping Cost <span>$00.00</span></p>
-                                        <h2>Grand Total <span>$1250.00</span></h2>
-                                    </div>
-                                    <div class="cart-summary-button">
-                                        <button class="checkout-btn">Checkout</button>
-                                        <button class="update-btn">Update Cart</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>*@
-
                 </div>
             </div>
         </div>
@@ -215,110 +147,6 @@ else
 
 
 
-
-
-
-
-    @*<div class="alert alert-danger" id="qtyMessageDiv" style="display:none">
-            <span></span>
-        </div>
-        <br />
-        <br />
-        <div class="ajaxBG"><span><img src="~/Content/Img/lg.comet-spinner.gif" /></span></div>
-        <table class="table">
-            <tr>
-                <th>
-                    Image
-                </th>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Quantity
-                </th>
-                <th>
-                    Price
-                </th>
-
-                <th>
-
-                </th>
-                <th>
-                    Total
-                </th>
-                <th>
-
-                </th>
-                <th>
-
-                </th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        <img src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image" width="160" height="160" />
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ProductName)
-                    </td>
-
-                    <td class="qty@(item.ProductId)" align="center" style="font-weight: bold;font-size: 17px;">
-                        <strong>
-                            @Html.DisplayFor(modelItem => item.Quantity)
-                        </strong>
-                    </td>
-
-                    <td>
-                        $@Html.DisplayFor(modelItem => item.Price)
-                    </td>
-
-                    <td>
-                        <a href="#" class="IncrProduct btn btn-default" data-id="@item.ProductId"><i class="fa fa-plus" style="color:forestgreen"></i></a>
-                        <a href="#" class="DecrProduct btn btn-default" data-id="@item.ProductId"><i class="fa fa-minus" style="color:red"></i></a>
-                    </td>
-
-                    <td class="total@(item.ProductId)">
-                        $@Html.DisplayFor(modelItem => item.Total)
-                    </td>
-                    <td>
-                        <a href="#" class="RemoveProduct btn btn-danger" data-id="@item.ProductId"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
-            }
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="grandtotal" style="font-weight:bolder">
-                    <b>Grand Total: </b>$ <span>@ViewBag.GrandTotal</span>
-                </td>
-            </tr>
-        </table>
-        <div class="paypalDiv">
-            <form class="paypalForm" action="https://www.sandbox.paypal.com/us/cgi-bin/webscr" method="post">
-                <input type="hidden" name="cmd" value="_cart">
-                <input type="hidden" name="Upload" value="1">
-
-                <input type="hidden" name="business" value="peterSeller@gmail.com">
-                @foreach (var item in Model)
-                {
-                    <input type="hidden" name="item_name_@count" value="@item.ProductName">
-                    <input type="hidden" name="amount_@count" value="@item.Price">
-                    <input type="hidden" name="quantity_@count" value="@item.Quantity">
-                    count++;
-                }
-
-                <input type="hidden" name="currency_code" value="USD">
-                <input type="image" src="http://www.paypal.com/en_US/i/btn/x-click-but01.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
-            </form>
-        </div>
-        <br />
-        <a href="#" class="placehoder btn btn-primary pull-right">CkeckOut</a>*@
 }
 <script src="~/Scripts/duDialog/duDialog.min.js"></script>
 @section Scripts{
@@ -374,30 +202,39 @@ else
 
                 var url = "/cart/DecrementProduct";
                 $.getJSON(url, { productId: productId }, function (data) {
-
+                    //Remove <td> if qyt was lessthan 1;
                     if (data.qty == 0) {
                         $this.parent().parent().fadeOut("fast", function () {
-                            //location.reload();
 
                             $('#tr_' + productId).hide('slow', function () {
                                 $(this).remove();
                             });
 
+                            //want this code to finish task
                             var productRows = $('.product-row');
                             if (productRows.length === 1) {
                                 location.reload();
                             }
                         });
+                        ///*********
+                        var gt = parseFloat($("td.grandtotal h2 span").text());
+
+                        var grandtotal = (gt - data.price).toFixed(2);
+                        $("td.grandtotal h2 span").text(grandtotal);
                     }
                     else {
+
                         //Here Price And qty Come From (data) Paramenter Of Action  Method
                         $("input.qty" + productId).val(data.qty);
                         var price = data.qty * data.price;
                         var priceHtml = "$" + price.toFixed(2);
                         $("td.total" + productId).html(priceHtml);
-                        var gt = parseFloat($("td.grandtotal span").text());
+                        var gt = parseFloat($("#gt-span").text());
+                        var gt2 = parseFloat($("#gt-span").val());
+
+
                         var grandtotal = (gt - data.price).toFixed(2);
-                        $("td.grandtotal span").text(grandtotal);
+                        $("#gt-span").text(grandtotal);
                     }
                 }).done(function (e) {
                     var url2 = "/cart/PaypalPartial";
@@ -417,7 +254,6 @@ else
                 var productId = $(this).data("id");
                 var url = "/cart/RemoveProduct";
 
-
                 // External  library called 'duDialog'
                 new duDialog('Confirm Dialog', 'Are You Sure you want Remove this Item', duDialog.OK_CANCEL, {
                     okText: 'Remove from Cart',
@@ -427,9 +263,16 @@ else
                             $.get(url, { productId: productId }, function (data) {
                                 //location.reload();
 
-                                $('#tr_' + productId).hide('slow', function () {
-                                    $(this).remove();
-                                });
+                                //want this code to finish task
+                                var productRows = $('.product-row');
+                                if (productRows.length === 1) {
+                                    location.reload();
+                                } else {
+                                    $('#tr_' + productId).hide('slow', function () {
+                                        $(this).remove();
+                                    });
+                                }
+
 
 
                             });
@@ -457,21 +300,21 @@ else
 
             /////////////////////////////////////////////////////////////////////
             // Place Order
-            /////////////////////////////////////////////////////////////////////           
+            /////////////////////////////////////////////////////////////////////
             $("a.placehoder").click(function (e) {
-            e.preventDefault();
-            debugger;
-            var $this = $(this);
-            var url = "/cart/PlaceOrder";
-            $(".ajaxBG").show();
-            $.post(url, {}, function (data) {
-                $(".ajaxBG span").text("thank you, You Will Redirected To Paypal..");
-                setTimeout(function () {
-                    $("form input[name='submit']").click();
-                }, 2000);
+                e.preventDefault();
+                debugger;
+                var $this = $(this);
+                var url = "/cart/PlaceOrder";
+                $(".ajaxBG").show();
+                $.post(url, {}, function (data) {
+                    $(".ajaxBG span").text("thank you, You Will Redirected To Paypal..");
+                    setTimeout(function () {
+                        $("form input[name='submit']").click();
+                    }, 2000);
+                });
             });
-        });
-                /////////////////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////
         });
 
 

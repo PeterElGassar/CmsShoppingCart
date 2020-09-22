@@ -32,13 +32,16 @@ if (searchInput) {
 }
 
 
-
 //Invok Glopal Method In All Pages
 CartController.quantityFunc();
 CartController.wishlistCompareFunc();
 CartController.addToCartAnimationFunc();
 CartController.addToCartFunc();
 CartController.incrementItemFunc();
+WishListController.initial();
+
+WishListController.renderWishlist();
+
 
 
 var quickViewFunction = function (productId) {
@@ -50,6 +53,8 @@ var quickViewFunction = function (productId) {
         CartController.wishlistCompareFunc();
         CartController.addToCartAnimationFunc();
         CartController.addToCartFunc();
+        WishListController.initial();
+
     });
 
 }
@@ -114,7 +119,6 @@ $(document).ready(function () {
 
         if ($("#search-input") != null && $("#search-input") != undefined) {
 
-
             $("#search-input").autocomplete({
 
                 minLength: 1,
@@ -147,7 +151,7 @@ $(document).ready(function () {
                     return false;
                 },
                 messages: {
-                    noResults: "", results: function (resultsCount) { }
+                    noResults: "No Result", results: function (resultsCount) { }
                 }
             })
                 .autocomplete('instance')._renderItem = function (ul, item) {
@@ -156,6 +160,10 @@ $(document).ready(function () {
                         .append('<p class="autoComplete-titel">' + item.ProductName + '</p>')
                         .appendTo(ul);
                 }
+
+            $(window).resize(function () {
+                $("#search-input").autocomplete("close");
+            });
 
         }
     });
@@ -172,6 +180,7 @@ $('.test-slick').slick({
 
 ///==========================
 //Main Page Of Categories
+//==========================
 //==========================
 $(function () {
 
@@ -527,7 +536,7 @@ $(function () {
     $('.product-slider-4').slick({
         arrows: true,
         dots: false,
-        autoplay: false,
+        autoplay: true,
         infinite: true,
         slidesToShow: 4,
         prevArrow: '<button type="button" class="slick-prev"><i class="icofont icofont-long-arrow-left"></i></button>',
@@ -639,7 +648,7 @@ $(function () {
     $('.team-slider-5').slick({
         arrows: false,
         dots: false,
-        autoplay: false,
+        autoplay: true,
         infinite: true,
         slidesToShow: 5,
         prevArrow: '<button type="button" class="slick-prev"><i class="icofont icofont-long-arrow-left"></i></button>',
@@ -745,7 +754,7 @@ $(function () {
     $('.brand-slider').slick({
         arrows: false,
         dots: false,
-        autoplay: false,
+        autoplay: true,
         infinite: false,
         slidesToShow: 5,
         prevArrow: '<button type="button" class="slick-prev"><i class="icofont icofont-rounded-left"></i></button>',
@@ -844,28 +853,29 @@ $(function () {
     productTabFilterScreen();
     windows.resize(productTabFilterScreen);
 
-    ///*--
-    //    Add To Cart Animation
-    //------------------------*/
-    //$('.add-to-cart').on('click', function (e) {
-    //    e.preventDefault();
+    /*--
+        Add To Cart Animation
+    ------------------------*/
+    $('.add-to-cart').on('click', function (e) {
+        e.preventDefault();
 
-    //    if ($(this).hasClass('added')) {
-    //        $(this).removeClass('added').find('i').removeClass('ti-check').addClass('ti-shopping-cart').siblings('span').text('add to cart');
-    //    } else {
-    //        $(this).addClass('added').find('i').addClass('ti-check').removeClass('ti-shopping-cart').siblings('span').text('added');
-    //    }
-    //});
-    ///*--
-    //    Wishlist & Compare
-    //------------------------*/
+        if ($(this).hasClass('added1')) {
+
+            $(this).removeClass('added1').find('i').removeClass('ti-check').addClass('ti-shopping-cart').siblings('span').text('add to cart');
+        } else {
+            $(this).addClass('added1').find('i').addClass('ti-check').removeClass('ti-shopping-cart').siblings('span').text('added1');
+        }
+    });
+    /*--
+        Wishlist & Compare
+    ------------------------*/
     //$('.wishlist-compare a').on('click', function (e) {
     //    e.preventDefault();
 
-    //    if ($(this).hasClass('added')) {
-    //        $(this).removeClass('added');
+    //    if ($(this).hasClass('added1')) {
+    //        $(this).removeClass('added1');
     //    } else {
-    //        $(this).addClass('added');
+    //        $(this).addClass('added1');
     //    }
     //});
 

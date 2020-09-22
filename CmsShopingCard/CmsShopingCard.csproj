@@ -70,6 +70,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -78,6 +81,12 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -140,6 +149,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BrandController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashBoardController.cs" />
@@ -149,6 +159,7 @@
     <Compile Include="Areas\Admin\ViewModels\Brand\CheckBoxVM.cs" />
     <Compile Include="Areas\Admin\ViewModels\Shop\OrdersForAdmin.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\WishListController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
@@ -226,6 +237,30 @@
     <Compile Include="Migrations\201912040344131_AddPropSliderGalleryTbl.Designer.cs">
       <DependentUpon>201912040344131_AddPropSliderGalleryTbl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009071608452_WishListTbl.cs" />
+    <Compile Include="Migrations\202009071608452_WishListTbl.designer.cs">
+      <DependentUpon>202009071608452_WishListTbl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009080450068_OverrideWishListTbl.cs" />
+    <Compile Include="Migrations\202009080450068_OverrideWishListTbl.designer.cs">
+      <DependentUpon>202009080450068_OverrideWishListTbl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009132319076_deleteCasecadeDeleteFromWishlist.cs" />
+    <Compile Include="Migrations\202009132319076_deleteCasecadeDeleteFromWishlist.designer.cs">
+      <DependentUpon>202009132319076_deleteCasecadeDeleteFromWishlist.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009132326215_deleteCasecadeDeleteFromWishlist1.cs" />
+    <Compile Include="Migrations\202009132326215_deleteCasecadeDeleteFromWishlist1.designer.cs">
+      <DependentUpon>202009132326215_deleteCasecadeDeleteFromWishlist1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009190214448_EditeProductTbl.cs" />
+    <Compile Include="Migrations\202009190214448_EditeProductTbl.designer.cs">
+      <DependentUpon>202009190214448_EditeProductTbl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009201943325_UserNameNotRequired.cs" />
+    <Compile Include="Migrations\202009201943325_UserNameNotRequired.designer.cs">
+      <DependentUpon>202009201943325_UserNameNotRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\Brand.cs" />
     <Compile Include="Models\Data\Category.cs" />
@@ -240,12 +275,15 @@
     <Compile Include="Models\Data\SliderGallery.cs" />
     <Compile Include="Models\Data\User.cs" />
     <Compile Include="Models\Data\UserRole.cs" />
+    <Compile Include="Models\Data\WishList.cs" />
+    <Compile Include="Models\Dtos\WishlistDto.cs" />
     <Compile Include="Models\ViewModels\Account\LoginUserVM.cs" />
     <Compile Include="Models\ViewModels\Account\OrdersForUserVM.cs" />
     <Compile Include="Models\ViewModels\Account\UserNavPartialVM.cs" />
     <Compile Include="Models\ViewModels\Account\UserProfileVM.cs" />
     <Compile Include="Models\ViewModels\Account\UserVM.cs" />
     <Compile Include="Models\ViewModels\Cart\CartVM.cs" />
+    <Compile Include="Models\ViewModels\Categories\CategoryVM.cs" />
     <Compile Include="Models\ViewModels\pages\PageVM.cs" />
     <Compile Include="Models\ViewModels\pages\SidebarVM.cs" />
     <Compile Include="Models\ViewModels\Shop\CategoriesVM.cs" />
@@ -262,6 +300,7 @@
     <Content Include="App_Data\CmsShopingCart_log.ldf">
       <DependentUpon>CmsShopingCart.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\DashboardStyle.css" />
@@ -406,8 +445,10 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\App\Controllers\CartController.js" />
+    <Content Include="Scripts\App\Controllers\WishListController.js" />
     <Content Include="Scripts\App\Services\AddToCartService.js" />
     <Content Include="Scripts\App\Services\NotificationsService.js" />
+    <Content Include="Scripts\App\Services\WishListService.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -734,6 +775,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
+    <Content Include="Scripts\underscore-min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -845,6 +887,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912040344131_AddPropSliderGalleryTbl.resx">
       <DependentUpon>201912040344131_AddPropSliderGalleryTbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009071608452_WishListTbl.resx">
+      <DependentUpon>202009071608452_WishListTbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009080450068_OverrideWishListTbl.resx">
+      <DependentUpon>202009080450068_OverrideWishListTbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009132319076_deleteCasecadeDeleteFromWishlist.resx">
+      <DependentUpon>202009132319076_deleteCasecadeDeleteFromWishlist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009132326215_deleteCasecadeDeleteFromWishlist1.resx">
+      <DependentUpon>202009132326215_deleteCasecadeDeleteFromWishlist1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009190214448_EditeProductTbl.resx">
+      <DependentUpon>202009190214448_EditeProductTbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009201943325_UserNameNotRequired.resx">
+      <DependentUpon>202009201943325_UserNameNotRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

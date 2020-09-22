@@ -14,6 +14,7 @@ namespace CmsShopingCard.Models.Data
         public int Id { get; set; }
         public string Name { get; set; }
         public string Slug { get; set; }
+
         [AllowHtml]
         public string Description { get; set; }
         public decimal Price { get; set; }
@@ -31,5 +32,10 @@ namespace CmsShopingCard.Models.Data
         public int? BrandId { get; set; }
         [ForeignKey("BrandId")]
         public virtual Brand Brand { get; set; }
+
+
+        public virtual ICollection<WishList> WishLists { get; set; }
+        public virtual ILookup<int, WishList> UserWishLists { get; set; }
+
     }
 }

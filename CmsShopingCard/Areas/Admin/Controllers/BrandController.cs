@@ -198,7 +198,7 @@ namespace CmsShopingCard.Areas.Admin.Controllers
         // GET: Admin/Shop/EditCategory/id
         public ActionResult EditCategory(int id)
         {
-            //get specific
+            //get specific Category
             var CategoryInDb = db.Categories.Find(id);
 
             if (CategoryInDb == null)
@@ -220,7 +220,7 @@ namespace CmsShopingCard.Areas.Admin.Controllers
                                          )
                          };
             ///////~~~~~~~~~~
-            var MyCatViewModel = new CategoriesVM()
+            var CatViewModel = new CategoriesVM()
             {
                 Id = id,
                 Name = CategoryInDb.Name,
@@ -228,6 +228,7 @@ namespace CmsShopingCard.Areas.Admin.Controllers
             /////~~~~~~~
             /////~~~~~~~
             var checkBoxList = new List<CheckBoxVM>();
+
             foreach (var item in Result)
             {
                 checkBoxList.Add(new CheckBoxVM
@@ -239,8 +240,8 @@ namespace CmsShopingCard.Areas.Admin.Controllers
                 });
             }
             ///////~~~~~~~~~~
-            MyCatViewModel.Brands = checkBoxList;
-            return View(MyCatViewModel);
+            CatViewModel.Brands = checkBoxList;
+            return View(CatViewModel);
         }
 
 
@@ -257,7 +258,7 @@ namespace CmsShopingCard.Areas.Admin.Controllers
             CategoryInDb.Name = model.Name;
             CategoryInDb.Slug = model.Name.Replace(" ", "-").ToLower();
 
-
+            //Delete All Brand underneath this Category
             foreach (var item in db.CategoryBrands)
             {
                 if (item.CategoryId == model.Id)
@@ -265,13 +266,17 @@ namespace CmsShopingCard.Areas.Admin.Controllers
                     db.Entry(item).State = EntityState.Deleted;
                 }
             }
+            //Assign all new brand for this Category
             foreach (var item in model.Brands)
             {
                 if (item.Checked)
                 {
-                    db.CategoryBrands.Add(new CategoryBrand() { CategoryId = model.Id, BrandId = item.Id });
+                    db.CategoryBrands.Add(
+                        new CategoryBrand() { CategoryId = model.Id, BrandId = item.Id }
+                        );
                 }
             }
+
             db.SaveChanges();
 
             return RedirectToAction("Categories", "Shop");
@@ -291,6 +296,7 @@ namespace CmsShopingCard.Areas.Admin.Controllers
                              B.BrandId,
                              B.Name,
                              B.ImageName,
+                             //For Check if brand underneath this category or not
                              Checked = (
                              (from CtoB in db.CategoryBrands
                               where (CtoB.CategoryId == id) & (CtoB.BrandId == B.BrandId)
@@ -302,7 +308,6 @@ namespace CmsShopingCard.Areas.Admin.Controllers
             {
                 Id = id,
                 Name = CategoryInDb.Name,
-
             };
 
             var BrandCheckBox = new List<CheckBoxVM>();
@@ -352,6 +357,7 @@ namespace CmsShopingCard.Areas.Admin.Controllers
 
             return jsonString;
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

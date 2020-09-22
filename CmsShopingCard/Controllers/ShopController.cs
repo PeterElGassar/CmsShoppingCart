@@ -82,17 +82,38 @@ namespace CmsShopingCard.Controllers
         public ActionResult Category(string categoryName, int? brandId, int? page)
         {
             int catId;
+            Lookup<int, WishList> wishlistProducts = null;
+            //check if product in wishlist or not
+            if (User.Identity.IsAuthenticated)
+            {
+                string userName = User.Identity.Name;
+                int userId = db.Users.FirstOrDefault(u => u.UserName == userName).UserId;
+
+                //get all product in wishList to this user
+                wishlistProducts = (Lookup<int, WishList>)db.WishLists
+                   .Where(w => w.UserId == userId)
+                   .ToList()
+                   .ToLookup(w => w.productId);
+            }
+
+
             List<ProductVM> productListVM;
-            var CategoryInDb = db.Categories.Where(x => x.Slug == categoryName).SingleOrDefault();
+            var CategoryInDb = db.Categories
+                .Where(x => x.Slug == categoryName)
+                .SingleOrDefault();
+
 
             if (brandId > 0)
             {
-                //Here Get the product if it concerns a specific brand
+                //Here Get the product if it's in specific brand
                 catId = CategoryInDb.Id;
-
-                productListVM = db.Products.ToArray()
+                productListVM = db.Products
+                   .ToArray()
                    .Where(x => x.CategoryId == catId && x.BrandId == brandId)
-                   .Select(x => new ProductVM(x))
+                   .Select(x => new ProductVM(x)
+                   {
+                       WishLists = wishlistProducts
+                   })
                    .ToList();
 
                 var brand = db.Brands.Find(brandId);
@@ -103,19 +124,23 @@ namespace CmsShopingCard.Controllers
             {
                 //Here Get the product Without brand
                 catId = CategoryInDb.Id;
-
                 //Init the List Of Product
                 productListVM = db.Products.ToArray()
                    .Where(x => x.CategoryId == catId)
-                   .Select(x => new ProductVM(x))
+                   .Select(x => new ProductVM(x)
+                   {
+                       WishLists = wishlistProducts
+                   })
                    .ToList();
             }
+
+
+
             //Get Category Name
             ViewBag.CategoryName = CategoryInDb.Name;
             //Pagination
             var pageNumber = page ?? 1;
             var onePageOfProducts = productListVM.ToPagedList(pageNumber, 12);
-
             ViewBag.OnePageOfProducts = onePageOfProducts;
             return View(productListVM);
         }
@@ -134,20 +159,31 @@ namespace CmsShopingCard.Controllers
                 return RedirectToAction("Index", "Pages");
 
             //Declare Dto
-            Product ProdectInDb = db.Products.Where(p => p.Slug == name).FirstOrDefault();
-            id = ProdectInDb.Id;
+            Product ProdectInDb = db.Products
+                .Where(p => p.Slug == name)
+                .FirstOrDefault();
 
             //Get Id Of this Product
+            id = ProdectInDb.Id;
+
             model = new ProductVM(ProdectInDb);
-
-
 
             //Get Gallery Images
             model.GalleryImages = Directory.EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
                   .Select(fn => Path.GetFileName(fn));
+
+            //check if product in wishlist or not
+            if (User.Identity.IsAuthenticated)
+            {
+                string userName = User.Identity.Name;
+                int userId = db.Users.FirstOrDefault(u => u.UserName == userName).UserId;
+                model.InWishlist = db.WishLists.Any(w => w.UserId == userId && w.productId == id);
+            }
             //Retur View With Model
             return View("ProductDetails", model);
         }
+
+
 
         // GET: Shop/product-details/name
         public ActionResult GetProductQuantity(int productId)
@@ -157,11 +193,38 @@ namespace CmsShopingCard.Controllers
 
             return PartialView(model);
         }
+
         // GET: GetProductByCategory
         public ActionResult GetProductByCategory()
         {
+            CategoriesVM catVm = new CategoriesVM();
 
-            return PartialView(db.Categories.ToList());
+            if (User.Identity.IsAuthenticated)
+            {
+                var userName = User.Identity.Name;
+                var userId = db.Users
+                    .FirstOrDefault(u => u.UserName == userName)
+                    .UserId;
+
+                //get all product in wishList to this user
+                var wishlistProducts = db.WishLists
+                    .Where(w => w.UserId == userId)
+                    .ToList()
+                    .ToLookup(w => w.productId);
+
+                catVm = new CategoriesVM()
+                {
+                    IsAuth = User.Identity.IsAuthenticated,
+                    WishLists = wishlistProducts,
+                    Categories = db.Categories.ToList()
+
+                };
+                return PartialView(catVm);
+
+            }
+
+            catVm.Categories = db.Categories.ToList();
+            return PartialView(catVm);
         }
 
         // GET: QuickViewProduct
@@ -169,16 +232,29 @@ namespace CmsShopingCard.Controllers
         public ActionResult QuickViewProduct(int Id)
         {
             Product ProdectInDb = db.Products.Where(x => x.Id == Id).FirstOrDefault();
-            int ID = ProdectInDb.Id;
+            int id = ProdectInDb.Id;
 
             var model = new ProductVM(ProdectInDb);
 
+
+            //check if product in wishlist or not
+            if (User.Identity.IsAuthenticated)
+            {
+                string userName = User.Identity.Name;
+                int userId = db.Users.FirstOrDefault(u => u.UserName == userName).UserId;
+                model.InWishlist = db.WishLists.Any(w => w.UserId == userId && w.productId == id);
+            }
+
+
             //To Fill Image Gallery OF this is Entity
-            model.GalleryImages = Directory.EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + ID + "/Gallery/Thumbs"))
+            model.GalleryImages = Directory.EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
                    .Select(fn => Path.GetFileName(fn));
             return PartialView(model);
         }
 
+
+
+        // GET: Shop/Search
         [HttpGet]
         public ActionResult Search(int? page, string prefix)
         {
@@ -201,6 +277,8 @@ namespace CmsShopingCard.Controllers
             return View(result);
         }
 
+
+        // POST: Shop/Search
         [HttpPost]
         public ActionResult Search(string prefix, int? page)
         {
@@ -221,6 +299,8 @@ namespace CmsShopingCard.Controllers
 
             return View(result);
         }
+
+
 
 
         //GET: Shop/GetProductQuantity

@@ -24,6 +24,8 @@ namespace CmsShopingCard.Controllers
             //Init The Cart
             var cart = Session["cart"] as List<CartVM> ?? new List<CartVM>();
 
+            ViewBag.PageTitel = "cart";
+
             //Ceck If Cart is Empty
             if (cart.Count == 0 || Session["cart"] == null)
             {
@@ -74,8 +76,6 @@ namespace CmsShopingCard.Controllers
         // GET: Cart
         public ActionResult AddToCartPartial(int id, int? Qyt)
         {
-
-
 
 
             //Init CartVM Listttt
@@ -281,13 +281,13 @@ namespace CmsShopingCard.Controllers
                 db.SaveChanges();
             }
 
-            //email Admin
-            var client = new SmtpClient("smtp.mailtrap.io", 2525)
-            {
-                Credentials = new NetworkCredential("407c320260fefc", "49bd37d59fb009"),
-                EnableSsl = true
-            };
-            client.Send("Admin@example.com", "Aamin@example.com", "New Order", "You Have A new Order. Order Number:" + orderId);
+            ////email Admin
+            //var client = new SmtpClient("smtp.mailtrap.io", 2525)
+            //{
+            //    Credentials = new NetworkCredential("407c320260fefc", "49bd37d59fb009"),
+            //    EnableSsl = true
+            //};
+            //client.Send("Admin@example.com", "Aamin@example.com", "New Order", "You Have A new Order. Order Number:" + orderId);
 
 
             //Finally Reste The Session (;

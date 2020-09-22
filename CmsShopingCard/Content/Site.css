@@ -64,6 +64,18 @@ div.loader {
     display: none;
 }
 
+.text-main {
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #606060;
+    line-height: 100px;
+}
+
+    .text-main:hover {
+        color: black;
+    }
+
 .ajaxMS {
     background-color: green;
     padding: 10px;
@@ -356,7 +368,7 @@ slick-track {
 
 /*/////////////////////////////////*/
 div.slick-list.draggable {
-    min-height: 630px !important;
+    min-height: 550px !important;
 }
 
 
@@ -667,9 +679,10 @@ input[type=number] {
 }*/
 
 .ui-autocomplete {
+
     position: absolute;
-    top: 71px !important;
-    left: 590px !important;
+    top: 23.3% !important;
+    left: 33% !important;
     width: 355px !important;
     background-color: #fff;
     background-clip: padding-box;
@@ -679,6 +692,8 @@ input[type=number] {
     padding: 10px;
     box-shadow: 2px 3px 6px #999;
     height: 580px;
+    margin-top: -100px;
+
 }
 
 .ui-menu-item {
@@ -693,12 +708,12 @@ input[type=number] {
 
 
 
-.ui-menu-item:hover {
-    cursor: pointer;
-    box-shadow: 1px 3px 7px #999;
-    background-color: #e9e9e9;
-    border-radius:5px;
-}
+    .ui-menu-item:hover {
+        cursor: pointer;
+        box-shadow: 1px 3px 7px #999;
+        background-color: #e9e9e9;
+        border-radius: 5px;
+    }
 
 .imgAutoC {
     width: 50px !important;
@@ -708,4 +723,244 @@ input[type=number] {
 
 .autoComplete-titel {
     display: inline-block;
+}
+
+added1 {
+    color: #202020;
+    border-color: #f5d730;
+    background-color: #f5d730;
+}
+
+/*Override Bootstrap*/
+
+.popover.bs-popover-bottom {
+    margin-top: 0px !important;
+}
+
+.show-wishlist {
+    display: block;
+}
+
+/*.popover.bs-popover-bottom {
+    width: 39% !important;
+    
+}*/
+/*.popover.bs-popover-top {
+    overflow: auto !important;
+    max-height: 70vh !important;
+}*/
+/*wishlist drodown*/
+.wrapper-wishlist {
+    display: inline;
+    position: relative;
+}
+
+.dropdown-wishlist {
+    background: #ffffff;
+    width: 22vw;
+    height: 60vh;
+    position: absolute;
+    right: 15px;
+    z-index: 10000;
+    margin-left: -10px;
+    margin-top: 78px;
+    border-radius: 0px 0px 5px 5px;
+    border: 1px solid rgba(0,0,0,.15);
+    border-top: none;
+    display: none;
+    border-top: 3px solid #f5d730;
+}
+
+
+
+.wishlist-header {
+    background-color: #f7f7f7 !important;
+    border-bottom: 1px solid #ebebeb;
+}
+
+    .wishlist-header h4.title {
+        color: #f5d730;
+        margin: 0px !important;
+    }
+
+.wishlist-body {
+    overflow: scroll;
+    height: 53vh;
+    overflow-x: hidden;
+}
+
+.wishlist-add-btn:hover {
+    color: #f5d730 !important;
+    padding: 10px 30px;
+}
+
+
+/*samll laptop*/
+@media(min-width:1024px){
+
+
+
+    .ui-autocomplete {
+        position: absolute;
+        top: 23.2% !important;
+        left: 37.5% !important;
+        width: 21% !important;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0,0,0,.15);
+        border-top: none;
+        border-radius: 0px 0px 25px 25px;
+        padding: 10px;
+        box-shadow: 2px 3px 6px #999;
+        height: 580px;
+        margin-top: -100px;
+    }
+}
+
+
+/*Tablet*/
+@media only screen and (min-device-width: 768px) and (max-device-width:1023px) {
+    .dropdown-wishlist {
+        width: 43vw;
+        margin-left: 0px;
+        margin-top: 78px;
+        right: -9vw;
+    }
+
+
+    .ui-autocomplete {
+        position: absolute;
+        top: 19.3% !important;
+        left: 32% !important;
+        width: 27% !important;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0,0,0,.15);
+        border-top: none;
+        border-radius: 0px 0px 25px 25px;
+        padding: 10px;
+        box-shadow: 2px 3px 6px #999;
+        height: 580px;
+        margin-top: -100px;
+    }
+}
+/* Mobile*/
+@media only screen and (min-width:424px ) and (max-width:767px) {
+    .dropdown-wishlist {
+        width: 62vw;
+        margin-left: 0px;
+        margin-top: 59px;
+        right: -18vw;
+    }
+
+    .ui-autocomplete {
+        position: absolute;
+        top: 44% !important;
+        left: 17% !important;
+        width: 260px !important;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0,0,0,.15);
+        border-top: none;
+        border-radius: 0px 0px 25px 25px;
+        padding: 10px;
+        box-shadow: 2px 3px 6px #999;
+        height: 70vh;
+        margin-top: -100px;
+        overflow: scroll;
+    }
+}
+
+/*small Mobile*/
+@media only screen and (min-width:320px ) and (max-width:423px) {
+    .dropdown-wishlist {
+        display: block;
+        width: 66vw;
+        margin-left: 0px;
+        margin-top: 60px;
+        right: -19vw;
+    }
+
+    .ui-autocomplete {
+        position: absolute;
+        top: 43.9% !important;
+        left: 7% !important;
+        width: 260px !important;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0,0,0,.15);
+        border-top: none;
+        border-radius: 0px 0px 25px 25px;
+        padding: 10px;
+        box-shadow: 2px 3px 6px #999;
+        height: 70vh;
+        margin-top: -100px;
+        overflow: scroll;
+    }
+
+    .ui-menu-item-wrapper {
+        font-size: .9rem;
+        font-weight: 500;
+        color: #2c2c2c;
+    }
+}
+
+
+/*small Mobile*/
+/*@media (max-width: 374px){
+    .dropdown-wishlist {
+        width: 80vw;
+        margin-left: 0px;
+        margin-top: 45px;
+        right: -24vw;
+    }
+}*/
+
+
+/*================Forms Style============*/
+
+label {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.form-control {
+    background-color: #d1d1d1;
+    border: 1px solid #ececec;
+    font-size: 1.1rem;
+    /*padding: 20px 15px;*/
+    -ms-border-radius: 10px;
+    border-radius: 10px;
+}
+
+    .form-control:focus {
+        border-color: #2196f3;
+        box-shadow: none;
+        -moz-box-shadow: none;
+    }
+
+.form-control {
+    height: 42px !important;
+    padding: 5px 10px;
+}
+
+.user-name {
+    font-size: 1.05rem;
+}
+
+.ajax-message {
+    opacity: 0;
+    transition: all .6s;
+    text-align:center;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.grandtotal h2 {
+    padding-top: 9px;
+    font-size: 18px;
+    line-height: 23px;
+    font-weight: 700;
+    color: #000000;
+    margin: 0;
 }

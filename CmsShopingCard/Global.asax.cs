@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.Http;
 
 namespace CmsShopingCard
 {
@@ -15,10 +16,12 @@ namespace CmsShopingCard
     {
         protected void Application_Start()
         {
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
         }
 
 
@@ -27,26 +30,35 @@ namespace CmsShopingCard
             //ckeck if user is login
             if (User == null) { return; }
             //Get UserName
-            string UserName = Context.User.Identity.Name;
+            string UserName = User.Identity.Name;
             //Declare array for Roles
             string[] roles = null;
-
-            using (Db db = new Db())
+            try
             {
-                //Poplate Roles
-                User UserInDbDTO = db.Users.FirstOrDefault(x => x.UserName == UserName);
+                using (Db db = new Db())
+                {
+                    //Poplate Roles
+                    User UserInDbDTO = db.Users.FirstOrDefault(x => x.UserName == UserName);
 
-                roles = db.UserRoles.Where(x => x.UserId == UserInDbDTO.UserId)
-                    .Select(x => x.Role.Name)
-                    .ToArray();
+                    roles = db.UserRoles.Where(x => x.UserId == UserInDbDTO.UserId)
+                        .Select(x => x.Role.Name)
+                        .ToArray();
 
+                }
+
+
+                //Build IPrincipal object
+                IIdentity userIdentity = new GenericIdentity(UserName);
+                IPrincipal NewUserObj = new GenericPrincipal(userIdentity, roles);
+
+                //Update Context.User
+                Context.User = NewUserObj;
             }
-            //Build IPrincipal object
-            IIdentity userIdentity = new GenericIdentity(UserName);
-            IPrincipal NewUserObj = new GenericPrincipal(userIdentity, roles);
+            catch (Exception)
+            {
 
-            //Update Context.User
-            Context.User = NewUserObj;
+                return;
+            }
         }
     }
 }

@@ -14,6 +14,7 @@ namespace CmsShopingCard.Models.ViewModels.Shop
         public string Sulg { get; set; }
         public int Sorting { get; set; }
         public string Name { get; set; }
+       
 
         public List<CheckBoxVM> Brands { get; set; }
         public CategoriesVM()
@@ -27,5 +28,13 @@ namespace CmsShopingCard.Models.ViewModels.Shop
             Sorting = row.Sorting;
             Name = row.Name;
         }
+
+
+        //for wishList
+        public bool IsAuth { get; set; }
+
+        public ILookup<int, WishList> WishLists { get; set; }
+
+        public IEnumerable<Category> Categories { get; set; }
     }
 }

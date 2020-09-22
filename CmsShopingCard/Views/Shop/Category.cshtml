@@ -39,7 +39,6 @@
     </div>
 </div>
 <!-- Page Banner Section End -->
-
 <!-- Product Section Start -->
 <div class="product-section section mt-90 mb-90">
     <div class="container">
@@ -131,11 +130,19 @@
 
                                     <div class="wishlist-compare">
                                         <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a>
-                                        <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
+                                        @if (item.WishLists != null)
+                                        {
+                                            <a href="#" data-tooltip="Wishlist" data-product-id="@item.Id"
+                                               class="wishlist js-wishlist @(item.WishLists.Contains(item.Id) ?"added1":"")">
+                                                <i class="ti-heart"></i>
+                                            </a>
+
+                                        }
+
                                     </div>
 
                                     <a href="#" class="add-to-cart addToCard" data-product-id="@item.Id" data-product-name="@item.Name">
-                                    <i class="ti-shopping-cart"></i><span>ADD TO CART</span>
+                                        <i class="ti-shopping-cart"></i><span>ADD TO CART</span>
                                     </a>
 
                                 </div>
@@ -194,7 +201,6 @@
     </div>
 </div>
 <!-- Feature Product Section End -->
-
 <!--Model Poup-->
 <div id="MyModel" class="modal fade">
     <div class="modal-dialog" style="min-width: 70%">

@@ -26,8 +26,23 @@ namespace CmsShopingCard.Models.Data
 
         public DbSet<SliderGallery> SliderGallerys { get; set; }
 
+        public DbSet<WishList> WishLists { get; set; }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            //Turn Off Cascade Delete
+            //modelBuilder.Entity<Attendance>()
+            //    .HasRequired(a => a.Gig)
+            //    .WithMany(g => g.Attendances)
+            //    .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<WishList>().HasRequired(w => w.Product)
+                .WithMany(p => p.WishLists)
+                .WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<WishList>().HasRequired(u=> u.User)
+            //    .WithOptional(u=> u.)
+        }
 
 
 

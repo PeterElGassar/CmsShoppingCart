@@ -87,11 +87,7 @@
                     </div>
 
                     <div class="col order-2 order-xs-2 order-lg-12 mt-10 mb-10">
-                        <!-- Header Account Links Start -->
-                        @*@if (User.Identity.IsAuthenticated)
-                            {
-                                @Html.Action("UserNavPartial", "Account")
-                            }*@
+                        <!-- Header Account Links Start -->      
 
                         @if (User.Identity.IsAuthenticated)
                         {
@@ -99,7 +95,7 @@
                         }
                         else
                         {
-                            <a href="/account/login" class="text-uppercase">Login</a><strong> / </strong><a href="/account/create-account" class="text-uppercase">Join</a>
+                            <a href="/account/login" class="text-main">Login</a><strong> / </strong><a href="/account/create-account" class="text-main">Join</a>
                         }
                         <!-- Header Account Links End -->
                     </div>
@@ -127,9 +123,9 @@
                         <div class="main-menu">
                             <nav style="display: block;">
                                 <ul>
-                                    <li class="active"><a href="index.html">HOME</a></li>
+                                    <li class="active"><a href="/">HOME</a></li>
                                     <li class="menu-item-has-children">
-                                        <a href="shop-grid.html">Shop</a>
+                                        <a href="#">Shop</a>
                                         @Html.Action("CategoryMenuPartial", "shop")
                                     </li>
                                     <li class="menu-item-has-children">
@@ -138,10 +134,10 @@
                                             <li>
                                                 <a href="#">Column One</a>
                                                 <ul>
-                                                    <li><a href="about-us.html">About us</a></li>
-                                                    <li><a href="best-deals.html">Best Deals</a></li>
-                                                    <li><a href="cart.html">Cart</a></li>
-                                                    <li><a href="checkout.html">Checkout</a></li>
+                                                    <li><a href="/">About us</a></li>
+                                                    <li><a href="/">Best Deals</a></li>
+                                                    <li><a href="/">Cart</a></li>
+                                                    <li><a href="/">Checkout</a></li>
                                                 </ul>
                                             </li>
                                             <li>
@@ -166,17 +162,17 @@
                                         </ul>
                                     </li>
                                     <li class="menu-item-has-children">
-                                        <a href="blog-1-column-left-sidebar.html">BLOG</a>
+                                        <a href="#">BLOG</a>
                                         <ul class="sub-menu">
                                             <li>
-                                                <a href="blog-1-column-left-sidebar.html">Blog 1 Column Left Sidebar</a>
+                                                <a href="#">Blog 1 Column Left Sidebar</a>
                                             </li>
                                             <li>
-                                                <a href="single-blog-left-sidebar.html">Single Blog Left Sidebar</a>
+                                                <a href="#">Single Blog Left Sidebar</a>
                                             </li>
                                         </ul>
                                     </li>
-                                    <li><a href="contact.html">CONTACT</a></li>
+                                    <li><a href="#">CONTACT</a></li>
                                 </ul>
                             </nav>
                         </div><!-- Main Menu End -->
@@ -191,10 +187,27 @@
                                 <!-- Compare -->
                                 <a href="compare.html" class="header-compare"><i class="ti-control-shuffle"></i></a>
                                 <!-- Wishlist -->
-                                <a href="wishlist.html" class="header-wishlist"><i class="ti-heart"></i> <span class="number">3</span></a>
+                                <div class="wrapper-wishlist">
+                                    <a href="#" class="header-wishlist js-wishlist"><i class="ti-heart"></i> <span class="number withlist-number ">0</span></a>
+                                    <div class="dropdown-wishlist">
+                                        @*<div class="wishlist-header py-2">
+                                            <h4 class="text-center display-5 title">WishList</h4>
+                                        </div>*@
+                                        <div class="wishlist-body p-sm-3">
+
+                                           
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
                                 <!-- Cart -->
 
-                                @Html.Action("CardPartial", "Cart")
+                                if (ViewBag.PageTitel != "cart")
+                                {
+                                    @Html.Action("CardPartial", "Cart")
+                                }
 
                             }
                             else if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
@@ -440,11 +453,56 @@
 
     </div>
     @Scripts.Render("~/bundles/Modules");
+
     @Scripts.Render("~/bundles/lib")
+    <!---wishlist Module-->
+    <script src="~/Scripts/App/Services/WishListService.js"></script>
+    <script src="~/Scripts/App/Controllers/WishListController.js"></script>
     <script src="~/Scripts/jquery-ui.js"></script>
+
     @RenderSection("scripts", required: false)
     <script src="~/Scripts/MyJavaScript.js"></script>
+    <link href="~/Content/animate.css" rel="stylesheet" />
 
+
+    <script type="text/x-template" id="wishlist-template">
+        <ul>
+            <%
+            _.each(products,function(product){%>
+            <li>
+                <div class="">
+                    <div class="row align-items-center ">
+                        <div class="col-5 ">
+                            <img class=" img-rounded img-fliud"
+                                 src="/images/Uploads/products/<%= product.Id%>/thumbs/<%= product.Image %>" style="width:100%" />
+                        </div>
+                        <div class="col-7 d-flex flex-column">
+                            <a class="m-0" href="/shop/product-details/<%=product.Slug%>">
+                            <h5 class="text-left font-weight-bold"><%= product.ProductName%></h5>
+                            </a>
+
+                            <p class="text-muted mb-0"><%= product.CategoryName%> <strong>/</strong> <%=product.BrandName%></p>
+                            <span class="font-weight-bold">$<%= product.Price%></span>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col mx-auto">
+                            <a href="#" class="btn btn-outline-warning btn-block mt-10 wishlist-add-btn px-sm-3 px-md-5 ">
+                                <i class="ti-shopping-cart "></i> Add to Cart
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <hr />
+
+            <% })%>
+        </ul>
+
+    
+    </script>
 </body>
 
 </html>

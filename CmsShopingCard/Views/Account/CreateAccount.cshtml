@@ -2,7 +2,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col  mx-auto">
+        <div class="col  mx-auto mt-30">
 
             @{
                 ViewBag.Title = "New Account";
@@ -33,7 +33,7 @@
 
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-4" })
                             <div class="col-md-6">
                                 @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
@@ -41,7 +41,7 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-4" })
                             <div class="col-md-6">
                                 @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
@@ -50,7 +50,7 @@
 
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-4" })
                             <div class="col-md-6">
                                 @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
@@ -59,7 +59,7 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-4" })
                             <div class="col-md-6">
                                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
@@ -68,7 +68,7 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-4" })
                             <div class="col-md-6">
                                 @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
@@ -76,15 +76,14 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-4" })
                             <div class="col-md-6">
                                 @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
-
-                        <div class="form-group">
+                        <div class="form-group py-5">
                             <div class="col-md-offset-2 col-md-6">
                                 <input type="submit" value="Create" class="btn btn-default" />
                             </div>

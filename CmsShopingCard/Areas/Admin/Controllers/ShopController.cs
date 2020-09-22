@@ -26,6 +26,7 @@ namespace CmsShopingCard.Areas.Admin.Controllers
         }
 
         // GET: Admin/Shop/Categories
+        //use to add category also
         public ActionResult Categories()
         {
             List<CategoriesVM> model = db.Categories.ToArray()

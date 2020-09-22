@@ -195,23 +195,9 @@ namespace CmsShopingCard.Controllers
         public ActionResult UserNavPartial()
         {
             string UserName = User.Identity.Name;
-            User UserInDb = new User();
+            User UserInDb = new User();          
 
-            //if (TempData["NewName"] != null)
-            //{
-            //    UserName = (string)TempData["NewName"];
-            //}
-
-            UserInDb = db.Users.FirstOrDefault(x => x.UserName == UserName);
-
-            //if (Session["CurrentId"] != null && TempData["NewName"] == null)
-            //{
-            //    CurrentUserId = (int)Session["CurrentId"];
-            //    UserInDb = db.Users.FirstOrDefault(x => x.UserId == CurrentUserId);
-
-            //}
-            //Get a User In DB
-            //Here I Need Fname & Lname To Dispaly In Navbar Only
+            UserInDb = db.Users.FirstOrDefault(x => x.UserName == UserName);          
             UserNavPartialVM model = new UserNavPartialVM()
             {
                 FirstName = UserInDb.FirstName,
@@ -305,7 +291,6 @@ namespace CmsShopingCard.Controllers
 
             UserInDb.FirstName = model.FirstName;
             UserInDb.LastName = model.LastName;
-            UserInDb.UserName = model.UserName;
             UserInDb.Email = model.EmailAddress;
 
             //make sure if user Enterd New Password or not
@@ -388,7 +373,9 @@ namespace CmsShopingCard.Controllers
             bool CheckEmailById;
             if (id > 0)
             {
-                return CheckEmailById = db.Users.Where(x => x.UserId != id).Any(x => x.Email == emailID);
+                return CheckEmailById = db.Users
+                    .Where(x => x.UserId != id)
+                    .Any(x => x.Email == emailID);
             }
             else
             {

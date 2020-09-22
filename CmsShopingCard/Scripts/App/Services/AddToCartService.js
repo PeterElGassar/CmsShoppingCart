@@ -36,12 +36,10 @@
     var quantityIncDec = function (incOrDecbtn) {
         // plus or minus btns
         var $button = incOrDecbtn;
-        debugger
         //input qunatity
         var $inputQty = $('#qty-input');
         var oldValue = parseInt($inputQty.val());
         var productQuantity = parseInt($inputQty.attr('data-max-value'));
-
 
         if ($button.hasClass('inc') && oldValue < productQuantity) {
             var newVal = parseFloat(oldValue) + 1;
@@ -70,7 +68,7 @@
         $('.pro-qty').append('<span class="inc qtybtn">+</span>');
 
         //'.qtybtn' is a class for plus & munse btn togther
-        $('.qtybtn').on('click', function () {
+        $('.qtybtn').unbind().on('click', function () {
             quantityIncDec($(this));
         });
 
@@ -100,26 +98,32 @@
 
                 button.val(prevValue);
 
-                $('.ajax-message span').text('the number of Quantity greater than in stock');
-                $('.ajax-message').fadeIn();
+                //$('.ajax-message span')
+                //    .text("You'r Quantity not Available now");
+
+                $('.ajax-message').animate({ opacity: 1, visibility: 'visible' }, 500);
+                //.css('visibility', 'visible');
 
                 setTimeout(function () {
-                    $('.ajax-message span').text('');
-                    $('.ajax-message').fadeOut("fast");
+
+                    //$('.ajax-message span')
+                    //    .text('')
+                    //    .hide('600');
+                    $('.ajax-message').animate({ opacity: 0, visibility: 'hidden' }, 500);
                 }, 2500);
 
             }
-
 
         });
 
     }
 
+
     /*-----Add To Cart
 ------------------------*/
     var addToCart = function () {
 
-        $("a.addToCard").click(function (e) {
+        $("a.addToCard").unbind().click(function (e) {
             e.preventDefault();
             $("div.loader").addClass("ib");
 
@@ -131,7 +135,6 @@
             //Optinal
             qtyProduct = $('#qty-input').val();
             url = "/Cart/AddToCartPartial";
-
 
             $.get(url, { id: productId, Qyt: qtyProduct }, function (data) {
 
@@ -148,10 +151,14 @@
 
             });
             closeModalPopup();
+            //To Solve Quantity Issue
+            $('#qty-input').val(undefined);
 
             setTimeout(function () {
                 notificationService.successNotify(productName + " Added to Cart Successfully.");
             }, 1000);
+
+            //To Solve Issue Quantity 
         });
     }
 
@@ -159,48 +166,67 @@
         /////////////////////////////////////////////////////////////////////
         // Increment Products In Cart
         /////////////////////////////////////////////////////////////////////
-        $("a.IncrProduct").click(function (e) {
+        $("a.IncrProduct").unbind().click(function (e) {
             e.preventDefault();
             var productId = $(this).data("id");
             var url = "/cart/IncrementProduct";
-            $.getJSON(url, { productId: productId }, function (data) {
+            updateGrandtotal(productId);
 
-                //Here Price And qty Come From (data) Paramenter Of Action  Method
 
-                $("input.qty" + productId).val(data.qty);
-                var price = data.qty * data.price;
-                var massage = data.ms;
-                var priceHtml = "$" + price.toFixed(2);
-
-                if (massage !== "") {
-                    NotificationService.errorNotify("Sorry We Dont Have More Of This Item Now.");
-
-                } else {
-                    //=====================Increment Grand Total For All Product In Cart
-                    $("td.total" + productId).html(priceHtml);
-                    var gt = parseFloat($("td.grandtotal span").text());
-                    var grandtotal = (gt + data.price).toFixed(2);
-                    $("td.grandtotal span").text(grandtotal);
-                }
-
-                //Done Call Back Function Its work to get a new quantity into Paypal form
-            }).done(function (e) {
-                var url2 = "/cart/PaypalPartial";
-                $.get(url2, {}, function (data) {
-                    $("div.paypalDiv").html(data);
-                });
-            });
         });
     }
 
 
     /*-----Close Modal
-------------------------*/
+    ------------------------*/
     var closeModalPopup = function () {
         if ($('#MyModel') != null || $('#MyModel') != undefined) {
             $("#MyModel").modal("hide");
         }
     }
+
+
+
+
+    /*-----Private Function for update grand total in index cart
+    ------------------------*/
+
+    function updateGrandtotal(productId) {
+        var url = "/cart/IncrementProduct";
+
+
+        $.getJSON(url, { productId: productId }, function (data) {
+
+            //Here Price And qty Come From (data) Paramenter Of Action  Method
+
+            $("input.qty" + productId).val(data.qty);
+            var price = data.qty * data.price;
+            var massage = data.ms;
+            var priceHtml = "$" + price.toFixed(2);
+
+            if (massage !== "") {
+                NotificationService.errorNotify("Sorry we Dont Have More of This Item Now.");
+            } else {
+
+                //=====================Increment Grand Total For All Product In Cart
+                $("td.total" + productId).html(priceHtml);
+                var gt = parseFloat($("td.grandtotal span").text());
+                var grandtotal = (gt + data.price).toFixed(2);
+                $("td.grandtotal span").text(grandtotal);
+            }
+
+            //Done Call Back Function Its work to get a new quantity into Paypal form
+        }).done(function (e) {
+            var url2 = "/cart/PaypalPartial";
+            $.get(url2, {}, function (data) {
+                $("div.paypalDiv").html(data);
+            });
+        });
+
+
+
+    }
+
 
 
     //$("span.incrProduct").on("clcik", function (e) {

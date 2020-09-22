@@ -2,7 +2,7 @@
 
 @*@Html.HiddenFor(model => model.Quantity, new { id = "product-quantity-hidden" })
 
-@Html.HiddenFor(model => model.Id, new { id = "product-id-hidden" })*@
+    @Html.HiddenFor(model => model.Id, new { id = "product-id-hidden" })*@
 
 <link href="~/Content/newTemplet/css/style.css" rel="stylesheet" />
 <div class="container-fluid">
@@ -33,7 +33,7 @@
             }
 
             @*<h3 class="cost"><span class="fa fa-usd fa-1x"></span>@Model.Price</h3>*@
-            <h5 class="price">$@Model.Price</h5>           
+            <h5 class="price">$@Model.Price</h5>
 
         </div>
 
@@ -53,12 +53,12 @@
 
 
                     <!--Alert Message-->
-                    <div class="alert alert-danger ajax-message text-center font-weight-bold" style="display:none">
-                        <span></span>
+                    <div class="alert alert-danger ajax-message " >
+                        <span>You'r Quantity not Available now</span>
                     </div>
                     <!--End Alert Message-->
 
-                    <div class="quantity-colors">
+                    <div class="quantity-colors d-flex flex-column flex-lg-row">
 
                         @if (User.Identity.IsAuthenticated)
                         {
@@ -83,13 +83,20 @@
 
                     </div>
 
-                    <div class="actions">                      
-
-                        <a href="#" class="add-to-cart addToCard" data-product-id="@Model.Id"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
-
+                    <div class="actions">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a href="#" class="add-to-cart addToCard" data-product-id="@Model.Id" data-product-name="@Model.Name"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
+                        }
                         <div class="wishlist-compare">
                             <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a>
-                            <a href="#" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
+                            @*<a href="#" data-tooltip="Wishlist" class="wishlist"><i class="ti-heart"></i></a>*@
+                            <a href="#"
+                               data-tooltip="Wishlist"
+                               data-product-id="@Model.Id"
+                               class="wishlist js-wishlist @(Model.InWishlist ?"added1":"")">
+                                <i class="ti-heart"></i>
+                            </a>
                         </div>
 
                     </div>
@@ -117,9 +124,6 @@
 
 @section Scripts{
 
-    @*@Scripts.Render("~/bundles/quickView")*@
-
-
     <script>
 
         $("#btn_cart").click(function (e) {
@@ -140,6 +144,6 @@
             });
 
         });
-    
     </script>
+ 
 }

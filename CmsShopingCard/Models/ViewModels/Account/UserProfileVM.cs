@@ -41,16 +41,17 @@ namespace CmsShopingCard.Models.ViewModels.Account
         [DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; }
 
-        [Required]
         public string UserName { get; set; }
 
         [DataType(DataType.Password)]
         public string CurrentPassword { get; set; }
 
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Compare("Password")]
         [Display(Name = "Confirm Password")]
+        [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
 
     }

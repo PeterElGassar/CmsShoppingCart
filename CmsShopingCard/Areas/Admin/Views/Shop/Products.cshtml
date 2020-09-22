@@ -59,7 +59,7 @@
             </td>
             <td>
                 <a href="/admin/shop/EditProduct/@product.Id" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i></a>
-                <a href="/admin/shop/DeleteProduct/@product.Id" class="delete btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
+                <a href="/admin/shop/DeleteProduct/@product.Id" class="deleteProduct btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
         </tr>
     }
@@ -88,12 +88,11 @@
             /*
             * confirm Products Deletion
             */
-            $('a.delete').click(function () {
+            $('a.deleteProduct').click(function () {
                 if (!confirm("Confirm Product Deletion")) {
                     return false;
                 }
             });
-
 
         });
     </script>

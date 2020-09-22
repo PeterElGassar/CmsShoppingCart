@@ -25,18 +25,16 @@ namespace CmsShopingCard.Controllers
                 page = "home";
             
             //Check If  page exists
-            //Equals Same Like == page
+            //Because If User Enterd Wrong Url returnd to index page
             if (!db.Pages.Any(x => x.Sulg.Equals(page)))
             {
                 return RedirectToAction("Index", new { page = "" });
             }
-
             //Get Page Dto
             Page pageInDb = db.Pages.Where(x => x.Sulg == page).FirstOrDefault();
 
             //set page titel In ViewBag
             ViewBag.PageTitel = pageInDb.Titel;
-
 
             //Here check that Condetion for make Space For Pages that have Siedbar
             if (pageInDb.HasSidebar == true)

@@ -11,35 +11,19 @@ namespace CmsShopingCard.Models.ViewModels.Shop
 {
     public class ProductVM
     {
-        public ProductVM()
-        {
-
-        }
-        public ProductVM(Product row)
-        {
-            Id = row.Id;
-            Name = row.Name;
-            Slug = row.Slug;
-            Description = row.Description;
-            Price = row.Price;
-            Quantity = row.Quantity;
-            CategoryName = row.CategoryName;
-            CategoryId = row.CategoryId;
-            ImageName = row.ImageName;
-            if (row.BrandId > 0)
-                BrandId = row.BrandId; Brand = row.Brand;
-
-            Category = row.Category;
-        }
-
+        
         [Key]
         public int Id { get; set; }
+
         [Required]
         public string Name { get; set; }
+
         public string Slug { get; set; }
+
         [Required]
         [AllowHtml]
         public string Description { get; set; }
+
         public decimal Price { get; set; }
         public int Quantity { get; set; }
         public string CategoryName { get; set; }
@@ -49,6 +33,7 @@ namespace CmsShopingCard.Models.ViewModels.Shop
 
         public int? BrandId { get; set; }
 
+        public bool InWishlist { get; set; }
 
         public string ImageName { get; set; }
 
@@ -65,5 +50,31 @@ namespace CmsShopingCard.Models.ViewModels.Shop
 
         [ForeignKey("BrandId")]
         public virtual Brand Brand { get; set; }
+
+        public virtual ILookup<int,WishList>  WishLists { get; set; }
+
+
+        public ProductVM()
+        {
+
+        }
+        public ProductVM(Product row)
+        {
+            Id = row.Id;
+            Name = row.Name;
+            Slug = row.Slug;
+            Description = row.Description;
+            Price = row.Price;
+            Quantity = row.Quantity;
+            CategoryName = row.CategoryName;
+            CategoryId = row.CategoryId;
+            ImageName = row.ImageName;
+            Category = row.Category;
+            WishLists = row.UserWishLists;
+            if (row.BrandId > 0)
+                BrandId = row.BrandId; Brand = row.Brand;
+
+          
+        }
     }
 }

@@ -17,7 +17,8 @@ namespace CmsShopingCard
                         "~/Scripts/toastr.js",
                         "~/Scripts/datatables/jquery.datatables.js",
                         "~/scripts/datatables/dataTables.bootstrap.js",
-                        "~/Content/newTemplet/js/main.js"
+                        "~/Content/newTemplet/js/main.js",
+                        "~/Scripts/underscore-min.js"
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -31,7 +32,8 @@ namespace CmsShopingCard
 
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/bootstrap.js"));
+                        "~/Scripts/bootstrap.js",
+                        "~/Scripts/underscore-min.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
@@ -44,7 +46,9 @@ namespace CmsShopingCard
                       "~/content/datatables/css/dataTables.bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/DashboardStyle.css",
-                      "~/Content/toastr.css"
+                      "~/Content/toastr.css",
+                      "~/Content/animate.css"
+
                       ));
         }
     }

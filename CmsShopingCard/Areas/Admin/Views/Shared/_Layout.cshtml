@@ -11,6 +11,9 @@
     <!-- Font Awesome Icon -->
     <link rel="stylesheet" href="~/Content/Templet_Files/css/font-awesome.min.css" />
 
+    <link href="~/Scripts/duDialog/duDialog.min.css" rel="stylesheet" />
+
+
     <!---Googel Fonts-->
     <link href="https://fonts.googleapis.com/css?family=Sigmar+One&display=swap&subset=latin-ext,vietnamese" rel="stylesheet">
 
@@ -100,14 +103,17 @@
         </div>
 
         <div class="row main-container">
-           
+
             @RenderBody()
 
         </div>
     </div>
     @Scripts.Render("~/bundles/lib")
     @RenderSection("scripts", required: false)
+
     <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/duDialog/duDialog.min.js"></script>
+
     <script type="text/javascript" src="~/Scripts/DashboardScript.js"></script>
 
 </body>

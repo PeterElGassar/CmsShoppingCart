@@ -4,61 +4,69 @@
     ViewBag.Title = "Orders";
 }
 
-<h2>Orders</h2>
-<div class="search-div">
-    <form id="search-note">
-        <input class="form-control" type="text" placeholder="Search For Order Number" />
-    </form>
-</div>
-@if (!Model.Any())
-{
-    <h3 class="text-center">You Have No Orders</h3>
-}
-else
-{
-    <table class="table">
-        <tr>
-            <th>
-                Order Number    
-            </th>
+<div class="container mt-70">
+    <div class="row">
+        <div class="col">
+            <h2>Orders</h2>
+            <div class="search-div">
+                <form id="search-note">
+                    <input class="form-control" type="text" placeholder="Search For Order Number" />
+                </form>
+            </div>
+            @if (!Model.Any())
+            {
+                <h3 class="text-center">You Have No Orders</h3>
+            }
+            else
+            {
+                <table class="table">
+                    <tr>
+                        <th>
+                            Order Number
+                        </th>
 
-            <th>Order Details</th>
+                        <th>Order Details</th>
 
-            <th>
-                CreatedAt
-            </th>
-            <th>
-                Total
-            </th>
-        </tr>
+                        <th>
+                            CreatedAt
+                        </th>
+                        <th>
+                            Total
+                        </th>
+                    </tr>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderNumber)
-                </td>
-
-                <td>
-                    @foreach (var item2 in item.ProductAndQuantity)
+                    @foreach (var item in Model)
                     {
-                        @item2.Key
-                        <span style="font-size:17px; font-weight:bold">QTY:</span>
-                        @item2.Value
-                        <br />
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreatedAt)
-                </td>
-                <td>
-                    $@Html.DisplayFor(modelItem => item.Total)
-                </td>
-            </tr>
-        }
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderNumber)
+                            </td>
 
-    </table>
-}
+                            <td>
+                                @foreach (var item2 in item.ProductAndQuantity)
+                                {
+                                    @item2.Key
+                                    <span style="font-size:17px; font-weight:bold">QTY:</span>
+                                    @item2.Value
+                                    <br />
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedAt)
+                            </td>
+                            <td>
+                                $@Html.DisplayFor(modelItem => item.Total)
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            }
+
+        </div>
+    </div>
+</div>
+
 
 @section Scripts
     {

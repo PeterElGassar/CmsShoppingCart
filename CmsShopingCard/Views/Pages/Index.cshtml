@@ -12,33 +12,20 @@
 
 @if (Model.Titel != "Home")
 {
-    @Html.Raw(Model.Body)
+
+    <div class="container">
+        <div class="row pt-60  pb-60 text-center">
+
+                @Html.Raw(Model.Body)
+           
+        </div>
+    </div>
+
+
+
 }
 else
 {
-    @*<div class="home-wrap">
-            <!-- home slick -->
-            <div id="home-slick">
-                @foreach (var img in Model.SliderGallery)
-                {
-                    <!-- banner1 -->
-                    <div class="banner banner-1">
-                        <img src="/Images/Uploads/SliderImages/@img.ImageName" height="610" />
-                        <div class="banner-caption text-center">
-                            <h1 class=" font-weak" style="color:#F8694A">@img.Title</h1>
-                            @if (img.UrlLink != null)
-                            {
-                                <a class="btn primary-btn" href="@Url.Content(img.UrlLink)">Shop Now</a>
-                            }
-                        </div>
-                    </div>
-                    <!-- /banner -->
-                }
-                <!-- /banner -->
-            </div>
-            <!-- /home slick -->
-        </div>*@
-
 
     <!-- Header Category Start -->
     <div class="header-category-section">
@@ -71,6 +58,7 @@ else
     <!-- Header Category End -->
 
 
+      //main banner in index page 
     <div class="hero-section section mb-30">
         <div class="container">
             <div class="row">
@@ -91,14 +79,14 @@ else
 
                                         <h2>HURRY UP!</h2>
                                         <h1><span>@img.Title</span></h1>
-                                        <h1>IT’S <span class="big">29%</span> OFF</h1>
+                                        @*<h1>IT’S <span class="big">29%</span> OFF</h1>*@
                                         <a href="@Url.Content(img.UrlLink)">get it now</a>
 
                                     </div>
 
                                     <!-- Hero Image -->
                                     <div class="hero-image  col-12 col-sm-6">
-                                        <img class="img-responsive custemSlideImg" src="/Images/Uploads/SliderImages/@img.ImageName" width="284" height="447" alt="Hero Image">
+                                        <img class="img-responsive custemSlideImg img-fluid" src="/Images/Uploads/SliderImages/@img.ImageName" width="284" height="447" alt="Hero Image">
                                     </div>
 
                                 </div>
@@ -114,7 +102,6 @@ else
             </div>
         </div>
     </div>
-
 
 
 }
