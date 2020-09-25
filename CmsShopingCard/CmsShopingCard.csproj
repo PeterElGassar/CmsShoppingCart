@@ -261,6 +261,10 @@
     <Compile Include="Migrations\202009201943325_UserNameNotRequired.designer.cs">
       <DependentUpon>202009201943325_UserNameNotRequired.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009250900222_AddConstraintToSlider.cs" />
+    <Compile Include="Migrations\202009250900222_AddConstraintToSlider.designer.cs">
+      <DependentUpon>202009250900222_AddConstraintToSlider.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\Brand.cs" />
     <Compile Include="Models\Data\Category.cs" />
@@ -431,13 +435,6 @@
     <Content Include="Content\jquery.fancybox-thumbs.css" />
     <Content Include="Content\jquery.fancybox.css" />
     <Content Include="Content\PagedList.css" />
-    <Content Include="Content\Templet_Files\blank.html" />
-    <Content Include="Content\Templet_Files\checkout.html" />
-    <Content Include="Content\Templet_Files\Credits.txt" />
-    <Content Include="Content\Templet_Files\index.html" />
-    <Content Include="Content\Templet_Files\product-page.html" />
-    <Content Include="Content\Templet_Files\products.html" />
-    <Content Include="Content\Templet_Files\style.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
@@ -477,7 +474,6 @@
     <Content Include="Areas\Admin\Views\Shop\Products.cshtml" />
     <Content Include="Areas\Admin\Views\Shop\EditProduct.cshtml" />
     <Content Include="Areas\Admin\Views\Shop\Orders.cshtml" />
-    <Content Include="Content\Templet_Files\.DS_Store" />
     <Content Include="Areas\Admin\Views\Brand\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Brand\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Brand\DeleteBrand.cshtml" />
@@ -751,6 +747,8 @@
     <Content Include="Scripts\dropzone\dropzone.min.js" />
     <Content Include="Scripts\duDialog\duDialog.min.css" />
     <Content Include="Scripts\duDialog\duDialog.min.js" />
+    <Content Include="Areas\Admin\Views\Slider\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Slider\Edit.cshtml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
@@ -818,12 +816,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Content\AdminTemplate\" />
     <Folder Include="Content\Img\" />
     <Folder Include="Content\newTemplet\" />
-    <Folder Include="Content\Templet_Files\css\" />
-    <Folder Include="Content\Templet_Files\fonts\" />
-    <Folder Include="Content\Templet_Files\img\" />
-    <Folder Include="Content\Templet_Files\js\" />
     <Folder Include="fileman\" />
   </ItemGroup>
   <ItemGroup>
@@ -905,6 +900,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009201943325_UserNameNotRequired.resx">
       <DependentUpon>202009201943325_UserNameNotRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009250900222_AddConstraintToSlider.resx">
+      <DependentUpon>202009250900222_AddConstraintToSlider.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,6 +1,7 @@
 ﻿using CmsShopingCard.Models.Data;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -16,10 +17,11 @@ namespace CmsShopingCard.Areas.Admin.Controllers
         {
             db = new Db();
         }
+
         // GET: Admin/Slider
         public ActionResult Index()
         {
-            return View();
+            return View(db.SliderGallerys.ToList());
         }
 
         // GET: Admin/AddImage
@@ -31,50 +33,81 @@ namespace CmsShopingCard.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult AddImage(SliderGallery model, HttpPostedFileBase sliderImage)
         {
-            
+
             db.SliderGallerys.Add(model);
             db.SaveChanges();
-            
+
             if (sliderImage != null && sliderImage.ContentLength > 0)
             {
-                var originalDirectory = new DirectoryInfo(string.Format("{0}Images\\Uploads", Server.MapPath(@"\")));
 
-                string sliderPath1 = Path.Combine(originalDirectory.ToString(), "SliderImages");
-                string sliderPathThumbs = Path.Combine(originalDirectory.ToString(), "SliderImages\\" + "Thumbs");
-
-                if (!Directory.Exists(sliderPath1))
-                    Directory.CreateDirectory(sliderPath1);
-
-                if (!Directory.Exists(sliderPathThumbs))
-                    Directory.CreateDirectory(sliderPathThumbs);
-
-                //Get Name Of Image
-                string imageName = sliderImage.FileName;
-
-                var SliderGallery = db.SliderGallerys.Find(model.SliderId);
-
-                SliderGallery.ImageName = imageName;
+                model.SaveImage(sliderImage);
                 db.SaveChanges();
 
-                string path = string.Format("{0}\\{1}", sliderPath1, imageName);
-                var pathThumbs = string.Format("{0}\\{1}", sliderPathThumbs, imageName);
-
-                sliderImage.SaveAs(path);
-
-                //Create and save thumbs Images            
-                WebImage img = new WebImage(sliderImage.InputStream);
-                img.Resize(img.Width, img.Height, false, true).Crop(1, 1, 1, 1).Write();
-                img.Save(pathThumbs);
                 TempData["SM"] = "You Added Image ToSlider Successfully..";
             }
             return RedirectToAction("AddImage");
         }
 
-        public ActionResult DeleteSliderImage() {
 
-            return View(db.SliderGallerys.ToList());
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var img = db.SliderGallerys.FirstOrDefault(s => s.SliderId == id);
+            if (img == null)
+            {
+                return HttpNotFound();
+
+            }
+
+            return View(img);
         }
 
+        [HttpPost]
+        public ActionResult Edit(SliderGallery model, HttpPostedFileBase file)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var sliderInDb = db.SliderGallerys.Find(model.SliderId);
+            sliderInDb.Title = model.Title;
+            sliderInDb.UrlLink = model.UrlLink;
+
+
+            TempData["SM"] = "Update Success..";
+
+            if (file != null && file.ContentLength > 0)
+            {
+                model.UpdateImage(file, sliderInDb.ImageName);
+                TempData["SM"] = "Update Success with Image..";
+
+            }
+            sliderInDb.ImageName = file.FileName;
+            db.SaveChanges();
+
+            return RedirectToAction("Edit");
+        }
+
+
+        public ActionResult DeleteSliderImage(int id)
+        {
+            var imgInDb = db.SliderGallerys.Find(id);
+            string imgName = imgInDb.ImageName;
+            db.SliderGallerys.Remove(imgInDb);
+            db.SaveChanges();
+
+
+            //remove image file 
+            var mainDirec = new
+                DirectoryInfo(string.Format(@"{0}\SliderImages\Thumbs", Server.MapPath(@"\")));
+
+            string fullPath = Path.Combine(mainDirec.ToString(), "\\", imgName);
+
+            if (Directory.Exists(fullPath))
+                Directory.Delete(fullPath, true);
+
+
+            return RedirectToAction("index");
+        }
 
 
         protected override void Dispose(bool disposing)

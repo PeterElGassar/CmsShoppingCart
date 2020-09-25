@@ -25,8 +25,12 @@
 <p>
     @Html.ActionLink("Add New Product", "AddProduct", "", new { @class = "btn btn-primary" })
 </p>
-<table class="table">
+<table class="table py-5">
     <tr>
+        <th>
+            Image
+
+        </th>
         <th>
             Name
         </th>
@@ -39,27 +43,25 @@
         <th>
             Price
         </th>
-        <th>
-            Image Name
-        </th>
+
         <th></th>
     </tr>
     @foreach (var product in ViewBag.OnePageOfProducts)
     {
 
         <tr>
+            <td class="dashboard-product-img">
+                <a href="/admin/shop/EditProduct/@product.Id">
+                    <img src="/Images/Uploads/Products/@product.Id/Thumbs/@product.ImageName" class="rounded img-responsive" width="120" height="120" />
+                </a>
+            </td>
             <td>@product.Name</td>
             <td>@product.Slug</td>
             <td>@product.Quantity</td>
             <td>@product.Price</td>
-            <td class="dashboard-product-img">
-                <a href="/admin/shop/EditProduct/@product.Id">
-                    <img src="/Images/Uploads/Products/@product.Id/Thumbs/@product.ImageName" class="img-thumbnail" />
-                </a>
-            </td>
             <td>
-                <a href="/admin/shop/EditProduct/@product.Id" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i></a>
-                <a href="/admin/shop/DeleteProduct/@product.Id" class="deleteProduct btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
+                <a href="/admin/shop/EditProduct/@product.Id" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                <a href="/admin/shop/DeleteProduct/@product.Id" class="deleteProduct btn btn-danger"><i class="fas fa-trash"></i></a>
             </td>
         </tr>
     }

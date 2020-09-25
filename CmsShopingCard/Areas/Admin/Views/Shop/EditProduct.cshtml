@@ -32,13 +32,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="Description" class="form-label col-md-2">Description</label>
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -78,14 +72,18 @@
             <div class="form-group">
                 <label class="control-label col-md-2">Brand</label>
                 <div class="col-md-10 brand_list">
-                    <select name="BrandId" id="brandList" class="form-control">
-
-                    </select>
+                    <select name="BrandId" id="brandList" class="form-control"></select>
                 </div>
             </div>
         }
 
-
+        <div class="form-group">
+            <label for="Description" class="form-label col-md-2">Description</label>
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         <div class="form-group">
 
@@ -96,7 +94,7 @@
                     <input type="file" name="file" id="ImageUpload" />
                 </div>
                 <br />
-                <img src="/Images/Uploads/Products/@Model.Id/Thumbs/@Model.ImageName" id="ImgPreview" />
+                <img src="/Images/Uploads/Products/@Model.Id/Thumbs/@Model.ImageName" id="ImgPreview" width="170" height="170" />
             </div>
         </div>
 

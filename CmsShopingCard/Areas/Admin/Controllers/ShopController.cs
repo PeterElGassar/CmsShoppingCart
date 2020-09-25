@@ -182,57 +182,61 @@ namespace CmsShopingCard.Areas.Admin.Controllers
             TempData["SM"] = "You Have Added a Product";
 
             #region Upload Image
-            //Create Necessary directories
-            var originalDirectory = new DirectoryInfo(string.Format("{0}Images\\Uploads", Server.MapPath(@"\")));
 
-            var pathString1 = Path.Combine(originalDirectory.ToString(), "Products");
-            var pathString2 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString());
-            var pathString3 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Thumbs");
-            var pathString4 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery");
-            var pathString5 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery\\Thumbs");
 
-            if (!Directory.Exists(pathString1))
-                Directory.CreateDirectory(pathString1);
+            ProductInDb.AddImage(model,file);
+            ////Create Necessary directories
+            //var originalDirectory = new DirectoryInfo(string.Format("{0}Images\\Uploads", Server.MapPath(@"\")));
 
-            if (!Directory.Exists(pathString2))
-                Directory.CreateDirectory(pathString2);
+            //var pathString1 = Path.Combine(originalDirectory.ToString(), "Products");
+            //var pathString2 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString());
+            //var pathString3 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Thumbs");
+            //var pathString4 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery");
+            //var pathString5 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery\\Thumbs");
 
-            if (!Directory.Exists(pathString3))
-                Directory.CreateDirectory(pathString3);
+            //if (!Directory.Exists(pathString1))
+            //    Directory.CreateDirectory(pathString1);
 
-            if (!Directory.Exists(pathString4))
-                Directory.CreateDirectory(pathString4);
+            //if (!Directory.Exists(pathString2))
+            //    Directory.CreateDirectory(pathString2);
 
-            if (!Directory.Exists(pathString5))
-                Directory.CreateDirectory(pathString5);
+            //if (!Directory.Exists(pathString3))
+            //    Directory.CreateDirectory(pathString3);
 
-            //check if a file was uploaded
-            if (file != null && file.ContentLength > 0)
-            {
+            //if (!Directory.Exists(pathString4))
+            //    Directory.CreateDirectory(pathString4);
 
-                //init Image Name
-                string imageName = file.FileName;
+            //if (!Directory.Exists(pathString5))
+            //    Directory.CreateDirectory(pathString5);
 
-                //Save Image to dto Or Anthor Word  In DataBase
-                Product dto = db.Products.Find(id);
-                dto.ImageName = imageName;
-                db.SaveChanges();
+            ////check if a file was uploaded
+            //if (file != null && file.ContentLength > 0)
+            //{
 
-                //Set Original And thumb Image Paths
-                //Path That file is named Contans Number Like 10 15 17 etc..
-                var path = string.Format("{0}\\{1}", pathString2, imageName);
+            //    //init Image Name
+            //    string imageName = file.FileName;
 
-                var path2 = string.Format("{0}\\{1}", pathString3, imageName);
+            //    //Save Image to dto Or Anthor Word  In DataBase
+            //    Product dto = db.Products.Find(id);
+            //    dto.ImageName = imageName;
+            //    db.SaveChanges();
 
-                //Save original
-                file.SaveAs(path);
+            //    //Set Original And thumb Image Paths
+            //    //Path That file is named Contans Number Like 10 15 17 etc..
+            //    var path = string.Format("{0}\\{1}", pathString2, imageName);
 
-                //Create and save thumb
-                WebImage img = new WebImage(file.InputStream);
-                img.Resize(img.Width, img.Height, false, true).Crop(1, 1, 1, 1).Write();
-                img.Save(path2);
-            }
+            //    var path2 = string.Format("{0}\\{1}", pathString3, imageName);
+
+            //    //Save original
+            //    file.SaveAs(path);
+
+            //    //Create and save thumb
+            //    WebImage img = new WebImage(file.InputStream);
+            //    img.Resize(img.Width, img.Height, false, true).Crop(1, 1, 1, 1).Write();
+            //    img.Save(path2);
+            //}
             #endregion
+            db.SaveChanges();
 
             return RedirectToAction("AddProduct");
         }
@@ -310,8 +314,11 @@ namespace CmsShopingCard.Areas.Admin.Controllers
             model.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
 
             ///          
-            model.GalleryImages = Directory.EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
-                    .Select(fn => Path.GetFileName(fn));
+            model.GalleryImages = Directory
+                .EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
+                .Select(fn => Path.GetFileName(fn));
+
+
             //Chack Model State
             if (!ModelState.IsValid)
             {
@@ -336,7 +343,7 @@ namespace CmsShopingCard.Areas.Admin.Controllers
             ProductInDb.Quantity = model.Quantity;
             ProductInDb.CategoryId = model.CategoryId;
             ProductInDb.ImageName = model.ImageName;
-            if (model.BrandId > 0 )
+            if (model.BrandId > 0)
             {
                 ProductInDb.BrandId = model.BrandId;
             }
@@ -400,7 +407,9 @@ namespace CmsShopingCard.Areas.Admin.Controllers
 
             //Remove Product Folder
             var OriginalDirectory = new DirectoryInfo(string.Format("{0}Images\\Uploads", Server.MapPath(@"\")));
+
             string PathString = Path.Combine(OriginalDirectory.ToString(), "Products\\" + id.ToString());
+
             if (Directory.Exists(PathString))
                 Directory.Delete(PathString, true);
 

@@ -12,6 +12,7 @@ namespace CmsShopingCard.Areas.Admin.Controllers
         // GET: Admin/DashBoard
         public ActionResult Index()
         {
+            ViewBag.DashBoardIndex = true;
             return View();
         }
     }

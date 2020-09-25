@@ -20,6 +20,16 @@ namespace CmsShopingCard
                         "~/Content/newTemplet/js/main.js",
                         "~/Scripts/underscore-min.js"
                       ));
+            bundles.Add(new ScriptBundle("~/bundles/lib/dashboard").Include(
+                      "~/Scripts/jquery-{version}.js",
+                      "~/Content/newTemplet/js/popper.min.js",
+                      "~/Content/newTemplet/js/bootstrap.min.js",
+                      "~/Content/newTemplet/js/plugins.js",
+                      "~/Scripts/toastr.js",
+                      "~/Scripts/datatables/jquery.datatables.js",
+                      "~/scripts/datatables/dataTables.bootstrap.js"
+                    ));
+
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
