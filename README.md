@@ -24,3 +24,16 @@
                <li><h3>Crud Pages Of Website</h3></li>  
                <li><h3>Management Clients Orders</h3></li>              
           </ul>
+ <hr>
+     <h3>Languages/Frameworks are used to built this Application</h3>
+        <ul>
+            <li><h4>Asp.net Mvc</h4></li>
+            <li><h4>Entity Framework (code first approach)</h4></li>
+            <li><h4>jQeury By (Revealing Module Pattern)</h4></li>
+            <li><h4>Bootstrap v4 & media Query</h4></li>
+            <li><h4>Popper.js</h4></li>
+            <li><h4>Underscore.js</h4></li>
+            <li><h4>Slick Slider</h4></li>
+            <li><h4>jQuery DataTables</h4></li>
+        </ul>
+    
