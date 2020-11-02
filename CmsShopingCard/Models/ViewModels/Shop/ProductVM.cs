@@ -16,8 +16,10 @@ namespace CmsShopingCard.Models.ViewModels.Shop
         public int Id { get; set; }
 
         [Required]
+        [Display(Name ="Product Name")]
         public string Name { get; set; }
 
+        [Display(Name = "Product Slug")]
         public string Slug { get; set; }
 
         [Required]
@@ -25,6 +27,7 @@ namespace CmsShopingCard.Models.ViewModels.Shop
         public string Description { get; set; }
 
         public decimal Price { get; set; }
+
         public int Quantity { get; set; }
         public string CategoryName { get; set; }
 

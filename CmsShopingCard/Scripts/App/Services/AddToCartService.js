@@ -171,8 +171,6 @@
             var productId = $(this).data("id");
             var url = "/cart/IncrementProduct";
             updateGrandtotal(productId);
-
-
         });
     }
 

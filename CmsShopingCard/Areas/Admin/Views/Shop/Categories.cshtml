@@ -4,17 +4,41 @@
     ViewBag.Title = "Categories";
 }
 
-<h2>Categories</h2>
-<div class="new-cat" style="width:350px">
+<h2 class="orange p-3">Categories</h2>
 
-    <input type="text" id="newCatName" value="" class="form-control" />
-    <p id="CategoiesP">
-        <a href="#" id="newCatA" class="btn btn-primary">Add New Category</a>
-        <span class="ajax-text">
-            @*<img src="~/Content/Img/lg.harmony-taiji-spinner.gif" width="50" height="25" />*@
-            <img width="40px" src="~/Content/fancybox/fancybox_loading@2x.gif" />
+<div class="alert alert-primary px-4 w-75">
+    <ul class="list-group category-summary">
+        <li class="mb-2">
+            <span class="orange-dot-2"><i class="fas fa-circle"></i></span>
+            <p class="d-inline"> Enter Brands Underneath new Categories</p>
+        </li>
+        <li class="mb-2">
+            <span class="orange-dot-2"><i class="fas fa-circle"></i></span>
+            <p class="d-inline"> Don't Repeat Category Name</p>
+
+        </li>
+    </ul>
+</div>
+
+<div class="row new-cat">
+
+    <div class="col-12 col-sm-7 col-lg-6 mx-auto d-flex flex-column py-2">
+        <span class="ajax-text alert text-center" style="visibility:hidden">
+            Dummy
         </span>
-    </p>
+
+        <input type="text" id="newCatName" placeholder="Category Name.."
+               class="form-control"
+               data-toggle="tooltip"
+               title="<h6>Please Select unique Name</h6>"
+               data-html="true"
+               data-placement="top" />
+
+        <p id="CategoiesP">
+            <a href="#" id="newCatA" class="btn btn-primary">Add New Category</a>
+        </p>
+    </div>
+
 </div>
 @if (!Model.Any())
 {
@@ -23,40 +47,175 @@
 else
 {
     <table class="table sorting categories" id="Pages">
-        <tr class="home">
+        <thead>
+            <tr class="home">
+                <th>
+                    Categoris Name
+                </th>
+                <th></th>
+                <th></th>
 
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr id="id_@item.Id">
-                <td>
-                    <div class="ajaxDivTd"></div>
-                    @Html.EditorFor(modelItem => item.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                </td>
-                <td>
-
-                    <a href="#" data-catId="@item.Id" class="delete btn btn-danger">
-                        <span class="glyphicon glyphicon-trash"></span>
-                    </a>
-
-                    <a href="@Url.Action("EditCategory", "Brand",new { id = item.Id })" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </a>
-                    <a href="@Url.Action("DetailsCategory", "Brand",new { id = item.Id })" class="btn btn-success">
-                        <span class="glyphicon glyphicon-eye-open"></span>
-                    </a>
-                </td>
             </tr>
-        }
+        </thead>
 
+        <tbody class="">
+            @foreach (var item in Model)
+            {
+                <tr id="id_@item.Id">
+                    <td>
+
+                        @Html.EditorFor(modelItem => item.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </td>
+
+                    <td>
+                        <div class="ajaxDivTd">
+                            <span class="alert alert-success">dummy</span>
+                        </div>
+                    </td>
+
+                    <td class="w-25">
+
+                        <div class="float-right">
+                            <a href="#" data-catId="@item.Id" class="delete btn btn-danger">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                            @*@Url.Action("EditCategory", "Brand", new { id = item.Id })*@
+                            <a href="#"
+                               data-cat-id="@item.Id"
+                               class="btn btn-primary js-edit-cat-btn"
+                               data-toggle="tooltip"
+                               title="edit Brands"
+                               data-html="true"
+                               data-placement="top">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="@Url.Action("DetailsCategory", "Brand",new { id = item.Id })"
+                               class="btn btn-success"
+                               data-toggle="tooltip"
+                               title="Show Brands"
+                               data-html="true"
+                               data-placement="top">
+
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
 }
 
+
+<!-- Sign-Up Model -->
+<div class="modal fade" id="edit-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="orange">Edit Brands</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="edit-modal-body">
+                <!--Render Partial Here--->
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts{
-    <script src="~/Scripts/jquery-ui.js"></script>    
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+    <script>
+
+        $('[data-toggle="tooltip"]').tooltip({
+            delay: { hide: 200},
+            trigger: 'hover'
+        });
+
+        ///============Submit Form Edit Brands Of Category==============
+
+        function editBrand(form) {
+
+            $.ajax({
+                type: "POST",
+                url: "/admin/Brand/EditCategoryPartial/",
+                data: new FormData(form),
+                dataType: "json",
+                success: function (result) {
+                    console.log(result)
+                    debugger
+                    console.log(result.status);
+                    if (result === true) {
+
+                        alert("success");
+                        $("#edit-modal").modal("hide")
+                    } else {
+                        alert("something Wrong..")
+                        $("#edit-modal").modal("hide")
+                    }
+                },
+                error: function (result) {
+                    debugger;
+                    alert(result);
+                }
+            });
+
+        }
+
+        function successCallBack(response) {
+            $("#edit-modal").modal("hide");
+
+            if (response.status)
+                successNotifiy(response.message)
+        }
+        function failureCallBack(response) {
+
+            $("#edit-modal").modal("hide");
+            filedNotifiy(response.message)
+
+        }
+
+        function successNotifiy(message) {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": true,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "4000",
+                "extendedTimeOut": "5000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr["success"](message, "E-Shop")
+        }
+
+        function filedNotifiy(message) {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": true,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "4000",
+                "extendedTimeOut": "5000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr["error"](message, "E-Shop")
+        }
+
+    </script>
 }

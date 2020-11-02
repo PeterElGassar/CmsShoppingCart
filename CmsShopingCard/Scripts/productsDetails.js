@@ -1,15 +1,20 @@
 ﻿/*
 *FancyBox
 */
-$(function () {
-    $(".fancybox").fancybox();
+$(function (e) {
+    $("a.fancybox").fancybox({
+        helpers: {
+            overlay: {
+                locked: false
+            }
+        }})
+
 });
+
 //////////////////////////////////
 /*
 *Add ToCart
 */
-
-
 //Change Event For Selected List
 var dropDownList = document.querySelector(".QuntList");
 var qtyDropList;

@@ -24,23 +24,27 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-5" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
-                </div>            
+                </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="form-group input-group">
+                    @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", Value = "" } })
+                        <div class="input-group-prepend">
+                            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control input-radius" } })
+                            <span class="input-group-text span-radius">$</span>
+
+                        </div>
                         @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", Value = "" } })
                         @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
@@ -62,40 +66,56 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label col-md-2" for="Description">Description</label>
-                    <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                @*<div class="form-group">
+                        <label class="form-label col-md-2" for="Description">Description</label>
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Add Product" class="btn btn-default" />
-                    </div>
-                </div>
+
 
             </div>
 
             <div class="col-md-4" id="InputImgDiv">
                 <div class="form-group">
-                    <div class="row">
-                        <label class="control-label col-md-2" for="ImageUpload" style="width:115px">Add Image</label>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div id="InputDiv">
-                                <input type="file" name="file" id="ImageUpload" accept="image/*" />
-                            </div>
-                            <img src="~/AppImg/41WojpNRS5L.png"  id="ImgPreview" width="250" height="250" />
+                    <div>
+                        <label class="control-label " for="ImageUpload">Choose Image</label>
+
+                        <div id="InputDiv">
+                            <input type="file" name="file" id="ImageUpload" accept="image/*" />
                         </div>
+                        <img class="product-img-preview mt-2 img-thumbnail rounded" src="~/AppImg/41WojpNRS5L.png" id="ImgPreview" />
                     </div>
                 </div>
             </div>
 
 
         </div>
+
+        @* des *@
+        <div class="form-group row my-4">
+
+            <div class="col-md-11 mx-auto text-center">
+                <label for="Description" class="form-label col-md-2">Description</label>
+
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group d-flex justify-content-around px-1 px-sm-4">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add Product" class="btn form-btn" />
+            </div>
+            <a class="btn btn-secondary" href="/admin/shop/products">
+                Back to Pages
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+
     </div>
 }
 
@@ -106,6 +126,11 @@
 
 @section Scripts{
     <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
     <script>
         //Set CkEditor
         /////////////////////////////////////////////////////////////
@@ -145,7 +170,6 @@
                     $('#brandList').empty();
                     for (var i = 0; i < getValue.length; i++) {
                         $("#brandList").append(new Option(getValue[i].Name, getValue[i].brandId));
-
                     }
                     //$("#selectList").append(new Option("option text", "value"));
                 });

@@ -1,0 +1,70 @@
+﻿@model CmsShopingCard.Models.Data.User
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-offset-1">
+
+        </div>
+        <div class="col-10 mx-auto">
+            <h4 class="orange text-center">Clinet Details</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-md-4 text-muted pb-3">
+                    First Name
+                </dt>
+
+                <dd class="col-md-8  pb-3">
+                    @Html.DisplayFor(model => model.FirstName)
+                </dd>
+
+                <dt class="col-md-4 text-muted pb-3">
+                    Last Name
+                </dt>
+
+                <dd class="col-md-8 pb-3">
+                    @Html.DisplayFor(model => model.LastName)
+                </dd>
+
+                <dt class="col-md-4 text-muted pb-3">
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
+
+                <dd class="col-md-8 pb-3">
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+
+                <dt class="col-md-4 text-muted pb-3">
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+
+                <dd class="col-md-8 pb-3">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+
+
+                <dt class="col-md-4 text-muted pb-3">
+                    Activetion Code
+                </dt>
+
+                <dd class="col-md-8 pb-3">
+                    @Html.DisplayFor(model => model.ActivetionCode)
+                </dd>
+
+                <dt class="col-md-4 text-muted pb-3">
+                    Is Email Verified
+                </dt>
+
+                <dd class="col-md-8 pb-3">
+                    @Html.DisplayFor(model => model.IsEmailVerified)
+                </dd>
+
+            </dl>
+        </div>
+
+        <div class="col-offset-1">
+
+        </div>
+    </div>
+</div>
+

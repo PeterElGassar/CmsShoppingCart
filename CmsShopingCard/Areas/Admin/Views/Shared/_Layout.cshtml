@@ -1,123 +1,123 @@
 ﻿@*<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Admin Area</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    <!-- fav icon -->
-    <link rel="shortcut icon" href="~/Images/shopping-cart.png" />
-    <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="~/Content/Templet_Files/css/font-awesome.min.css" />
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - Admin Area</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        <!-- fav icon -->
+        <link rel="shortcut icon" href="~/Images/shopping-cart.png" />
+        <!-- Font Awesome Icon -->
+        <link rel="stylesheet" href="~/Content/Templet_Files/css/font-awesome.min.css" />
 
-    <link href="~/Scripts/duDialog/duDialog.min.css" rel="stylesheet" />
+        <link href="~/Scripts/duDialog/duDialog.min.css" rel="stylesheet" />
 
 
-    <!---Googel Fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Sigmar+One&display=swap&subset=latin-ext,vietnamese" rel="stylesheet">
+        <!---Googel Fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Sigmar+One&display=swap&subset=latin-ext,vietnamese" rel="stylesheet">
 
-</head>
-<body>
-    <div class="wrapper">
+    </head>
+    <body>
+        <div class="wrapper">
 
-        <div class="top-navbar">
+            <div class="top-navbar">
 
-            <div class="humburger">
-                <div></div>
-                <div></div>
-                <div></div>
+                <div class="humburger">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+
+                <div class="top-menu">
+                    <div class="logo">DashBoard</div>
+                    <ul>
+                        <li><a href="#"><i class="fa fa-bell"></i></a></li>
+                        <li><a href="#"><i class="fa fa-user"></i></a></li>
+                        <li><a href="/"><i class="fa fa-sign-out"></i></a></li>
+
+                    </ul>
+                </div>
             </div>
 
-            <div class="top-menu">
-                <div class="logo">DashBoard</div>
+            <div class="sidebar">
                 <ul>
-                    <li><a href="#"><i class="fa fa-bell"></i></a></li>
-                    <li><a href="#"><i class="fa fa-user"></i></a></li>
-                    <li><a href="/"><i class="fa fa-sign-out"></i></a></li>
+                    <li>
+                        <a href="/admin/pages" class="activee">
+                            <span class="icon">
+                                <i class="fa fa-book" aria-hidden="true"></i>
+                            </span>
+                            <span class="titel">Pages</span>
+                        </a>
+                    </li>
+                    <li>
 
+                        <a href="/admin/Slider/AddImage">
+                            <span class="icon">
+                                <i class="fa fa-image" aria-hidden="true"></i>
+                            </span>
+                            <span class="titel">Slider</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/Shop/Categories">
+                            <span class="icon">
+                                <i class="fa fa-list-alt" aria-hidden="true"></i>
+                            </span>
+                            <span class="titel">Category</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/shop/orders">
+                            <span class="icon">
+                                <i class="fa fa-gift" aria-hidden="true"></i>
+                            </span>
+                            <span class="titel">Orders</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/shop/Products">
+                            <span class="icon">
+                                <i class="fa fa-product-hunt" aria-hidden="true"></i>
+                            </span>
+                            <span class="titel">Products</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/Brand/Index">
+                            <span class="icon">
+                                <i class="fa fa-gift" aria-hidden="true"></i>
+                            </span>
+                            <span class="titel">Brands</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/Pages/EditSidebar">
+                            <span class="icon">
+                                <i class="fa fa-window-maximize fa-rotate-90" aria-hidden="true"></i>
+                            </span>
+                            <span class="titel">Sidbar</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
+
+            <div class="row main-container">
+
+                @RenderBody()
+
+            </div>
         </div>
+        @Scripts.Render("~/bundles/lib")
+        @RenderSection("scripts", required: false)
 
-        <div class="sidebar">
-            <ul>
-                <li>
-                    <a href="/admin/pages" class="activee">
-                        <span class="icon">
-                            <i class="fa fa-book" aria-hidden="true"></i>
-                        </span>
-                        <span class="titel">Pages</span>
-                    </a>
-                </li>
-                <li>
+        <script src="~/Scripts/jquery-ui.js"></script>
+        <script src="~/Scripts/duDialog/duDialog.min.js"></script>
 
-                    <a href="/admin/Slider/AddImage">
-                        <span class="icon">
-                            <i class="fa fa-image" aria-hidden="true"></i>
-                        </span>
-                        <span class="titel">Slider</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/Shop/Categories">
-                        <span class="icon">
-                            <i class="fa fa-list-alt" aria-hidden="true"></i>
-                        </span>
-                        <span class="titel">Category</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/shop/orders">
-                        <span class="icon">
-                            <i class="fa fa-gift" aria-hidden="true"></i>
-                        </span>
-                        <span class="titel">Orders</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/shop/Products">
-                        <span class="icon">
-                            <i class="fa fa-product-hunt" aria-hidden="true"></i>
-                        </span>
-                        <span class="titel">Products</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/Brand/Index">
-                        <span class="icon">
-                            <i class="fa fa-gift" aria-hidden="true"></i>
-                        </span>
-                        <span class="titel">Brands</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/Pages/EditSidebar">
-                        <span class="icon">
-                            <i class="fa fa-window-maximize fa-rotate-90" aria-hidden="true"></i>
-                        </span>
-                        <span class="titel">Sidbar</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+        <script type="text/javascript" src="~/Scripts/DashboardScript.js"></script>
 
-        <div class="row main-container">
-
-            @RenderBody()
-
-        </div>
-    </div>
-    @Scripts.Render("~/bundles/lib")
-    @RenderSection("scripts", required: false)
-
-    <script src="~/Scripts/jquery-ui.js"></script>
-    <script src="~/Scripts/duDialog/duDialog.min.js"></script>
-
-    <script type="text/javascript" src="~/Scripts/DashboardScript.js"></script>
-
-</body>
-</html>*@
+    </body>
+    </html>*@
 
 
 
@@ -133,36 +133,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="titel icon" type="image/png" href="~/Content/adminTemplate/images/title-img.png">
+
     <title>Dash Board</title>
 
     <!--Font Awesome-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
-    <link rel="titel icon" type="image/png" href="~/Content/adminTemplate/images/title-img.png">
-
     <!-- Bootstrap CSS -->
-    <link href="~/Content/newTemplet/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminTemplate/Bootstrap/bootstrap.css" rel="stylesheet" />
     <!-- Bootstrap Datatables -->
-    @*<link href="~/content/datatables/css/dataTables.bootstrap.css" rel="stylesheet" />*@
-
+    <link href="~/Content/DataTables/css/dataTables.bootstrap4.css" rel="stylesheet" />
     <!-- Reset File -->
     <link rel="stylesheet" href="~/Content/AdminTemplate/Css/Reset.css">
     <!-- Main Style -->
-    <link rel="stylesheet" href="~/Content/AdminTemplate/Css/Main-Style.css">
-
-
-    @*@Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")*@
-    <!-- fav icon -->
-    <link rel="shortcut icon" href="~/Images/shopping-cart.png" />
-
+    <!--duDialog Style-->
     <link href="~/Scripts/duDialog/duDialog.min.css" rel="stylesheet" />
     <link href="~/Content/Site.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/AdminTemplate/Css/Main-Style.css">
 
-    <link href="~/Content/newTemplet/css/plugins.css" rel="stylesheet" />
-    <link href="~/Content/PagedList.css" rel="stylesheet" />
-
+    @*<link href="~/Content/DashboardStyle.css" rel="stylesheet" />*@
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -184,70 +176,72 @@
 
                         <div class=" borderBottom pb-3">
                             <img src="~/Content/AdminTemplate/images/admin.jpeg" width="50" class="rounded-circle">
-                            <a href="#" class="text-white  ml-3">Marven Smith</a>
+                            <a href="#" class="text-white  ml-3"><span class="Peter-ElGassar">Peter-ElGassar</span></a>
                         </div>
                         <!-- List  -->
                         <ul class="navbar-nav flex-column mt-4">
-                            <li class="nav-item active-link">
-                                <a href="/admin/pages" class="nav-link text-white p-lg-4 p-3 p-md-3  ">
+                            <li class="nav-item ">
+                                <a href="/admin/pages" class="nav-link text-white p-lg-4 p-3 p-md-3  sidebar-link">
                                     <i class="fas fa-home text-light fa-lg pr-2"></i>
-                                    DashBoard
+                                    Pages
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="/Account/user-profile"
                                    class="nav-link text-white p-lg-4 p-3 p-md-3  sidebar-link">
                                     <i class="fas fa-user text-light fa-lg pr-2"></i>
-                                    Profile/EditProfile
+                                    Admin Profile
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="/admin/Slider/index"
                                    class="nav-link text-white p-lg-4 p-3 p-md-3  sidebar-link">
                                     <i class="fas  fa-envelope text-light fa-lg pr-2"></i>
-                                    Inbox/SliderImg
+                                    Slider Images
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="/admin/Shop/Categories"
                                    class="nav-link text-white p-lg-4 p-3 p-md-3  sidebar-link">
                                     <i class="fas fa-shopping-cart text-light fa-lg pr-2"></i>
-                                    Sale/Categories
+                                    Categories
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="/admin/shop/orders"
                                    class="nav-link text-white p-lg-4 p-3 p-md-3  sidebar-link">
                                     <i class="fas fa-chart-line text-light fa-lg pr-2"></i>
-                                    Analytics/Orders
+                                    Clients Orders
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="/admin/shop/Products"
                                    class="nav-link text-white p-lg-4 p-3 p-md-3  sidebar-link">
                                     <i class="fas fa-chart-bar text-light fa-lg pr-2"></i>
-                                    Charts/Products
+                                    Products
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="/admin/Brand/Index"
                                    class="nav-link text-white p-lg-4 p-3 p-md-3  sidebar-link">
                                     <i class="fas fa-table text-light fa-lg pr-2"></i>
-                                    Tables/Brand
+                                    Brand
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a href="/admin/Pages/EditSidebar"
+                                   class="nav-link text-white p-lg-4 p-3 p-md-3  sidebar-link">
+                                    <i class="fas fa-file text-light pr-2"></i>
+                                    Ads Sidebar
+                                </a>
+                            </li>
+
                             <li class="nav-item">
                                 <a href="#"
                                    class="nav-link text-white p-lg-4 p-3 p-md-3  sidebar-link">
                                     <i class="fas fa-wrench text-light fa-lg pr-2"></i>
                                     Settings
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/admin/Pages/EditSidebar"
-                                   class="nav-link text-white p-lg-4 p-3 p-md-3  sidebar-link">
-                                    <i class="fas fa-file text-light pr-2"></i>
-                                    Documentations/Sidebar
                                 </a>
                             </li>
                         </ul>
@@ -307,15 +301,15 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Peter El-Gassar</h4>
+                    <h4 class="modal-title orange">Dashboard</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    تخرج مني انا؟ تجرح قلبي انا؟؟
+                    <h4>Back to E-shop page ? </h4>  
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success">متخفيش انا مش ناسيكي</button>
-                    <button class="btn btn-danger" data-dismiss="modal">راحل انا راحل</button>
+                    <button class="btn btn-success" data-dismiss="modal">Stay in dashboard</button>
+                    <a  class="btn btn-danger exit-btn" >Exit ?</a>
                 </div>
             </div>
         </div>
@@ -333,8 +327,8 @@
 
         <div class="container-fliud">
             <div class="row">
-                <div class="col-md-8 col-lg-9 col-xl-10 ml-auto">
-                    <div class="row ">
+                <div class="col-md-8 col-lg-9 col-xl-10 ml-auto mt-5">
+                    <div class="row">
 
                         <div class="col mx-auto admin-render-wrapper">
                             @RenderBody()
@@ -376,17 +370,18 @@
     </footer>
     <script src="~/Content/AdminTemplate/jQuery/jquery-1.10.2.min.js"></script>
     <!-- Popper.js Lib -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
-    </script>
+    <script src="~/Content/newTemplet/js/popper.min.js"></script>
+
     <script src="~/Content/AdminTemplate/Bootstrap/bootstrap.min.js"></script>
-    <script src="~/Content/AdminTemplate/jQuery/mainScript.js"></script>
 
     <script src="~/Scripts/duDialog/duDialog.min.js"></script>
-
-    <script type="text/javascript" src="~/Scripts/DashboardScript.js"></script>
-    @*<script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>*@
     <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/DashboardScript.js"></script>
+
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.bootstrap4.min.js"></script>
+
+    <script src="~/Scripts/toastr.min.js"></script>
 
     @RenderSection("scripts", required: false)
 

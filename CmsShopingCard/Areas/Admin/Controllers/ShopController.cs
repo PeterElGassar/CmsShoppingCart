@@ -13,6 +13,8 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using System.Data.Entity;
+
 
 namespace CmsShopingCard.Areas.Admin.Controllers
 {
@@ -44,7 +46,7 @@ namespace CmsShopingCard.Areas.Admin.Controllers
             //Declare id 
             string id;
 
-            if (db.Categories.Any(x => x.Name == catName))
+            if (db.Categories.Any(x => x.Name.ToLower().Trim() == catName.ToLower().Trim()))
                 return "titletaken";
 
             Category CategoryInDb = new Category();
@@ -91,11 +93,15 @@ namespace CmsShopingCard.Areas.Admin.Controllers
         public ActionResult DeleteCategory(int id)
         {
 
-            //get specific Category to remove it
-            var dto = db.Categories.Find(id);
+            var dto = db.Categories.FirstOrDefault(c => c.Id == id);
+
+            if (dto == null)
+                return HttpNotFound();
 
             db.Categories.Remove(dto);
-            var categoryList = db.CategoryBrands.Where(x => x.CategoryId == id).ToList();
+            db.SaveChanges();
+
+            var categoryList = db.CategoryBrands.Include(x => x.Brand).Where(x => x.CategoryId == id).ToList();
             //remove category from brand table
             foreach (var item in categoryList)
             {
@@ -105,7 +111,6 @@ namespace CmsShopingCard.Areas.Admin.Controllers
 
             return RedirectToAction("Categories");
         }
-
 
         // POST: Admin/Shop/RenameCategory
         [HttpPost]
@@ -184,57 +189,8 @@ namespace CmsShopingCard.Areas.Admin.Controllers
             #region Upload Image
 
 
-            ProductInDb.AddImage(model,file);
-            ////Create Necessary directories
-            //var originalDirectory = new DirectoryInfo(string.Format("{0}Images\\Uploads", Server.MapPath(@"\")));
+            ProductInDb.AddImage(model, file);
 
-            //var pathString1 = Path.Combine(originalDirectory.ToString(), "Products");
-            //var pathString2 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString());
-            //var pathString3 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Thumbs");
-            //var pathString4 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery");
-            //var pathString5 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery\\Thumbs");
-
-            //if (!Directory.Exists(pathString1))
-            //    Directory.CreateDirectory(pathString1);
-
-            //if (!Directory.Exists(pathString2))
-            //    Directory.CreateDirectory(pathString2);
-
-            //if (!Directory.Exists(pathString3))
-            //    Directory.CreateDirectory(pathString3);
-
-            //if (!Directory.Exists(pathString4))
-            //    Directory.CreateDirectory(pathString4);
-
-            //if (!Directory.Exists(pathString5))
-            //    Directory.CreateDirectory(pathString5);
-
-            ////check if a file was uploaded
-            //if (file != null && file.ContentLength > 0)
-            //{
-
-            //    //init Image Name
-            //    string imageName = file.FileName;
-
-            //    //Save Image to dto Or Anthor Word  In DataBase
-            //    Product dto = db.Products.Find(id);
-            //    dto.ImageName = imageName;
-            //    db.SaveChanges();
-
-            //    //Set Original And thumb Image Paths
-            //    //Path That file is named Contans Number Like 10 15 17 etc..
-            //    var path = string.Format("{0}\\{1}", pathString2, imageName);
-
-            //    var path2 = string.Format("{0}\\{1}", pathString3, imageName);
-
-            //    //Save original
-            //    file.SaveAs(path);
-
-            //    //Create and save thumb
-            //    WebImage img = new WebImage(file.InputStream);
-            //    img.Resize(img.Width, img.Height, false, true).Crop(1, 1, 1, 1).Write();
-            //    img.Save(path2);
-            //}
             #endregion
             db.SaveChanges();
 
@@ -261,7 +217,8 @@ namespace CmsShopingCard.Areas.Admin.Controllers
             ViewBag.SelectCat = catId.ToString();
 
             //Set Pagination
-            var onePageOfProducts = listOfProductVm.ToPagedList(pageNumber, 5);
+            //var onePageOfProducts = listOfProductVm.ToPagedList(pageNumber, 5);
+            var onePageOfProducts = listOfProductVm.ToPagedList(pageNumber, 10);
             ViewBag.OnePageOfProducts = onePageOfProducts;
 
             return View(listOfProductVm);
@@ -353,7 +310,7 @@ namespace CmsShopingCard.Areas.Admin.Controllers
             db.SaveChanges();
 
             //Set TempDate Message
-            TempData["SM"] = "You Have Edited The Product..!";
+            TempData["SM"] = "Product Updated Successfully ..";
 
             #region Upload Images
             //Check For File  Upload
@@ -478,10 +435,15 @@ namespace CmsShopingCard.Areas.Admin.Controllers
                 decimal total = 0m;
 
                 //Inial List of  OrderDetailsDTO
-                List<OrderDetails> orderDetialsList = db.OrderDetails.Where(x => x.OrderId == order.OrderId).ToList();
+                List<OrderDetails> orderDetialsList = db.OrderDetails
+                    .Where(x => x.OrderId == order.OrderId).ToList();
                 //Get Username
 
                 User User = db.Users.Where(x => x.UserId == order.UserId).FirstOrDefault();
+
+
+
+
                 string username = User.UserName;
 
                 //Loop Through the List of OrderDetails
@@ -504,14 +466,28 @@ namespace CmsShopingCard.Areas.Admin.Controllers
                 OrdersForAdmin.Add(new OrdersForAdmin()
                 {
                     OrderNumber = order.OrderId,
-                    UserName = username,
+                    //UserName = username,
                     Total = total,
                     ProductAndQuantity = ProductsAndQty,
-                    CreatedAt = order.CreateAt
+                    CreatedAt = order.CreateAt,
+                    User = User
                 });
+
             }
 
             return View(OrdersForAdmin);
+        }
+
+        public ActionResult OrderUserDetils(int id)
+        {
+
+            User User = db.Users.Where(x => x.UserId == id).FirstOrDefault();
+            if (User == null)
+            {
+                return HttpNotFound("User Not Found..");
+            }
+
+            return PartialView(User);
         }
 
         protected override void Dispose(bool disposing)

@@ -40,6 +40,8 @@ namespace CmsShopingCard.Models.Data
                 .WithMany(p => p.WishLists)
                 .WillCascadeOnDelete(false);
 
+
+
             //modelBuilder.Entity<WishList>().HasRequired(u=> u.User)
             //    .WithOptional(u=> u.)
         }

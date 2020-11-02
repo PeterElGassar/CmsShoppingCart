@@ -1,0 +1,60 @@
+﻿@model CmsShopingCard.Models.ViewModels.Shop.CategoriesVM
+
+@{
+    ViewBag.Title = "EditCategory";
+}
+
+@if (TempData["SM"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SM"]
+
+    </div>}
+@using (Ajax.BeginForm("EditCategoryPartial", new AjaxOptions()
+{
+    OnSuccess = "successCallBack",
+    OnFailure = "failureCallBack",
+}))
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <h4 class=" text-center mb-4">All Brands</h4>
+
+        <div class="row d-flex justify-content-center">
+            @for (int i = 0; i < Model.Brands.Count(); i++)
+            {
+                <div class="m-2">
+                    @Html.EditorFor(m => m.Brands[i].Checked)
+                    @Html.DisplayFor(m => m.Brands[i].Name, null, new { @class = "orange" })
+
+                    <div class="thumbnail">
+                        <img src="~/Images/Uploads/Brands/@Model.Brands[i].Id.ToString()/Thumbs/@Model.Brands[i].ImageName.ToString()"
+                             width="100" height="100"
+                             class="img-fluid img-thumbnail rounded" />
+                    </div>
+                    @Html.HiddenFor(m => m.Brands[i].Name)
+                    @Html.HiddenFor(m => m.Brands[i].ImageName)
+                    @Html.HiddenFor(m => m.Brands[i].Id)
+                </div>
+
+            }
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+
+  
+}
+

@@ -60,6 +60,15 @@ namespace CmsShopingCard
                       "~/Content/animate.css"
 
                       ));
+
+
+            bundles.Add(new StyleBundle("~/Content/css2").Include(                     
+                      "~/Content/site.css",
+                      "~/Content/DashboardStyle.css",
+                      "~/Content/toastr.css",
+                      "~/Content/animate.css"
+
+                      ));
         }
     }
 }

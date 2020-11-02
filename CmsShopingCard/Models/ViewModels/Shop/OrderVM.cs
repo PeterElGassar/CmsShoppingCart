@@ -24,5 +24,6 @@ namespace CmsShopingCard.Models.ViewModels.Shop
 
         public DateTime CreateAt { get; set; }
 
+        public virtual User User { get; set; }
     }
 }

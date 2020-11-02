@@ -24,6 +24,16 @@ namespace CmsShopingCard.Areas.Admin.Controllers
             return View(db.SliderGallerys.ToList());
         }
 
+
+        //GET: Admin/Brand/GetBrands
+        public JsonResult GetSliders()
+        {
+            var Sliders = db.SliderGallerys.ToList();
+
+            return Json(new { data = Sliders }, JsonRequestBehavior.AllowGet);
+        }
+
+
         // GET: Admin/AddImage
         public ActionResult AddImage()
         {
@@ -33,6 +43,11 @@ namespace CmsShopingCard.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult AddImage(SliderGallery model, HttpPostedFileBase sliderImage)
         {
+            if (!ModelState.IsValid)
+            {
+                TempData["SM"] = "Form not Valid...";
+                return View(model);
+            }
 
             db.SliderGallerys.Add(model);
             db.SaveChanges();
@@ -109,6 +124,69 @@ namespace CmsShopingCard.Areas.Admin.Controllers
             return RedirectToAction("index");
         }
 
+
+        [HttpGet]
+        public ActionResult AddImgByPopup()
+        {
+            var slider = new SliderGallery();
+            return PartialView("AddImgByPopup", slider);
+        }
+
+
+        [HttpPost]
+        public JsonResult AddImgByPopup(SliderGallery model, HttpPostedFileBase sliderImage)
+        {
+
+
+            db.SliderGallerys.Add(model);
+            db.SaveChanges();
+
+            if (sliderImage != null && sliderImage.ContentLength > 0)
+            {
+
+                model.SaveImage(sliderImage);
+                db.SaveChanges();
+
+            }
+            return Json(new { status = true, message = "Image added success.." });
+        }
+
+
+        [HttpGet]
+        public ActionResult EditImgPartial(int id)
+        {
+            var slider = db.SliderGallerys.FirstOrDefault(s => s.SliderId == id);
+            if (slider == null)
+            {
+                return HttpNotFound();
+
+            }
+
+            return PartialView("AddImgByPopup", slider);
+        }
+
+
+        [HttpPost]
+        public JsonResult EditImgPartial(SliderGallery model, HttpPostedFileBase sliderImage)
+        {
+            if (!ModelState.IsValid)
+                return Json(new { status = false, message = "Form is invalid.." });
+
+            var sliderInDb = db.SliderGallerys.Find(model.SliderId);
+            sliderInDb.Title = model.Title;
+            sliderInDb.UrlLink = model.UrlLink;
+
+            if (sliderImage != null && sliderImage.ContentLength > 0)
+            {
+                model.UpdateImage(sliderImage, sliderInDb.ImageName);
+                sliderInDb.ImageName = sliderImage.FileName;
+            }
+
+            db.SaveChanges();
+
+
+            return Json(new { status = true, message = "Slider Updated Success." });
+        }
 
         protected override void Dispose(bool disposing)
         {

@@ -1,17 +1,17 @@
 ﻿@model CmsShopingCard.Models.ViewModels.Shop.ProductVM
 
 @{
-    ViewBag.Title = "EditProduct";
+    ViewBag.Title = "Edit Product";
 }
 
-<h2>EditProduct</h2>
+<h2>Edit Product</h2>
 
 <div>
     @Html.ActionLink("Back to List", "Products")
 </div>
 @if (TempData["SM"] != null)
 {
-    <div class="alert alert-success">
+    <div class="alert alert-success text-center font-weight-bold">
         @TempData["SM"]
     </div>
 }
@@ -24,90 +24,114 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group input-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-5" })
+
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group input-group">
+                    @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-12">
+                        <div class="input-group-prepend">
+                            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control input-radius" } })
+                            <span class="input-group-text span-radius">$</span>
+
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="CategoryId">Category</label>
+                    <div class="col-12">
+                        @Html.DropDownListFor(model => model.CategoryId, Model.Categories, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @if (Model.Brands != null)
+                {
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="HasSidebar">Brand</label>
+                        <div class="col-12">
+                            @Html.DropDownListFor(model => model.BrandId, new SelectList(Model.Brands, "BrandId", "Name"), new { @class = "form-control", id = "brandList" })
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Brand</label>
+                        <div class="col-12 brand_list">
+                            <select name="BrandId" id="brandList" class="form-control"></select>
+                        </div>
+                    </div>
+                }
+
             </div>
-        </div>
 
+            <div class="col-md-4">
+                <div class="form-group">
 
+                    @*@Html.EditorFor(model => model.ImageName, new { htmlAttributes = new { @class = "form-control" } })*@
+                    <div class="">
+                        <label class="control-label" for="ImageName">Choose Image</label>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2" for="CategoryId">Category</label>
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CategoryId, Model.Categories, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        @if (Model.Brands != null)
-        {
-            <div class="form-group">
-                <label class="control-label col-md-2" for="HasSidebar">Brand</label>
-                <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.BrandId, new SelectList(Model.Brands, "BrandId", "Name"), new { @class = "form-control", id = "brandList" })
+                        <div id="InputDiv">
+                            <input type="file" name="file" id="ImageUpload" />
+                        </div>
+                        <br />
+                        <img class="img-thumbnail img-fluid rounded product-img-preview" src="/Images/Uploads/Products/@Model.Id/Thumbs/@Model.ImageName" id="ImgPreview" />
+                    </div>
                 </div>
             </div>
 
-        }
-        else
-        {
-            <div class="form-group">
-                <label class="control-label col-md-2">Brand</label>
-                <div class="col-md-10 brand_list">
-                    <select name="BrandId" id="brandList" class="form-control"></select>
-                </div>
-            </div>
-        }
+        </div>
 
-        <div class="form-group">
-            <label for="Description" class="form-label col-md-2">Description</label>
-            <div class="col-md-10">
+
+
+        @* des *@
+        <div class="form-group row my-4">
+
+            <div class="col-md-11 mx-auto text-center">
+                <label for="Description" class="form-label col-md-2">Description</label>
+
                 @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-
-            <label class="control-label col-md-2" for="ImageName">Image Name</label>
-            @Html.EditorFor(model => model.ImageName, new { htmlAttributes = new { @class = "form-control" } })
-            <div class="col-md-10">
-                <div id="InputDiv">
-                    <input type="file" name="file" id="ImageUpload" />
-                </div>
-                <br />
-                <img src="/Images/Uploads/Products/@Model.Id/Thumbs/@Model.ImageName" id="ImgPreview" width="170" height="170" />
-            </div>
-        </div>
 
 
-        <div class="form-group">
+
+        <div class="form-group d-flex justify-content-around">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Edit Product" class="btn btn-default" />
+                <input type="submit" value="Update Product" class="btn btn-default form-btn" />
             </div>
+            <a class="btn btn-secondary" href="/admin/shop/products">
+                Back to Pages
+                <i class="fas fa-chevron-right"></i>
+            </a>
         </div>
     </div>
 
     <hr />
 }
+<h4 class="text-center font-weight-bold">Product Gallery</h4>
 <hr />
 @if (!Model.GalleryImages.Any())
 {
@@ -120,31 +144,30 @@
         <input type="submit" value="Upload" />
     </div>
 </form>
+
 <br /> <br />
-<div class="row">
+<div class="row d-flex justify-content-around  mb-4">
     @foreach (var Image in Model.GalleryImages)
     {
-        <div id="dropZone_imagesPreview" class="col-sm-4 previewBox_@Image">
-            <img src="/Images/Uploads/Products/@Model.Id/Gallery/Thumbs/@Image" class="img-thumbnail " />
-            @*@Html.ActionLink("Delete", "DeleteImage", "Shop", new { @class = "deleteimage btn", data_name = Image })*@
-            <div class="row ">
-                <div class="text-center" style="margin: 5px 0px 0px 0px;">
-                    <a class="deleteimage btn btn-danger" href="/Admin/Shop/DeleteImage" data-name="@Image">
-                        <i class="fa fa-trash glyphicon glyphicon-trash"></i>
-                    </a>
-                </div>
-            </div>
+        <div id="dropZone_imagesPreview" class="col-4 col-sm-3 col-lg-2 previewBox_@Image text-center">
+            <img src="/Images/Uploads/Products/@Model.Id/Gallery/Thumbs/@Image" class="img-thumbnail rounded img-fluid"  />
 
+            <a class="deleteimage btn btn-danger px-4" href="/Admin/Shop/DeleteImage" data-name="@Image">
+                <i class="fa fa-trash glyphicon glyphicon-trash"></i>
+            </a>
         </div>
+
     }
 </div>
 <link href="~/Scripts/dropzone/basic.min.css" rel="stylesheet" />
 <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
 @section Scripts{
+
     <script src="~/Scripts/dropzone/dropzone.min.js"></script>
-<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+
     <script>
-        /////////////////////////////////////////////////////////////////////  
+        /////////////////////////////////////////////////////////////////////
         //  CkEditor JS
         CKEDITOR.replace("Description");
         $(function () {
@@ -176,10 +199,10 @@
             DropZone JS
             */
             Dropzone.options.dropZoneFrom = {
-                
+
                 //This Attribute allows you to see only files with image extensions
                 acceptedFiles: "image/*",
-                maxFilesize:2,
+                maxFilesize:2.5,
                 init: function () {
                     //This Mean the form#dropZoneFrom
                     //file Prameter = Image

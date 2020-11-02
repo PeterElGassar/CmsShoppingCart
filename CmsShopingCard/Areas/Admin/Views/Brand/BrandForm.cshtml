@@ -1,0 +1,94 @@
+﻿
+@model CmsShopingCard.Models.Data.Brand
+
+
+
+
+
+
+@using (Html.BeginForm("CreateByPopup", "Brand", FormMethod.Post, new
+{
+    @id = "createForm",
+    enctype = "multipart/form-data",
+    onsubmit = "return submitFrom(this);"
+    //accept_charset = "utf-8"
+}))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.BrandId, new { id = "brand-hidden-id" });
+
+    @Html.HiddenFor(model => model.ImageName);
+
+     <!--Alert Message-->
+        <div class="alert alert-danger ajax-message">
+            <span></span>
+        </div>
+        <!--End Alert Message-->
+    <div class="row pt-4">
+       
+        <div class="col mx-auto">
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group d-flex justify-content-center">
+                    <div class="col-md-10">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group" id="InputImgDiv">
+                    <div class="form-group d-flex justify-content-center text-center">
+
+                        <div class="col-md-10">
+                            <div id="InputDiv" class="w-100 ">
+                                <input type="file" name="BrandImage" id="ImageUpload" accept="image/*" />
+                            </div>
+                            <!--Validation Span-->
+                            <span class="text-danger field-validation-error" data-valmsg-for="ImageUpload" data-valmsg-replace="true" id="ImageUpload" style="display: none">
+                                <span for="ImageUpload" id="ImageUpload" class="" style="">The Image is required.</span>
+                            </span>
+
+
+                            @if (Model.ImageName != null)
+                            {
+                                <img class="rounded img-fluid img-thumbnail mt-2" src="~/Images/Uploads/Brands/@Model.BrandId/Thumbs/@Model.ImageName" id="ImgPreview" width="150" height="160" />
+
+                            }
+                            else
+                            {
+                                <img class=" rounded img-fluid img-thumbnail mt-2  brand-img-preview" src="~/AppImg/41WojpNRS5L.png" id="ImgPreview" width="150" height="160" />
+
+                            }
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-success " />
+
+                        @*<button type="button" class="btn btn-success" id="submit-form-btn">Create by ajax</button>*@
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+
+

@@ -22,5 +22,9 @@ namespace CmsShopingCard.Models.Data
 
         public virtual ICollection<Product> Products { get; set; }
 
+
+        [NotMapped]
+        public HttpPostedFileBase BrandImage { get; set; }
+
     }
 }

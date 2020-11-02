@@ -15,7 +15,6 @@ namespace CmsShopingCard.Models.Data
         [Key]
         public int SliderId { get; set; }
 
-        [Required]
         public string ImageName { get; set; }
 
         [Required]
@@ -58,14 +57,7 @@ namespace CmsShopingCard.Models.Data
         public void UpdateImage(HttpPostedFileBase file, string oldImgName)
         {
             string newImgName = file.FileName;
-            //var mainDirec = new
-            //    DirectoryInfo(string.Format(@"{0}Images\Uploads", HttpContext.Current.Server.MapPath(@"\")));
 
-            ////old paths
-            //string originalImgPath =
-            //    Path.Combine(mainDirec.ToString(), "SliderImages\\{0}", oldImgName);
-            //string thumbImgPath =
-            //    Path.Combine(mainDirec.ToString(), "SliderImages\\" + "Thumbs\\{0}", oldImgName);
 
             var paths = GetPaths(oldImgName);
 

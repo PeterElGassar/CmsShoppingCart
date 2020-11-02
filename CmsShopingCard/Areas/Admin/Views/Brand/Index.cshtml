@@ -3,12 +3,16 @@
 @{
     ViewBag.Title = "Index";
 }
-<div class="col-md-1"></div>
-<div class="col-md-10">
+
+<div class="col-md-offset-1">
+
+</div>
+<div class="col-md-10 mx-auto">
     <h2>Brands Of Categories</h2>
-    <p>
-        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+    <p class="mt-3">
+        <a class="btn form-btn js-create-btn py-2" href="#">Add New brand</a>
     </p>
+
     @if (!Model.Any())
     {
 
@@ -17,8 +21,8 @@
     else
     {
 
-    <!---Brands Table-->
-        <table class="brandsTable">
+        <!---Brands Table-->
+        <table class=" table-striped table-bordered" id="brands-table">
             <thead>
                 <tr>
                     <th>
@@ -31,61 +35,120 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
-            {
-            <tr id=" id_@item.BrandId">
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <div class="thumbnail" style="width:90px">
-                        <img src="/Images/Uploads/Brands/@item.BrandId/Thumbs/@item.ImageName" width="90" height="90" />
-                    </div>
-                </td>
-                <td>
-                    <a class="btn btn-primary" href="/admin/Brand/EditBrand/@item.BrandId"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <a class="delete-btn btn btn-danger" data-brand-id="@item.BrandId" href="#"><i class="glyphicon glyphicon-trash"></i></a>
-                    @*<a class="delete-btn btn btn-danger" href="/admin/Brand/DeleteBrand/@item.BrandId"><i class="glyphicon glyphicon-trash"></i></a>*@
+                @*foreach (var item in Model)
+                    {
+                        <tr id=" id_@item.BrandId">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                <div class="thumbnail" style="width:90px">
+                                    <img src="/Images/Uploads/Brands/@item.BrandId/Thumbs/@item.ImageName" width="90" height="90" />
+                                </div>
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-primary edit-brand-btn" data-brand-id="@item.BrandId"><i class=" fas fa-edit"></i></a>
 
-                </td>
-            </tr>
-                }
+                                <a class="delete-btn btn btn-danger" data-brand-id="@item.BrandId" href="#"><i class="fas fa-trash"></i></a>
+
+                            </td>
+
+                        </tr>
+                    }*@
             </tbody>
         </table>
     }
+
 </div>
-<div class="col-md-1"></div>
+<div class="col-md-offset-1"></div>
+
+
+<!-- Sign-Up Model -->
+<div class="modal fade" id="client-details">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="orange">Add new Brand</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="client-modal-body">
+                <!--Render Partial Here--->
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 @section Scripts{
-    <script>
-        $(document).ready(function () {
-            $(".brandsTable").DataTable();
-        });
-        $(function () {
 
-            /////////////////////////////////////////////////////////////////////
-            /*
-            * confirm Brand Deletion
-            */
-            $('a.delete-btn').click(function (e) {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        var brndsTable;
+
+
+        /////////===============DataTables CODE=======================
+        /////////Get Brand Data As json format for DtataTables
+
+        $(document).ready(function () {
+            brndsTable = $('#brands-table').DataTable({
+                ajax: {
+                    "type": "GET",
+                    "url": "/admin/Brand/GetBrands/",
+                    "datatype": "json"
+                },
+                columns: [
+                    {
+                        data: "ImageName",
+                        render: function (ImageName, type, brand) {
+                            return `
+                                                 <img class='rounded img-thumbnail' src="/Images/Uploads/Brands/${brand.BrandId}/Thumbs/${brand.ImageName}" height='120' width='100'/>
+                                        `;
+                        }
+                    },
+                    { data: "Name" },
+                    {
+                        data: "BrandId",
+                        render: function (BrandId, type, brand) {
+
+                            return `
+                                            <a href="#" class="btn btn-primary edit-brand-btn" data-brand-id="${brand.BrandId}"><i class=" fas fa-edit"></i></a>
+                                            <a class="btn btn-danger delete-btn" data-brand-id="${brand.BrandId}" href="#"><i class="fas fa-trash"></i></a>
+                                             `;
+                        }
+                    }
+                ],
+                "language": { "emptyTable": "No Product Data Found" },
+                "recordsFiltered": 28,
+            });
+        });
+
+
+        $(function () {
+            // confirm Brand Deletion
+            $(document).on("click", "a.delete-btn", function (e) {
                 //if (!confirm("Confirm Brand Deletion")) {
                 //    return false;
                 //}
-                debugger;
                 e.preventDefault();
-                var buttonId = $(this).attr("data-brand-id");
+                var button = $(this);
                 var url = "/admin/Brand/DeleteBrand";
 
                 new duDialog('', 'Are You Sure you want Remove this Brand?', duDialog.OK_CANCEL, {
                     okText: 'Remove',
                     callbacks: {
                         okClick: function () {
-                            $.get(url, { id: buttonId }, function () {
-                                // get a Specific Item <tr> to remove it
-                                var trElement = $("tr#id_" + buttonId);
-                                trElement.remove();
-                            });
+                            $.get(url, { id: button.attr("data-brand-id") }, function () {
 
+                                // get a Specific Item <tr> to remove it
+                                var trElement = $(this).parents("tr");
+                                debugger;
+                                //trElement.remove();
+                                brndsTable.row(button.parents("tr")).remove().draw();
+                            });
                             this.hide();
                         },
                         cancelClick: function () {
@@ -93,16 +156,155 @@
                         }
                     }
                 });
+                e.preventDefault();
+            });
+        });
+
+        function submitFrom(form) {
+            var hiddenBrandId = $("#brand-hidden-id").val();
+            $.validator.unobtrusive.parse(form);
+
+            if ($(form).valid()) {
+                var imgInputFile = $("input#ImageUpload");
+
+                if (imgInputFile[0].files.length === 0 && hiddenBrandId == 0) {
+                    $("span#ImageUpload").css("display", "Block");
+                    return false;
+                } else {
+
+                    if (hiddenBrandId > 0) {
+                        editBrand(form);
+                    } else {
+                        createBrand(form);
+                    }
+
+                }
+            }
+            return false;
+        }
+
+        function createBrand(form) {
+
+            $.ajax({
+                type: "POST",
+                url: "/admin/Brand/CreateByPopup/",
+                data: new FormData(form),
+                processData: false,
+                contentType: false,
+                dataType: "text",
+                success: function (result) {
+                    debugger
+                    console.log(result);
+                    if (result === "false") {
+
+                        $(".ajax-message span").text("this Name is Taken Before..");
+                        $(".ajax-message").addClass("ib");
+
+                        setTimeout(function () {
+                            $(".ajax-message span").text("");
+                            $(".ajax-message").removeClass("ib");
+                        }, 2500);
+
+                    } else if (result === "true") {
+                        $(".ajax-message span").text("this Name is Taken Before..");
+                        $(".ajax-message").addClass("ib");
+
+                        setTimeout(function () {
+                            $(".ajax-message span").text("");
+                            $(".ajax-message").removeClass("ib");
+                        }, 2500);
+                    }
+                    else {
+                        if (typeof result === 'string') {
+                            debugger;
+                            $("#client-details").modal("hide");
+                            //Notification
 
 
+                            successNotifiy("Added brand Success");
 
+                        }
+                    }
+                    brndsTable.ajax.reload();
+                },
+                error: function (result) {
+                    debugger;
 
+                    alert(result);
+                }
             });
 
+        }
+
+        function editBrand(form) {
+            $.ajax({
+                type: "POST",
+                url: "/admin/Brand/EditBrandPartial/",
+                data: new FormData(form),
+                processData: false,
+                contentType: false,
+                dataType: "text",
+                success: function (result) {
+                    debugger;
+                    console.log(result);
+                    if (result === "false") {
+
+                        $(".ajax-message span").text("this Name is Taken Before..");
+                        $(".ajax-message").addClass("ib");
+
+                        setTimeout(function () {
+                            $(".ajax-message span").text("");
+                            $(".ajax-message").removeClass("ib");
+                        }, 2500);
+                    }
+                    else if (result === "true") {
+
+                        $(".ajax-message span").text("this Name is Taken Before..");
+                        $(".ajax-message").addClass("ib");
+
+                        setTimeout(function () {
+                            $(".ajax-message span").text("");
+                            $(".ajax-message").removeClass("ib");
+                        }, 2500);
+                    }
+                    else {
+                        if (typeof result === 'string') {
+                            debugger;
+                            $("#client-details").modal("hide");
+                            successNotifiy("Brand Updated success..");
+
+                        }
+                    }
+                    brndsTable.ajax.reload();
+                },
+                error: function (result) {
+                    debugger;
+                    alert(result);
+                }
+            });
+
+        }
 
 
+        function successNotifiy(message) {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": true,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "4000",
+                "extendedTimeOut": "5000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr["success"](message, "E-Shop")
+        }
 
-        });
     </script>
 }
 
@@ -121,29 +323,3 @@
 
 
 
-
-@*<div class="container-fluid">
-        <div class="row brands__display">
-            @foreach (var brand in Model)
-                {
-             <!-- Single brand -->
-                <div class="col-xs-2  brands__item">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <!--Image-->
-                            <img class="thumbnail" src="/Images/Uploads/Brands/@brand.BrandId/Thumbs/@brand.ImageName"
-                                 width="90" height="90" />
-
-                            <!---Btns---->
-                            <div class="row">
-                                <a class="btn btn-primary edite_brand_btn" href="/admin/Brand/EditBrand/@brand.BrandId"><i class="glyphicon glyphicon-pencil"></i></a>
-                                <a class="delete btn btn-danger remove_brand_btn" href="/admin/Brand/DeleteBrand/@brand.BrandId"><i class="glyphicon glyphicon-trash"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            <!-- /Single brand -->
-            }
-        </div>
-    </div>*@

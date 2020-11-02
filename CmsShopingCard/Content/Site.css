@@ -26,38 +26,49 @@ div.newCatName {
 }
 
 span.ajax-text {
-    display: none;
+    /*display: none;*/
+    visibility:hidden ;
 }
 
 table.sorting.categories td {
     padding: 20px !important;
-    width: 250px;
 }
 
+/*resize index Categoris Table td*/
+
+table.sorting.categories tbody tr td:nth-child(1) {
+    width:35% !important;
+}
+
+
+
 .ajaxDivTd {
-    width: 400px;
-    position: absolute;
+   
+    visibility: hidden !important;
+    cursor: none
 }
 
 #CategoiesP {
-    width: 500px;
-    height: 70px;
+ 
 }
 
 #InputDiv {
     color: #ffffff;
-    background-color: #428bca;
-    border-color: #357ebd;
+    background-color: #f44336;
+    border-color: #f44336;
     padding: 9px;
     border-radius: 5px;
-    width: 230px;
+    width: 90%;
 }
-
+#InputDiv input[type=file]{
+    outline:none;
+    border:none;
+}
 #InputImgDiv {
-    position: relative;
+    /*position: relative;
     bottom: 25px;
     left: 20px;
-    top: 10px;
+    top: 10px;*/
 }
 
 div.loader {
@@ -99,8 +110,8 @@ div.loader {
 }
 
 .ib {
-    display: inline-block !important;
     visibility: visible !important;
+    opacity: 1 !important;
 }
 
 ul.adminarea {
@@ -202,7 +213,6 @@ form.paypalForm {
 }
 
 .deleteimage {
-    width: 100px;
 }
 
 /*h2::first-letter {
@@ -924,7 +934,7 @@ label {
     font-weight: 500;
 }
 
-.form-control {
+.form-group .form-control {
     background-color: #d1d1d1;
     border: 1px solid #ececec;
     font-size: 1.1rem;
@@ -933,11 +943,11 @@ label {
     border-radius: 10px;
 }
 
-    .form-control:focus {
-        border-color: #2196f3;
-        box-shadow: none;
-        -moz-box-shadow: none;
-    }
+.form-group .form-control:focus {
+    border-color: #2196f3;
+    box-shadow: none;
+    -moz-box-shadow: none;
+}
 
 .form-control {
     height: 42px !important;
